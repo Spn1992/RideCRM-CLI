@@ -1,0 +1,81 @@
+@page
+@model AmusementRideCRM.Pages.VendorInvoice.DetailsModel
+@{
+    ViewData["Title"] = "VendorInvoice Details";
+}
+
+<div class="container-fluid">
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-header bg-surface border-bottom py-3">
+            <h5 class="mb-0 fw-semibold text-primary-custom">VendorInvoice Details</h5>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">VendorInvoiceId</dt>
+                <dd class="col-sm-9">@Model.Item.VendorInvoiceId</dd>
+                <dt class="col-sm-3">InvoiceNumber</dt>
+                <dd class="col-sm-9">@Model.Item.InvoiceNumber</dd>
+                <dt class="col-sm-3">VendorId</dt>
+                <dd class="col-sm-9">@Model.Item.VendorId</dd>
+                <dt class="col-sm-3">PurchaseOrderId</dt>
+                <dd class="col-sm-9">@Model.Item.PurchaseOrderId</dd>
+                <dt class="col-sm-3">InvoiceDate</dt>
+                <dd class="col-sm-9">@Model.Item.InvoiceDate</dd>
+                <dt class="col-sm-3">DueDate</dt>
+                <dd class="col-sm-9">@Model.Item.DueDate</dd>
+                <dt class="col-sm-3">Currency</dt>
+                <dd class="col-sm-9">@Model.Item.Currency</dd>
+                <dt class="col-sm-3">SubTotalEur</dt>
+                <dd class="col-sm-9">@Model.Item.SubTotalEur</dd>
+                <dt class="col-sm-3">FreightEur</dt>
+                <dd class="col-sm-9">@Model.Item.FreightEur</dd>
+                <dt class="col-sm-3">TaxEur</dt>
+                <dd class="col-sm-9">@Model.Item.TaxEur</dd>
+                <dt class="col-sm-3">TotalEur</dt>
+                <dd class="col-sm-9">@Model.Item.TotalEur</dd>
+                <dt class="col-sm-3">Status</dt>
+                <dd class="col-sm-9">@Model.Item.Status</dd>
+                <dt class="col-sm-3">UploadedFileName</dt>
+                <dd class="col-sm-9">@Model.Item.UploadedFileName</dd>
+                <dt class="col-sm-3">UploadedFilePath</dt>
+                <dd class="col-sm-9">@Model.Item.UploadedFilePath</dd>
+                <dt class="col-sm-3">AiExtractionJson</dt>
+                <dd class="col-sm-9">@Model.Item.AiExtractionJson</dd>
+                <dt class="col-sm-3">AiConfidenceScore</dt>
+                <dd class="col-sm-9">@Model.Item.AiConfidenceScore</dd>
+                <dt class="col-sm-3">ReviewedByUserId</dt>
+                <dd class="col-sm-9">@Model.Item.ReviewedByUserId</dd>
+                <dt class="col-sm-3">ReviewedDate</dt>
+                <dd class="col-sm-9">@Model.Item.ReviewedDate</dd>
+                <dt class="col-sm-3">ReviewNotes</dt>
+                <dd class="col-sm-9">@Model.Item.ReviewNotes</dd>
+                <dt class="col-sm-3">HasDiscrepancy</dt>
+                <dd class="col-sm-9">@Model.Item.HasDiscrepancy</dd>
+                <dt class="col-sm-3">DiscrepancyNotes</dt>
+                <dd class="col-sm-9">@Model.Item.DiscrepancyNotes</dd>
+                <dt class="col-sm-3">QBBillTxnID</dt>
+                <dd class="col-sm-9">@Model.Item.QBBillTxnID</dd>
+                <dt class="col-sm-3">QBBillEditSequence</dt>
+                <dd class="col-sm-9">@Model.Item.QBBillEditSequence</dd>
+                <dt class="col-sm-3">UploadedDate</dt>
+                <dd class="col-sm-9">@Model.Item.UploadedDate</dd>
+                <dt class="col-sm-3">UploadedBy</dt>
+                <dd class="col-sm-9">@Model.Item.UploadedBy</dd>
+                <dt class="col-sm-3">CreatedDate</dt>
+                <dd class="col-sm-9">@Model.Item.CreatedDate</dd>
+                <dt class="col-sm-3">CreatedBy</dt>
+                <dd class="col-sm-9">@Model.Item.CreatedBy</dd>
+                <dt class="col-sm-3">ModifiedDate</dt>
+                <dd class="col-sm-9">@Model.Item.ModifiedDate</dd>
+                <dt class="col-sm-3">ModifiedBy</dt>
+                <dd class="col-sm-9">@Model.Item.ModifiedBy</dd>
+                <dt class="col-sm-3">RowVersion</dt>
+                <dd class="col-sm-9">@Model.Item.RowVersion</dd>
+            </dl>
+        </div>
+        <div class="card-footer bg-light text-end">
+            <a href="/VendorInvoice/Edit?id=@Model.Item.VendorInvoiceId" class="btn btn-primary">Edit</a>
+            <a href="/VendorInvoice" class="btn btn-secondary">Back to List</a>
+        </div>
+    </div>
+</div>

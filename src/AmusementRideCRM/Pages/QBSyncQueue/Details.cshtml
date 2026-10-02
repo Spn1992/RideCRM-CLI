@@ -1,0 +1,61 @@
+@page
+@model AmusementRideCRM.Pages.QBSyncQueue.DetailsModel
+@{
+    ViewData["Title"] = "QBSyncQueue Details";
+}
+
+<div class="container-fluid">
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-header bg-surface border-bottom py-3">
+            <h5 class="mb-0 fw-semibold text-primary-custom">QBSyncQueue Details</h5>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">SyncId</dt>
+                <dd class="col-sm-9">@Model.Item.SyncId</dd>
+                <dt class="col-sm-3">EntityType</dt>
+                <dd class="col-sm-9">@Model.Item.EntityType</dd>
+                <dt class="col-sm-3">EntityId</dt>
+                <dd class="col-sm-9">@Model.Item.EntityId</dd>
+                <dt class="col-sm-3">SyncDirection</dt>
+                <dd class="col-sm-9">@Model.Item.SyncDirection</dd>
+                <dt class="col-sm-3">SyncAction</dt>
+                <dd class="col-sm-9">@Model.Item.SyncAction</dd>
+                <dt class="col-sm-3">Status</dt>
+                <dd class="col-sm-9">@Model.Item.Status</dd>
+                <dt class="col-sm-3">QBTxnID</dt>
+                <dd class="col-sm-9">@Model.Item.QBTxnID</dd>
+                <dt class="col-sm-3">QBEditSequence</dt>
+                <dd class="col-sm-9">@Model.Item.QBEditSequence</dd>
+                <dt class="col-sm-3">QBRequestXml</dt>
+                <dd class="col-sm-9">@Model.Item.QBRequestXml</dd>
+                <dt class="col-sm-3">QBResponseXml</dt>
+                <dd class="col-sm-9">@Model.Item.QBResponseXml</dd>
+                <dt class="col-sm-3">RetryCount</dt>
+                <dd class="col-sm-9">@Model.Item.RetryCount</dd>
+                <dt class="col-sm-3">MaxRetries</dt>
+                <dd class="col-sm-9">@Model.Item.MaxRetries</dd>
+                <dt class="col-sm-3">ErrorMessage</dt>
+                <dd class="col-sm-9">@Model.Item.ErrorMessage</dd>
+                <dt class="col-sm-3">Priority</dt>
+                <dd class="col-sm-9">@Model.Item.Priority</dd>
+                <dt class="col-sm-3">ScheduledDate</dt>
+                <dd class="col-sm-9">@Model.Item.ScheduledDate</dd>
+                <dt class="col-sm-3">ProcessedDate</dt>
+                <dd class="col-sm-9">@Model.Item.ProcessedDate</dd>
+                <dt class="col-sm-3">CreatedDate</dt>
+                <dd class="col-sm-9">@Model.Item.CreatedDate</dd>
+                <dt class="col-sm-3">CreatedBy</dt>
+                <dd class="col-sm-9">@Model.Item.CreatedBy</dd>
+                <dt class="col-sm-3">ModifiedDate</dt>
+                <dd class="col-sm-9">@Model.Item.ModifiedDate</dd>
+                <dt class="col-sm-3">RowVersion</dt>
+                <dd class="col-sm-9">@Model.Item.RowVersion</dd>
+            </dl>
+        </div>
+        <div class="card-footer bg-light text-end">
+            <a href="/QBSyncQueue/Edit?id=@Model.Item.SyncId" class="btn btn-primary">Edit</a>
+            <a href="/QBSyncQueue" class="btn btn-secondary">Back to List</a>
+        </div>
+    </div>
+</div>

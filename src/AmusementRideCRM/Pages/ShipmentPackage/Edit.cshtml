@@ -1,0 +1,77 @@
+@page
+@model AmusementRideCRM.Pages.ShipmentPackage.EditModel
+@{
+    ViewData["Title"] = "Edit ShipmentPackage";
+}
+
+<div class="container-fluid">
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-header bg-surface border-bottom py-3">
+            <h5 class="mb-0 fw-semibold text-primary-custom">Edit ShipmentPackage</h5>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                <input type="hidden" asp-for="Item.PackageId" />
+                <div class="mb-3">
+                    <label asp-for="Item.ShipmentId" class="form-label"></label>
+                    <input asp-for="Item.ShipmentId" class="form-control" />
+                    <span asp-validation-for="Item.ShipmentId" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.PackageNumber" class="form-label"></label>
+                    <input asp-for="Item.PackageNumber" class="form-control" />
+                    <span asp-validation-for="Item.PackageNumber" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.WeightLbs" class="form-label"></label>
+                    <input asp-for="Item.WeightLbs" class="form-control" />
+                    <span asp-validation-for="Item.WeightLbs" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.LengthIn" class="form-label"></label>
+                    <input asp-for="Item.LengthIn" class="form-control" />
+                    <span asp-validation-for="Item.LengthIn" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.WidthIn" class="form-label"></label>
+                    <input asp-for="Item.WidthIn" class="form-control" />
+                    <span asp-validation-for="Item.WidthIn" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.HeightIn" class="form-label"></label>
+                    <input asp-for="Item.HeightIn" class="form-control" />
+                    <span asp-validation-for="Item.HeightIn" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.TrackingNumber" class="form-label"></label>
+                    <input asp-for="Item.TrackingNumber" class="form-control" />
+                    <span asp-validation-for="Item.TrackingNumber" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.LabelImageUrl" class="form-label"></label>
+                    <input asp-for="Item.LabelImageUrl" class="form-control" />
+                    <span asp-validation-for="Item.LabelImageUrl" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.InsuredValue" class="form-label"></label>
+                    <input asp-for="Item.InsuredValue" class="form-control" />
+                    <span asp-validation-for="Item.InsuredValue" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.Notes" class="form-label"></label>
+                    <input asp-for="Item.Notes" class="form-control" />
+                    <span asp-validation-for="Item.Notes" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.CreatedDate" class="form-label"></label>
+                    <input asp-for="Item.CreatedDate" class="form-control" />
+                    <span asp-validation-for="Item.CreatedDate" class="text-danger"></span>
+                </div>
+                <div class="text-end mt-4">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <a href="/ShipmentPackage" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

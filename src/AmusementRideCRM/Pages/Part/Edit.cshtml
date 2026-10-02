@@ -1,0 +1,152 @@
+@page
+@model AmusementRideCRM.Pages.Part.EditModel
+@{
+    ViewData["Title"] = "Edit Part";
+}
+
+<div class="container-fluid">
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-header bg-surface border-bottom py-3">
+            <h5 class="mb-0 fw-semibold text-primary-custom">Edit Part</h5>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                <input type="hidden" asp-for="Item.PartId" />
+                <div class="mb-3">
+                    <label asp-for="Item.PartNumber" class="form-label"></label>
+                    <input asp-for="Item.PartNumber" class="form-control" />
+                    <span asp-validation-for="Item.PartNumber" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.Description" class="form-label"></label>
+                    <input asp-for="Item.Description" class="form-control" />
+                    <span asp-validation-for="Item.Description" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.DetailedDescription" class="form-label"></label>
+                    <input asp-for="Item.DetailedDescription" class="form-control" />
+                    <span asp-validation-for="Item.DetailedDescription" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.CategoryCode" class="form-label"></label>
+                    <input asp-for="Item.CategoryCode" class="form-control" />
+                    <span asp-validation-for="Item.CategoryCode" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.UnitOfMeasure" class="form-label"></label>
+                    <input asp-for="Item.UnitOfMeasure" class="form-control" />
+                    <span asp-validation-for="Item.UnitOfMeasure" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.QuantityOnHand" class="form-label"></label>
+                    <input asp-for="Item.QuantityOnHand" class="form-control" />
+                    <span asp-validation-for="Item.QuantityOnHand" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.ReservedQuantity" class="form-label"></label>
+                    <input asp-for="Item.ReservedQuantity" class="form-control" />
+                    <span asp-validation-for="Item.ReservedQuantity" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.AvailableQuantity" class="form-label"></label>
+                    <input asp-for="Item.AvailableQuantity" class="form-control" />
+                    <span asp-validation-for="Item.AvailableQuantity" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.ReorderPoint" class="form-label"></label>
+                    <input asp-for="Item.ReorderPoint" class="form-control" />
+                    <span asp-validation-for="Item.ReorderPoint" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.ReorderQuantity" class="form-label"></label>
+                    <input asp-for="Item.ReorderQuantity" class="form-control" />
+                    <span asp-validation-for="Item.ReorderQuantity" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.IsNonStocked" class="form-label"></label>
+                    <input asp-for="Item.IsNonStocked" class="form-control" />
+                    <span asp-validation-for="Item.IsNonStocked" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.LastVendorCostEur" class="form-label"></label>
+                    <input asp-for="Item.LastVendorCostEur" class="form-control" />
+                    <span asp-validation-for="Item.LastVendorCostEur" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.SellingPriceUsd" class="form-label"></label>
+                    <input asp-for="Item.SellingPriceUsd" class="form-control" />
+                    <span asp-validation-for="Item.SellingPriceUsd" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.PrimaryLocationId" class="form-label"></label>
+                    <input asp-for="Item.PrimaryLocationId" class="form-control" />
+                    <span asp-validation-for="Item.PrimaryLocationId" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.Weight" class="form-label"></label>
+                    <input asp-for="Item.Weight" class="form-control" />
+                    <span asp-validation-for="Item.Weight" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.PhotoUrl" class="form-label"></label>
+                    <input asp-for="Item.PhotoUrl" class="form-control" />
+                    <span asp-validation-for="Item.PhotoUrl" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.IsMerged" class="form-label"></label>
+                    <input asp-for="Item.IsMerged" class="form-control" />
+                    <span asp-validation-for="Item.IsMerged" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.MergedIntoPartId" class="form-label"></label>
+                    <input asp-for="Item.MergedIntoPartId" class="form-control" />
+                    <span asp-validation-for="Item.MergedIntoPartId" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.MergedDate" class="form-label"></label>
+                    <input asp-for="Item.MergedDate" class="form-control" />
+                    <span asp-validation-for="Item.MergedDate" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.MergedBy" class="form-label"></label>
+                    <input asp-for="Item.MergedBy" class="form-control" />
+                    <span asp-validation-for="Item.MergedBy" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.QBItemListID" class="form-label"></label>
+                    <input asp-for="Item.QBItemListID" class="form-control" />
+                    <span asp-validation-for="Item.QBItemListID" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.IsActive" class="form-label"></label>
+                    <input asp-for="Item.IsActive" class="form-control" />
+                    <span asp-validation-for="Item.IsActive" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.CreatedDate" class="form-label"></label>
+                    <input asp-for="Item.CreatedDate" class="form-control" />
+                    <span asp-validation-for="Item.CreatedDate" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.CreatedBy" class="form-label"></label>
+                    <input asp-for="Item.CreatedBy" class="form-control" />
+                    <span asp-validation-for="Item.CreatedBy" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.ModifiedDate" class="form-label"></label>
+                    <input asp-for="Item.ModifiedDate" class="form-control" />
+                    <span asp-validation-for="Item.ModifiedDate" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.ModifiedBy" class="form-label"></label>
+                    <input asp-for="Item.ModifiedBy" class="form-control" />
+                    <span asp-validation-for="Item.ModifiedBy" class="text-danger"></span>
+                </div>
+                <div class="text-end mt-4">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <a href="/Part" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

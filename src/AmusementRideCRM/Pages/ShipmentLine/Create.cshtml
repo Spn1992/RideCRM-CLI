@@ -1,0 +1,56 @@
+@page
+@model AmusementRideCRM.Pages.ShipmentLine.CreateModel
+@{
+    ViewData["Title"] = "Create ShipmentLine";
+}
+
+<div class="container-fluid">
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-header bg-surface border-bottom py-3">
+            <h5 class="mb-0 fw-semibold text-primary-custom">Create ShipmentLine</h5>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                <div class="mb-3">
+                    <label asp-for="Item.ShipmentId" class="form-label"></label>
+                    <input asp-for="Item.ShipmentId" class="form-control" />
+                    <span asp-validation-for="Item.ShipmentId" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.OrderLineId" class="form-label"></label>
+                    <input asp-for="Item.OrderLineId" class="form-control" />
+                    <span asp-validation-for="Item.OrderLineId" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.PartId" class="form-label"></label>
+                    <input asp-for="Item.PartId" class="form-control" />
+                    <span asp-validation-for="Item.PartId" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.QuantityShipped" class="form-label"></label>
+                    <input asp-for="Item.QuantityShipped" class="form-control" />
+                    <span asp-validation-for="Item.QuantityShipped" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.LocationId" class="form-label"></label>
+                    <input asp-for="Item.LocationId" class="form-control" />
+                    <span asp-validation-for="Item.LocationId" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.Notes" class="form-label"></label>
+                    <input asp-for="Item.Notes" class="form-control" />
+                    <span asp-validation-for="Item.Notes" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.CreatedDate" class="form-label"></label>
+                    <input asp-for="Item.CreatedDate" class="form-control" />
+                    <span asp-validation-for="Item.CreatedDate" class="text-danger"></span>
+                </div>
+                <div class="text-end mt-4">
+                    <button type="submit" class="btn btn-primary">Create</button>
+                    <a href="/ShipmentLine" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

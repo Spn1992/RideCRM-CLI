@@ -1,0 +1,46 @@
+@page
+@model AmusementRideCRM.Pages.CustomerOrderLine.IndexModel
+@{
+    ViewData["Title"] = "CustomerOrderLine List";
+}
+
+<div class="container-fluid">
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-header bg-surface border-bottom d-flex justify-content-between align-items-center py-3">
+            <h5 class="mb-0 fw-semibold text-primary-custom">CustomerOrderLine Management</h5>
+            <a href="/CustomerOrderLine/Create" class="btn btn-primary btn-sm"><i class="bi bi-plus-lg me-1"></i> Create New</a>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover table-custom mb-0">
+                    <thead class="bg-light">
+                        <tr>
+                            <th class="ps-4">ID</th>
+                            <th>LineNumber</th>
+                            <th>Quantity</th>
+                            <th>UnitPriceUsd</th>
+                            <th>LineTotal</th>
+                            <th class="text-end pe-4">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Items)
+                        {
+                            <tr>
+                                <td class="ps-4">@item.OrderLineId</td>
+                                <td>@item.LineNumber</td>
+                                <td>@item.Quantity</td>
+                                <td>@item.UnitPriceUsd</td>
+                                <td>@item.LineTotal</td>
+                                <td class="text-end pe-4">
+                                    <a href="/CustomerOrderLine/Details?id=@item.OrderLineId" class="btn btn-sm btn-light"><i class="bi bi-eye"></i></a>
+                                    <a href="/CustomerOrderLine/Edit?id=@item.OrderLineId" class="btn btn-sm btn-light"><i class="bi bi-pencil"></i></a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

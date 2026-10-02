@@ -1,0 +1,43 @@
+@page
+@model AmusementRideCRM.Pages.InventoryReservation.DetailsModel
+@{
+    ViewData["Title"] = "InventoryReservation Details";
+}
+
+<div class="container-fluid">
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-header bg-surface border-bottom py-3">
+            <h5 class="mb-0 fw-semibold text-primary-custom">InventoryReservation Details</h5>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">ReservationId</dt>
+                <dd class="col-sm-9">@Model.Item.ReservationId</dd>
+                <dt class="col-sm-3">OrderLineId</dt>
+                <dd class="col-sm-9">@Model.Item.OrderLineId</dd>
+                <dt class="col-sm-3">PartId</dt>
+                <dd class="col-sm-9">@Model.Item.PartId</dd>
+                <dt class="col-sm-3">QuantityReserved</dt>
+                <dd class="col-sm-9">@Model.Item.QuantityReserved</dd>
+                <dt class="col-sm-3">HoldingLocationId</dt>
+                <dd class="col-sm-9">@Model.Item.HoldingLocationId</dd>
+                <dt class="col-sm-3">ReservationDate</dt>
+                <dd class="col-sm-9">@Model.Item.ReservationDate</dd>
+                <dt class="col-sm-3">Status</dt>
+                <dd class="col-sm-9">@Model.Item.Status</dd>
+                <dt class="col-sm-3">ReleasedDate</dt>
+                <dd class="col-sm-9">@Model.Item.ReleasedDate</dd>
+                <dt class="col-sm-3">Notes</dt>
+                <dd class="col-sm-9">@Model.Item.Notes</dd>
+                <dt class="col-sm-3">CreatedBy</dt>
+                <dd class="col-sm-9">@Model.Item.CreatedBy</dd>
+                <dt class="col-sm-3">RowVersion</dt>
+                <dd class="col-sm-9">@Model.Item.RowVersion</dd>
+            </dl>
+        </div>
+        <div class="card-footer bg-light text-end">
+            <a href="/InventoryReservation/Edit?id=@Model.Item.ReservationId" class="btn btn-primary">Edit</a>
+            <a href="/InventoryReservation" class="btn btn-secondary">Back to List</a>
+        </div>
+    </div>
+</div>

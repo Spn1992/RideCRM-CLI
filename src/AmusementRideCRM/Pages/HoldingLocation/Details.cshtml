@@ -1,0 +1,39 @@
+@page
+@model AmusementRideCRM.Pages.HoldingLocation.DetailsModel
+@{
+    ViewData["Title"] = "HoldingLocation Details";
+}
+
+<div class="container-fluid">
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-header bg-surface border-bottom py-3">
+            <h5 class="mb-0 fw-semibold text-primary-custom">HoldingLocation Details</h5>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">HoldingLocationId</dt>
+                <dd class="col-sm-9">@Model.Item.HoldingLocationId</dd>
+                <dt class="col-sm-3">LocationCode</dt>
+                <dd class="col-sm-9">@Model.Item.LocationCode</dd>
+                <dt class="col-sm-3">LocationName</dt>
+                <dd class="col-sm-9">@Model.Item.LocationName</dd>
+                <dt class="col-sm-3">Description</dt>
+                <dd class="col-sm-9">@Model.Item.Description</dd>
+                <dt class="col-sm-3">IsAvailable</dt>
+                <dd class="col-sm-9">@Model.Item.IsAvailable</dd>
+                <dt class="col-sm-3">CreatedDate</dt>
+                <dd class="col-sm-9">@Model.Item.CreatedDate</dd>
+                <dt class="col-sm-3">CreatedBy</dt>
+                <dd class="col-sm-9">@Model.Item.CreatedBy</dd>
+                <dt class="col-sm-3">ModifiedDate</dt>
+                <dd class="col-sm-9">@Model.Item.ModifiedDate</dd>
+                <dt class="col-sm-3">ModifiedBy</dt>
+                <dd class="col-sm-9">@Model.Item.ModifiedBy</dd>
+            </dl>
+        </div>
+        <div class="card-footer bg-light text-end">
+            <a href="/HoldingLocation/Edit?id=@Model.Item.HoldingLocationId" class="btn btn-primary">Edit</a>
+            <a href="/HoldingLocation" class="btn btn-secondary">Back to List</a>
+        </div>
+    </div>
+</div>

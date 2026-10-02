@@ -1,0 +1,45 @@
+@page
+@model AmusementRideCRM.Pages.NotificationQueue.DetailsModel
+@{
+    ViewData["Title"] = "NotificationQueue Details";
+}
+
+<div class="container-fluid">
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-header bg-surface border-bottom py-3">
+            <h5 class="mb-0 fw-semibold text-primary-custom">NotificationQueue Details</h5>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">NotificationId</dt>
+                <dd class="col-sm-9">@Model.Item.NotificationId</dd>
+                <dt class="col-sm-3">RecipientUserId</dt>
+                <dd class="col-sm-9">@Model.Item.RecipientUserId</dd>
+                <dt class="col-sm-3">RecipientRole</dt>
+                <dd class="col-sm-9">@Model.Item.RecipientRole</dd>
+                <dt class="col-sm-3">NotificationType</dt>
+                <dd class="col-sm-9">@Model.Item.NotificationType</dd>
+                <dt class="col-sm-3">Title</dt>
+                <dd class="col-sm-9">@Model.Item.Title</dd>
+                <dt class="col-sm-3">Message</dt>
+                <dd class="col-sm-9">@Model.Item.Message</dd>
+                <dt class="col-sm-3">RelatedEntity</dt>
+                <dd class="col-sm-9">@Model.Item.RelatedEntity</dd>
+                <dt class="col-sm-3">RelatedEntityId</dt>
+                <dd class="col-sm-9">@Model.Item.RelatedEntityId</dd>
+                <dt class="col-sm-3">ActionUrl</dt>
+                <dd class="col-sm-9">@Model.Item.ActionUrl</dd>
+                <dt class="col-sm-3">IsRead</dt>
+                <dd class="col-sm-9">@Model.Item.IsRead</dd>
+                <dt class="col-sm-3">ReadDate</dt>
+                <dd class="col-sm-9">@Model.Item.ReadDate</dd>
+                <dt class="col-sm-3">CreatedDate</dt>
+                <dd class="col-sm-9">@Model.Item.CreatedDate</dd>
+            </dl>
+        </div>
+        <div class="card-footer bg-light text-end">
+            <a href="/NotificationQueue/Edit?id=@Model.Item.NotificationId" class="btn btn-primary">Edit</a>
+            <a href="/NotificationQueue" class="btn btn-secondary">Back to List</a>
+        </div>
+    </div>
+</div>

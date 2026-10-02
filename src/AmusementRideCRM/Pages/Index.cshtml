@@ -1,0 +1,67 @@
+@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Dashboard";
+    ViewData["ActivePage"] = "Dashboard";
+}
+
+<div class="container-fluid">
+    <div class="row g-4 mb-4">
+        <!-- Metric Cards -->
+        <div class="col-12 col-sm-6 col-xl-3">
+            <div class="card h-100 border-0 shadow-sm rounded-4 p-3 d-flex flex-column justify-content-between">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                    <span class="text-secondary-custom fw-semibold small text-uppercase tracking-wide">Total Orders</span>
+                    <div class="bg-primary bg-opacity-10 text-primary rounded p-2">
+                        <i class="bi bi-cart"></i>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="mb-0 fw-bold">@Model.OrderCount</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-xl-3">
+            <div class="card h-100 border-0 shadow-sm rounded-4 p-3 d-flex flex-column justify-content-between">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                    <span class="text-secondary-custom fw-semibold small text-uppercase tracking-wide">Total Parts</span>
+                    <div class="bg-success bg-opacity-10 text-success rounded p-2">
+                        <i class="bi bi-box-seam"></i>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="mb-0 fw-bold">@Model.PartCount</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-xl-3">
+            <div class="card h-100 border-0 shadow-sm rounded-4 p-3 d-flex flex-column justify-content-between">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                    <span class="text-secondary-custom fw-semibold small text-uppercase tracking-wide">Pending Quotes</span>
+                    <div class="bg-warning bg-opacity-10 text-warning rounded p-2">
+                        <i class="bi bi-file-earmark-text"></i>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="mb-0 fw-bold">12</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-xl-3">
+            <div class="card h-100 border-0 shadow-sm rounded-4 p-3 d-flex flex-column justify-content-between">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                    <span class="text-secondary-custom fw-semibold small text-uppercase tracking-wide">Action Items</span>
+                    <div class="bg-danger bg-opacity-10 text-danger rounded p-2">
+                        <i class="bi bi-exclamation-triangle"></i>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="mb-0 fw-bold">3</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

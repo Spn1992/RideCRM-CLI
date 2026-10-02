@@ -1,0 +1,77 @@
+@page
+@model AmusementRideCRM.Pages.NotificationQueue.EditModel
+@{
+    ViewData["Title"] = "Edit NotificationQueue";
+}
+
+<div class="container-fluid">
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-header bg-surface border-bottom py-3">
+            <h5 class="mb-0 fw-semibold text-primary-custom">Edit NotificationQueue</h5>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                <input type="hidden" asp-for="Item.NotificationId" />
+                <div class="mb-3">
+                    <label asp-for="Item.RecipientUserId" class="form-label"></label>
+                    <input asp-for="Item.RecipientUserId" class="form-control" />
+                    <span asp-validation-for="Item.RecipientUserId" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.RecipientRole" class="form-label"></label>
+                    <input asp-for="Item.RecipientRole" class="form-control" />
+                    <span asp-validation-for="Item.RecipientRole" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.NotificationType" class="form-label"></label>
+                    <input asp-for="Item.NotificationType" class="form-control" />
+                    <span asp-validation-for="Item.NotificationType" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.Title" class="form-label"></label>
+                    <input asp-for="Item.Title" class="form-control" />
+                    <span asp-validation-for="Item.Title" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.Message" class="form-label"></label>
+                    <input asp-for="Item.Message" class="form-control" />
+                    <span asp-validation-for="Item.Message" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.RelatedEntity" class="form-label"></label>
+                    <input asp-for="Item.RelatedEntity" class="form-control" />
+                    <span asp-validation-for="Item.RelatedEntity" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.RelatedEntityId" class="form-label"></label>
+                    <input asp-for="Item.RelatedEntityId" class="form-control" />
+                    <span asp-validation-for="Item.RelatedEntityId" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.ActionUrl" class="form-label"></label>
+                    <input asp-for="Item.ActionUrl" class="form-control" />
+                    <span asp-validation-for="Item.ActionUrl" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.IsRead" class="form-label"></label>
+                    <input asp-for="Item.IsRead" class="form-control" />
+                    <span asp-validation-for="Item.IsRead" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.ReadDate" class="form-label"></label>
+                    <input asp-for="Item.ReadDate" class="form-control" />
+                    <span asp-validation-for="Item.ReadDate" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.CreatedDate" class="form-label"></label>
+                    <input asp-for="Item.CreatedDate" class="form-control" />
+                    <span asp-validation-for="Item.CreatedDate" class="text-danger"></span>
+                </div>
+                <div class="text-end mt-4">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <a href="/NotificationQueue" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

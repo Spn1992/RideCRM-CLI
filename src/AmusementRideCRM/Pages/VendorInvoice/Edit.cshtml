@@ -1,0 +1,162 @@
+@page
+@model AmusementRideCRM.Pages.VendorInvoice.EditModel
+@{
+    ViewData["Title"] = "Edit VendorInvoice";
+}
+
+<div class="container-fluid">
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-header bg-surface border-bottom py-3">
+            <h5 class="mb-0 fw-semibold text-primary-custom">Edit VendorInvoice</h5>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                <input type="hidden" asp-for="Item.VendorInvoiceId" />
+                <div class="mb-3">
+                    <label asp-for="Item.InvoiceNumber" class="form-label"></label>
+                    <input asp-for="Item.InvoiceNumber" class="form-control" />
+                    <span asp-validation-for="Item.InvoiceNumber" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.VendorId" class="form-label"></label>
+                    <input asp-for="Item.VendorId" class="form-control" />
+                    <span asp-validation-for="Item.VendorId" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.PurchaseOrderId" class="form-label"></label>
+                    <input asp-for="Item.PurchaseOrderId" class="form-control" />
+                    <span asp-validation-for="Item.PurchaseOrderId" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.InvoiceDate" class="form-label"></label>
+                    <input asp-for="Item.InvoiceDate" class="form-control" />
+                    <span asp-validation-for="Item.InvoiceDate" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.DueDate" class="form-label"></label>
+                    <input asp-for="Item.DueDate" class="form-control" />
+                    <span asp-validation-for="Item.DueDate" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.Currency" class="form-label"></label>
+                    <input asp-for="Item.Currency" class="form-control" />
+                    <span asp-validation-for="Item.Currency" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.SubTotalEur" class="form-label"></label>
+                    <input asp-for="Item.SubTotalEur" class="form-control" />
+                    <span asp-validation-for="Item.SubTotalEur" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.FreightEur" class="form-label"></label>
+                    <input asp-for="Item.FreightEur" class="form-control" />
+                    <span asp-validation-for="Item.FreightEur" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.TaxEur" class="form-label"></label>
+                    <input asp-for="Item.TaxEur" class="form-control" />
+                    <span asp-validation-for="Item.TaxEur" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.TotalEur" class="form-label"></label>
+                    <input asp-for="Item.TotalEur" class="form-control" />
+                    <span asp-validation-for="Item.TotalEur" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.Status" class="form-label"></label>
+                    <input asp-for="Item.Status" class="form-control" />
+                    <span asp-validation-for="Item.Status" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.UploadedFileName" class="form-label"></label>
+                    <input asp-for="Item.UploadedFileName" class="form-control" />
+                    <span asp-validation-for="Item.UploadedFileName" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.UploadedFilePath" class="form-label"></label>
+                    <input asp-for="Item.UploadedFilePath" class="form-control" />
+                    <span asp-validation-for="Item.UploadedFilePath" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.AiExtractionJson" class="form-label"></label>
+                    <input asp-for="Item.AiExtractionJson" class="form-control" />
+                    <span asp-validation-for="Item.AiExtractionJson" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.AiConfidenceScore" class="form-label"></label>
+                    <input asp-for="Item.AiConfidenceScore" class="form-control" />
+                    <span asp-validation-for="Item.AiConfidenceScore" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.ReviewedByUserId" class="form-label"></label>
+                    <input asp-for="Item.ReviewedByUserId" class="form-control" />
+                    <span asp-validation-for="Item.ReviewedByUserId" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.ReviewedDate" class="form-label"></label>
+                    <input asp-for="Item.ReviewedDate" class="form-control" />
+                    <span asp-validation-for="Item.ReviewedDate" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.ReviewNotes" class="form-label"></label>
+                    <input asp-for="Item.ReviewNotes" class="form-control" />
+                    <span asp-validation-for="Item.ReviewNotes" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.HasDiscrepancy" class="form-label"></label>
+                    <input asp-for="Item.HasDiscrepancy" class="form-control" />
+                    <span asp-validation-for="Item.HasDiscrepancy" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.DiscrepancyNotes" class="form-label"></label>
+                    <input asp-for="Item.DiscrepancyNotes" class="form-control" />
+                    <span asp-validation-for="Item.DiscrepancyNotes" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.QBBillTxnID" class="form-label"></label>
+                    <input asp-for="Item.QBBillTxnID" class="form-control" />
+                    <span asp-validation-for="Item.QBBillTxnID" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.QBBillEditSequence" class="form-label"></label>
+                    <input asp-for="Item.QBBillEditSequence" class="form-control" />
+                    <span asp-validation-for="Item.QBBillEditSequence" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.UploadedDate" class="form-label"></label>
+                    <input asp-for="Item.UploadedDate" class="form-control" />
+                    <span asp-validation-for="Item.UploadedDate" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.UploadedBy" class="form-label"></label>
+                    <input asp-for="Item.UploadedBy" class="form-control" />
+                    <span asp-validation-for="Item.UploadedBy" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.CreatedDate" class="form-label"></label>
+                    <input asp-for="Item.CreatedDate" class="form-control" />
+                    <span asp-validation-for="Item.CreatedDate" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.CreatedBy" class="form-label"></label>
+                    <input asp-for="Item.CreatedBy" class="form-control" />
+                    <span asp-validation-for="Item.CreatedBy" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.ModifiedDate" class="form-label"></label>
+                    <input asp-for="Item.ModifiedDate" class="form-control" />
+                    <span asp-validation-for="Item.ModifiedDate" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.ModifiedBy" class="form-label"></label>
+                    <input asp-for="Item.ModifiedBy" class="form-control" />
+                    <span asp-validation-for="Item.ModifiedBy" class="text-danger"></span>
+                </div>
+                <div class="text-end mt-4">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <a href="/VendorInvoice" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

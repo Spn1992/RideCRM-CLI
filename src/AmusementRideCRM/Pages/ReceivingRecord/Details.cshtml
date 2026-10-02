@@ -1,0 +1,63 @@
+@page
+@model AmusementRideCRM.Pages.ReceivingRecord.DetailsModel
+@{
+    ViewData["Title"] = "ReceivingRecord Details";
+}
+
+<div class="container-fluid">
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-header bg-surface border-bottom py-3">
+            <h5 class="mb-0 fw-semibold text-primary-custom">ReceivingRecord Details</h5>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">ReceivingId</dt>
+                <dd class="col-sm-9">@Model.Item.ReceivingId</dd>
+                <dt class="col-sm-3">ReceivingNumber</dt>
+                <dd class="col-sm-9">@Model.Item.ReceivingNumber</dd>
+                <dt class="col-sm-3">PurchaseOrderId</dt>
+                <dd class="col-sm-9">@Model.Item.PurchaseOrderId</dd>
+                <dt class="col-sm-3">VendorId</dt>
+                <dd class="col-sm-9">@Model.Item.VendorId</dd>
+                <dt class="col-sm-3">ReceivingDate</dt>
+                <dd class="col-sm-9">@Model.Item.ReceivingDate</dd>
+                <dt class="col-sm-3">ReceivedByUserId</dt>
+                <dd class="col-sm-9">@Model.Item.ReceivedByUserId</dd>
+                <dt class="col-sm-3">WarehouseLocationId</dt>
+                <dd class="col-sm-9">@Model.Item.WarehouseLocationId</dd>
+                <dt class="col-sm-3">CarrierName</dt>
+                <dd class="col-sm-9">@Model.Item.CarrierName</dd>
+                <dt class="col-sm-3">TrackingNumber</dt>
+                <dd class="col-sm-9">@Model.Item.TrackingNumber</dd>
+                <dt class="col-sm-3">PackingSlipNumber</dt>
+                <dd class="col-sm-9">@Model.Item.PackingSlipNumber</dd>
+                <dt class="col-sm-3">Status</dt>
+                <dd class="col-sm-9">@Model.Item.Status</dd>
+                <dt class="col-sm-3">HasDiscrepancy</dt>
+                <dd class="col-sm-9">@Model.Item.HasDiscrepancy</dd>
+                <dt class="col-sm-3">DiscrepancyNotes</dt>
+                <dd class="col-sm-9">@Model.Item.DiscrepancyNotes</dd>
+                <dt class="col-sm-3">Notes</dt>
+                <dd class="col-sm-9">@Model.Item.Notes</dd>
+                <dt class="col-sm-3">LabelsPrinted</dt>
+                <dd class="col-sm-9">@Model.Item.LabelsPrinted</dd>
+                <dt class="col-sm-3">LabelCount</dt>
+                <dd class="col-sm-9">@Model.Item.LabelCount</dd>
+                <dt class="col-sm-3">CreatedDate</dt>
+                <dd class="col-sm-9">@Model.Item.CreatedDate</dd>
+                <dt class="col-sm-3">CreatedBy</dt>
+                <dd class="col-sm-9">@Model.Item.CreatedBy</dd>
+                <dt class="col-sm-3">ModifiedDate</dt>
+                <dd class="col-sm-9">@Model.Item.ModifiedDate</dd>
+                <dt class="col-sm-3">ModifiedBy</dt>
+                <dd class="col-sm-9">@Model.Item.ModifiedBy</dd>
+                <dt class="col-sm-3">RowVersion</dt>
+                <dd class="col-sm-9">@Model.Item.RowVersion</dd>
+            </dl>
+        </div>
+        <div class="card-footer bg-light text-end">
+            <a href="/ReceivingRecord/Edit?id=@Model.Item.ReceivingId" class="btn btn-primary">Edit</a>
+            <a href="/ReceivingRecord" class="btn btn-secondary">Back to List</a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,142 @@
+@page
+@model AmusementRideCRM.Pages.Shipment.EditModel
+@{
+    ViewData["Title"] = "Edit Shipment";
+}
+
+<div class="container-fluid">
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-header bg-surface border-bottom py-3">
+            <h5 class="mb-0 fw-semibold text-primary-custom">Edit Shipment</h5>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                <input type="hidden" asp-for="Item.ShipmentId" />
+                <div class="mb-3">
+                    <label asp-for="Item.ShipmentNumber" class="form-label"></label>
+                    <input asp-for="Item.ShipmentNumber" class="form-control" />
+                    <span asp-validation-for="Item.ShipmentNumber" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.OrderId" class="form-label"></label>
+                    <input asp-for="Item.OrderId" class="form-control" />
+                    <span asp-validation-for="Item.OrderId" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.ShipmentDate" class="form-label"></label>
+                    <input asp-for="Item.ShipmentDate" class="form-control" />
+                    <span asp-validation-for="Item.ShipmentDate" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.ShippedByUserId" class="form-label"></label>
+                    <input asp-for="Item.ShippedByUserId" class="form-control" />
+                    <span asp-validation-for="Item.ShippedByUserId" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.Carrier" class="form-label"></label>
+                    <input asp-for="Item.Carrier" class="form-control" />
+                    <span asp-validation-for="Item.Carrier" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.ServiceType" class="form-label"></label>
+                    <input asp-for="Item.ServiceType" class="form-control" />
+                    <span asp-validation-for="Item.ServiceType" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.TrackingNumber" class="form-label"></label>
+                    <input asp-for="Item.TrackingNumber" class="form-control" />
+                    <span asp-validation-for="Item.TrackingNumber" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.ShippingLabelUrl" class="form-label"></label>
+                    <input asp-for="Item.ShippingLabelUrl" class="form-control" />
+                    <span asp-validation-for="Item.ShippingLabelUrl" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.ShippingCostActual" class="form-label"></label>
+                    <input asp-for="Item.ShippingCostActual" class="form-control" />
+                    <span asp-validation-for="Item.ShippingCostActual" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.ShippingCostBilled" class="form-label"></label>
+                    <input asp-for="Item.ShippingCostBilled" class="form-control" />
+                    <span asp-validation-for="Item.ShippingCostBilled" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.ShipToName" class="form-label"></label>
+                    <input asp-for="Item.ShipToName" class="form-control" />
+                    <span asp-validation-for="Item.ShipToName" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.ShipToAddress1" class="form-label"></label>
+                    <input asp-for="Item.ShipToAddress1" class="form-control" />
+                    <span asp-validation-for="Item.ShipToAddress1" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.ShipToAddress2" class="form-label"></label>
+                    <input asp-for="Item.ShipToAddress2" class="form-control" />
+                    <span asp-validation-for="Item.ShipToAddress2" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.ShipToCity" class="form-label"></label>
+                    <input asp-for="Item.ShipToCity" class="form-control" />
+                    <span asp-validation-for="Item.ShipToCity" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.ShipToState" class="form-label"></label>
+                    <input asp-for="Item.ShipToState" class="form-control" />
+                    <span asp-validation-for="Item.ShipToState" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.ShipToPostalCode" class="form-label"></label>
+                    <input asp-for="Item.ShipToPostalCode" class="form-control" />
+                    <span asp-validation-for="Item.ShipToPostalCode" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.ShipToCountry" class="form-label"></label>
+                    <input asp-for="Item.ShipToCountry" class="form-control" />
+                    <span asp-validation-for="Item.ShipToCountry" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.Status" class="form-label"></label>
+                    <input asp-for="Item.Status" class="form-control" />
+                    <span asp-validation-for="Item.Status" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.IsInvoiced" class="form-label"></label>
+                    <input asp-for="Item.IsInvoiced" class="form-control" />
+                    <span asp-validation-for="Item.IsInvoiced" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.Notes" class="form-label"></label>
+                    <input asp-for="Item.Notes" class="form-control" />
+                    <span asp-validation-for="Item.Notes" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.CreatedDate" class="form-label"></label>
+                    <input asp-for="Item.CreatedDate" class="form-control" />
+                    <span asp-validation-for="Item.CreatedDate" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.CreatedBy" class="form-label"></label>
+                    <input asp-for="Item.CreatedBy" class="form-control" />
+                    <span asp-validation-for="Item.CreatedBy" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.ModifiedDate" class="form-label"></label>
+                    <input asp-for="Item.ModifiedDate" class="form-control" />
+                    <span asp-validation-for="Item.ModifiedDate" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.ModifiedBy" class="form-label"></label>
+                    <input asp-for="Item.ModifiedBy" class="form-control" />
+                    <span asp-validation-for="Item.ModifiedBy" class="text-danger"></span>
+                </div>
+                <div class="text-end mt-4">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <a href="/Shipment" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,41 @@
+@page
+@model AmusementRideCRM.Pages.VendorPartCrossReference.DetailsModel
+@{
+    ViewData["Title"] = "VendorPartCrossReference Details";
+}
+
+<div class="container-fluid">
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-header bg-surface border-bottom py-3">
+            <h5 class="mb-0 fw-semibold text-primary-custom">VendorPartCrossReference Details</h5>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">CrossRefId</dt>
+                <dd class="col-sm-9">@Model.Item.CrossRefId</dd>
+                <dt class="col-sm-3">VendorId</dt>
+                <dd class="col-sm-9">@Model.Item.VendorId</dd>
+                <dt class="col-sm-3">VendorPartNumber</dt>
+                <dd class="col-sm-9">@Model.Item.VendorPartNumber</dd>
+                <dt class="col-sm-3">VendorDescription</dt>
+                <dd class="col-sm-9">@Model.Item.VendorDescription</dd>
+                <dt class="col-sm-3">PartId</dt>
+                <dd class="col-sm-9">@Model.Item.PartId</dd>
+                <dt class="col-sm-3">ConfidenceScore</dt>
+                <dd class="col-sm-9">@Model.Item.ConfidenceScore</dd>
+                <dt class="col-sm-3">IsConfirmed</dt>
+                <dd class="col-sm-9">@Model.Item.IsConfirmed</dd>
+                <dt class="col-sm-3">ConfirmedByUserId</dt>
+                <dd class="col-sm-9">@Model.Item.ConfirmedByUserId</dd>
+                <dt class="col-sm-3">ConfirmedDate</dt>
+                <dd class="col-sm-9">@Model.Item.ConfirmedDate</dd>
+                <dt class="col-sm-3">CreatedDate</dt>
+                <dd class="col-sm-9">@Model.Item.CreatedDate</dd>
+            </dl>
+        </div>
+        <div class="card-footer bg-light text-end">
+            <a href="/VendorPartCrossReference/Edit?id=@Model.Item.CrossRefId" class="btn btn-primary">Edit</a>
+            <a href="/VendorPartCrossReference" class="btn btn-secondary">Back to List</a>
+        </div>
+    </div>
+</div>

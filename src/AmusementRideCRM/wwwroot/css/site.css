@@ -1,0 +1,69 @@
+:root {
+    --bg-canvas: #F8FAFC;
+    --bg-surface: #FFFFFF;
+    --text-primary-custom: #0F172A;
+    --text-secondary-custom: #475569;
+    --text-tertiary: #94A3B8;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+.bg-canvas {
+    background-color: var(--bg-canvas);
+}
+
+.bg-surface {
+    background-color: var(--bg-surface);
+}
+
+.text-primary-custom {
+    color: var(--text-primary-custom);
+}
+
+.text-secondary-custom {
+    color: var(--text-secondary-custom);
+}
+
+.text-tertiary {
+    color: var(--text-tertiary);
+}
+
+.sidebar .nav-link {
+    color: var(--text-secondary-custom);
+    border-radius: 0.5rem;
+    padding: 0.6rem 1rem;
+    font-weight: 500;
+}
+
+.sidebar .nav-link:hover {
+    background-color: #F1F5F9;
+    color: var(--text-primary-custom);
+}
+
+.sidebar .nav-link.active {
+    background-color: #EEF2FF;
+    color: #4F46E5;
+}
+
+.card {
+    border: 1px solid #E2E8F0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    border-radius: 0.75rem;
+}
+
+.table-custom th {
+    background-color: #F8FAFC;
+    color: var(--text-secondary-custom);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    border-bottom-width: 1px;
+}
+
+.table-custom td {
+    vertical-align: middle;
+    color: var(--text-primary-custom);
+}

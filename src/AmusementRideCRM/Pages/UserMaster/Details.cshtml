@@ -1,0 +1,71 @@
+@page
+@model AmusementRideCRM.Pages.UserMaster.DetailsModel
+@{
+    ViewData["Title"] = "UserMaster Details";
+}
+
+<div class="container-fluid">
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-header bg-surface border-bottom py-3">
+            <h5 class="mb-0 fw-semibold text-primary-custom">UserMaster Details</h5>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">UserId</dt>
+                <dd class="col-sm-9">@Model.Item.UserId</dd>
+                <dt class="col-sm-3">UserName</dt>
+                <dd class="col-sm-9">@Model.Item.UserName</dd>
+                <dt class="col-sm-3">NormalizedUserName</dt>
+                <dd class="col-sm-9">@Model.Item.NormalizedUserName</dd>
+                <dt class="col-sm-3">Email</dt>
+                <dd class="col-sm-9">@Model.Item.Email</dd>
+                <dt class="col-sm-3">NormalizedEmail</dt>
+                <dd class="col-sm-9">@Model.Item.NormalizedEmail</dd>
+                <dt class="col-sm-3">PasswordHash</dt>
+                <dd class="col-sm-9">@Model.Item.PasswordHash</dd>
+                <dt class="col-sm-3">FirstName</dt>
+                <dd class="col-sm-9">@Model.Item.FirstName</dd>
+                <dt class="col-sm-3">LastName</dt>
+                <dd class="col-sm-9">@Model.Item.LastName</dd>
+                <dt class="col-sm-3">DisplayName</dt>
+                <dd class="col-sm-9">@Model.Item.DisplayName</dd>
+                <dt class="col-sm-3">PhoneNumber</dt>
+                <dd class="col-sm-9">@Model.Item.PhoneNumber</dd>
+                <dt class="col-sm-3">RoleCode</dt>
+                <dd class="col-sm-9">@Model.Item.RoleCode</dd>
+                <dt class="col-sm-3">IsActive</dt>
+                <dd class="col-sm-9">@Model.Item.IsActive</dd>
+                <dt class="col-sm-3">IsLocked</dt>
+                <dd class="col-sm-9">@Model.Item.IsLocked</dd>
+                <dt class="col-sm-3">LockoutEnd</dt>
+                <dd class="col-sm-9">@Model.Item.LockoutEnd</dd>
+                <dt class="col-sm-3">FailedLoginAttempts</dt>
+                <dd class="col-sm-9">@Model.Item.FailedLoginAttempts</dd>
+                <dt class="col-sm-3">LastLoginDate</dt>
+                <dd class="col-sm-9">@Model.Item.LastLoginDate</dd>
+                <dt class="col-sm-3">PasswordChangedDate</dt>
+                <dd class="col-sm-9">@Model.Item.PasswordChangedDate</dd>
+                <dt class="col-sm-3">RefreshToken</dt>
+                <dd class="col-sm-9">@Model.Item.RefreshToken</dd>
+                <dt class="col-sm-3">RefreshTokenExpiry</dt>
+                <dd class="col-sm-9">@Model.Item.RefreshTokenExpiry</dd>
+                <dt class="col-sm-3">ProfileImageUrl</dt>
+                <dd class="col-sm-9">@Model.Item.ProfileImageUrl</dd>
+                <dt class="col-sm-3">CreatedDate</dt>
+                <dd class="col-sm-9">@Model.Item.CreatedDate</dd>
+                <dt class="col-sm-3">CreatedBy</dt>
+                <dd class="col-sm-9">@Model.Item.CreatedBy</dd>
+                <dt class="col-sm-3">ModifiedDate</dt>
+                <dd class="col-sm-9">@Model.Item.ModifiedDate</dd>
+                <dt class="col-sm-3">ModifiedBy</dt>
+                <dd class="col-sm-9">@Model.Item.ModifiedBy</dd>
+                <dt class="col-sm-3">RowVersion</dt>
+                <dd class="col-sm-9">@Model.Item.RowVersion</dd>
+            </dl>
+        </div>
+        <div class="card-footer bg-light text-end">
+            <a href="/UserMaster/Edit?id=@Model.Item.UserId" class="btn btn-primary">Edit</a>
+            <a href="/UserMaster" class="btn btn-secondary">Back to List</a>
+        </div>
+    </div>
+</div>

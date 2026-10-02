@@ -1,0 +1,176 @@
+@page
+@model AmusementRideCRM.Pages.Customer.CreateModel
+@{
+    ViewData["Title"] = "Create Customer";
+}
+
+<div class="container-fluid">
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-header bg-surface border-bottom py-3">
+            <h5 class="mb-0 fw-semibold text-primary-custom">Create Customer</h5>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                <div class="mb-3">
+                    <label asp-for="Item.CompanyName" class="form-label"></label>
+                    <input asp-for="Item.CompanyName" class="form-control" />
+                    <span asp-validation-for="Item.CompanyName" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.CustomerCode" class="form-label"></label>
+                    <input asp-for="Item.CustomerCode" class="form-control" />
+                    <span asp-validation-for="Item.CustomerCode" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.BillingAddress1" class="form-label"></label>
+                    <input asp-for="Item.BillingAddress1" class="form-control" />
+                    <span asp-validation-for="Item.BillingAddress1" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.BillingAddress2" class="form-label"></label>
+                    <input asp-for="Item.BillingAddress2" class="form-control" />
+                    <span asp-validation-for="Item.BillingAddress2" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.BillingCity" class="form-label"></label>
+                    <input asp-for="Item.BillingCity" class="form-control" />
+                    <span asp-validation-for="Item.BillingCity" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.BillingState" class="form-label"></label>
+                    <input asp-for="Item.BillingState" class="form-control" />
+                    <span asp-validation-for="Item.BillingState" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.BillingPostalCode" class="form-label"></label>
+                    <input asp-for="Item.BillingPostalCode" class="form-control" />
+                    <span asp-validation-for="Item.BillingPostalCode" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.BillingCountry" class="form-label"></label>
+                    <input asp-for="Item.BillingCountry" class="form-control" />
+                    <span asp-validation-for="Item.BillingCountry" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.ShippingAddress1" class="form-label"></label>
+                    <input asp-for="Item.ShippingAddress1" class="form-control" />
+                    <span asp-validation-for="Item.ShippingAddress1" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.ShippingAddress2" class="form-label"></label>
+                    <input asp-for="Item.ShippingAddress2" class="form-control" />
+                    <span asp-validation-for="Item.ShippingAddress2" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.ShippingCity" class="form-label"></label>
+                    <input asp-for="Item.ShippingCity" class="form-control" />
+                    <span asp-validation-for="Item.ShippingCity" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.ShippingState" class="form-label"></label>
+                    <input asp-for="Item.ShippingState" class="form-control" />
+                    <span asp-validation-for="Item.ShippingState" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.ShippingPostalCode" class="form-label"></label>
+                    <input asp-for="Item.ShippingPostalCode" class="form-control" />
+                    <span asp-validation-for="Item.ShippingPostalCode" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.ShippingCountry" class="form-label"></label>
+                    <input asp-for="Item.ShippingCountry" class="form-control" />
+                    <span asp-validation-for="Item.ShippingCountry" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.Phone" class="form-label"></label>
+                    <input asp-for="Item.Phone" class="form-control" />
+                    <span asp-validation-for="Item.Phone" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.Fax" class="form-label"></label>
+                    <input asp-for="Item.Fax" class="form-control" />
+                    <span asp-validation-for="Item.Fax" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.Email" class="form-label"></label>
+                    <input asp-for="Item.Email" class="form-control" />
+                    <span asp-validation-for="Item.Email" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.Website" class="form-label"></label>
+                    <input asp-for="Item.Website" class="form-control" />
+                    <span asp-validation-for="Item.Website" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.PaymentTerms" class="form-label"></label>
+                    <input asp-for="Item.PaymentTerms" class="form-control" />
+                    <span asp-validation-for="Item.PaymentTerms" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.TaxExempt" class="form-label"></label>
+                    <input asp-for="Item.TaxExempt" class="form-control" />
+                    <span asp-validation-for="Item.TaxExempt" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.CreditLimit" class="form-label"></label>
+                    <input asp-for="Item.CreditLimit" class="form-control" />
+                    <span asp-validation-for="Item.CreditLimit" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.Notes" class="form-label"></label>
+                    <input asp-for="Item.Notes" class="form-control" />
+                    <span asp-validation-for="Item.Notes" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.QBCustomerListID" class="form-label"></label>
+                    <input asp-for="Item.QBCustomerListID" class="form-control" />
+                    <span asp-validation-for="Item.QBCustomerListID" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.QBFullName" class="form-label"></label>
+                    <input asp-for="Item.QBFullName" class="form-control" />
+                    <span asp-validation-for="Item.QBFullName" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.QBEditSequence" class="form-label"></label>
+                    <input asp-for="Item.QBEditSequence" class="form-control" />
+                    <span asp-validation-for="Item.QBEditSequence" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.IsSyncedFromQB" class="form-label"></label>
+                    <input asp-for="Item.IsSyncedFromQB" class="form-control" />
+                    <span asp-validation-for="Item.IsSyncedFromQB" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.IsActive" class="form-label"></label>
+                    <input asp-for="Item.IsActive" class="form-control" />
+                    <span asp-validation-for="Item.IsActive" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.CreatedDate" class="form-label"></label>
+                    <input asp-for="Item.CreatedDate" class="form-control" />
+                    <span asp-validation-for="Item.CreatedDate" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.CreatedBy" class="form-label"></label>
+                    <input asp-for="Item.CreatedBy" class="form-control" />
+                    <span asp-validation-for="Item.CreatedBy" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.ModifiedDate" class="form-label"></label>
+                    <input asp-for="Item.ModifiedDate" class="form-control" />
+                    <span asp-validation-for="Item.ModifiedDate" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.ModifiedBy" class="form-label"></label>
+                    <input asp-for="Item.ModifiedBy" class="form-control" />
+                    <span asp-validation-for="Item.ModifiedBy" class="text-danger"></span>
+                </div>
+                <div class="text-end mt-4">
+                    <button type="submit" class="btn btn-primary">Create</button>
+                    <a href="/Customer" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

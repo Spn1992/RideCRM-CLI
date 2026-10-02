@@ -1,0 +1,46 @@
+@page
+@model AmusementRideCRM.Pages.Customer.IndexModel
+@{
+    ViewData["Title"] = "Customer List";
+}
+
+<div class="container-fluid">
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-header bg-surface border-bottom d-flex justify-content-between align-items-center py-3">
+            <h5 class="mb-0 fw-semibold text-primary-custom">Customer Management</h5>
+            <a href="/Customer/Create" class="btn btn-primary btn-sm"><i class="bi bi-plus-lg me-1"></i> Create New</a>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover table-custom mb-0">
+                    <thead class="bg-light">
+                        <tr>
+                            <th class="ps-4">ID</th>
+                            <th>CompanyName</th>
+                            <th>CustomerCode</th>
+                            <th>BillingAddress1</th>
+                            <th>BillingAddress2</th>
+                            <th class="text-end pe-4">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Items)
+                        {
+                            <tr>
+                                <td class="ps-4">@item.CustomerId</td>
+                                <td>@item.CompanyName</td>
+                                <td>@item.CustomerCode</td>
+                                <td>@item.BillingAddress1</td>
+                                <td>@item.BillingAddress2</td>
+                                <td class="text-end pe-4">
+                                    <a href="/Customer/Details?id=@item.CustomerId" class="btn btn-sm btn-light"><i class="bi bi-eye"></i></a>
+                                    <a href="/Customer/Edit?id=@item.CustomerId" class="btn btn-sm btn-light"><i class="bi bi-pencil"></i></a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

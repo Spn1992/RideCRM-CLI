@@ -1,0 +1,87 @@
+@page
+@model AmusementRideCRM.Pages.Customer.DetailsModel
+@{
+    ViewData["Title"] = "Customer Details";
+}
+
+<div class="container-fluid">
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-header bg-surface border-bottom py-3">
+            <h5 class="mb-0 fw-semibold text-primary-custom">Customer Details</h5>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">CustomerId</dt>
+                <dd class="col-sm-9">@Model.Item.CustomerId</dd>
+                <dt class="col-sm-3">CompanyName</dt>
+                <dd class="col-sm-9">@Model.Item.CompanyName</dd>
+                <dt class="col-sm-3">CustomerCode</dt>
+                <dd class="col-sm-9">@Model.Item.CustomerCode</dd>
+                <dt class="col-sm-3">BillingAddress1</dt>
+                <dd class="col-sm-9">@Model.Item.BillingAddress1</dd>
+                <dt class="col-sm-3">BillingAddress2</dt>
+                <dd class="col-sm-9">@Model.Item.BillingAddress2</dd>
+                <dt class="col-sm-3">BillingCity</dt>
+                <dd class="col-sm-9">@Model.Item.BillingCity</dd>
+                <dt class="col-sm-3">BillingState</dt>
+                <dd class="col-sm-9">@Model.Item.BillingState</dd>
+                <dt class="col-sm-3">BillingPostalCode</dt>
+                <dd class="col-sm-9">@Model.Item.BillingPostalCode</dd>
+                <dt class="col-sm-3">BillingCountry</dt>
+                <dd class="col-sm-9">@Model.Item.BillingCountry</dd>
+                <dt class="col-sm-3">ShippingAddress1</dt>
+                <dd class="col-sm-9">@Model.Item.ShippingAddress1</dd>
+                <dt class="col-sm-3">ShippingAddress2</dt>
+                <dd class="col-sm-9">@Model.Item.ShippingAddress2</dd>
+                <dt class="col-sm-3">ShippingCity</dt>
+                <dd class="col-sm-9">@Model.Item.ShippingCity</dd>
+                <dt class="col-sm-3">ShippingState</dt>
+                <dd class="col-sm-9">@Model.Item.ShippingState</dd>
+                <dt class="col-sm-3">ShippingPostalCode</dt>
+                <dd class="col-sm-9">@Model.Item.ShippingPostalCode</dd>
+                <dt class="col-sm-3">ShippingCountry</dt>
+                <dd class="col-sm-9">@Model.Item.ShippingCountry</dd>
+                <dt class="col-sm-3">Phone</dt>
+                <dd class="col-sm-9">@Model.Item.Phone</dd>
+                <dt class="col-sm-3">Fax</dt>
+                <dd class="col-sm-9">@Model.Item.Fax</dd>
+                <dt class="col-sm-3">Email</dt>
+                <dd class="col-sm-9">@Model.Item.Email</dd>
+                <dt class="col-sm-3">Website</dt>
+                <dd class="col-sm-9">@Model.Item.Website</dd>
+                <dt class="col-sm-3">PaymentTerms</dt>
+                <dd class="col-sm-9">@Model.Item.PaymentTerms</dd>
+                <dt class="col-sm-3">TaxExempt</dt>
+                <dd class="col-sm-9">@Model.Item.TaxExempt</dd>
+                <dt class="col-sm-3">CreditLimit</dt>
+                <dd class="col-sm-9">@Model.Item.CreditLimit</dd>
+                <dt class="col-sm-3">Notes</dt>
+                <dd class="col-sm-9">@Model.Item.Notes</dd>
+                <dt class="col-sm-3">QBCustomerListID</dt>
+                <dd class="col-sm-9">@Model.Item.QBCustomerListID</dd>
+                <dt class="col-sm-3">QBFullName</dt>
+                <dd class="col-sm-9">@Model.Item.QBFullName</dd>
+                <dt class="col-sm-3">QBEditSequence</dt>
+                <dd class="col-sm-9">@Model.Item.QBEditSequence</dd>
+                <dt class="col-sm-3">IsSyncedFromQB</dt>
+                <dd class="col-sm-9">@Model.Item.IsSyncedFromQB</dd>
+                <dt class="col-sm-3">IsActive</dt>
+                <dd class="col-sm-9">@Model.Item.IsActive</dd>
+                <dt class="col-sm-3">CreatedDate</dt>
+                <dd class="col-sm-9">@Model.Item.CreatedDate</dd>
+                <dt class="col-sm-3">CreatedBy</dt>
+                <dd class="col-sm-9">@Model.Item.CreatedBy</dd>
+                <dt class="col-sm-3">ModifiedDate</dt>
+                <dd class="col-sm-9">@Model.Item.ModifiedDate</dd>
+                <dt class="col-sm-3">ModifiedBy</dt>
+                <dd class="col-sm-9">@Model.Item.ModifiedBy</dd>
+                <dt class="col-sm-3">RowVersion</dt>
+                <dd class="col-sm-9">@Model.Item.RowVersion</dd>
+            </dl>
+        </div>
+        <div class="card-footer bg-light text-end">
+            <a href="/Customer/Edit?id=@Model.Item.CustomerId" class="btn btn-primary">Edit</a>
+            <a href="/Customer" class="btn btn-secondary">Back to List</a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,87 @@
+@page
+@model AmusementRideCRM.Pages.CustomerInvoice.DetailsModel
+@{
+    ViewData["Title"] = "CustomerInvoice Details";
+}
+
+<div class="container-fluid">
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-header bg-surface border-bottom py-3">
+            <h5 class="mb-0 fw-semibold text-primary-custom">CustomerInvoice Details</h5>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">InvoiceId</dt>
+                <dd class="col-sm-9">@Model.Item.InvoiceId</dd>
+                <dt class="col-sm-3">InvoiceNumber</dt>
+                <dd class="col-sm-9">@Model.Item.InvoiceNumber</dd>
+                <dt class="col-sm-3">OrderId</dt>
+                <dd class="col-sm-9">@Model.Item.OrderId</dd>
+                <dt class="col-sm-3">ShipmentId</dt>
+                <dd class="col-sm-9">@Model.Item.ShipmentId</dd>
+                <dt class="col-sm-3">CustomerId</dt>
+                <dd class="col-sm-9">@Model.Item.CustomerId</dd>
+                <dt class="col-sm-3">InvoiceDate</dt>
+                <dd class="col-sm-9">@Model.Item.InvoiceDate</dd>
+                <dt class="col-sm-3">DueDate</dt>
+                <dd class="col-sm-9">@Model.Item.DueDate</dd>
+                <dt class="col-sm-3">PaymentTerms</dt>
+                <dd class="col-sm-9">@Model.Item.PaymentTerms</dd>
+                <dt class="col-sm-3">Currency</dt>
+                <dd class="col-sm-9">@Model.Item.Currency</dd>
+                <dt class="col-sm-3">SubTotal</dt>
+                <dd class="col-sm-9">@Model.Item.SubTotal</dd>
+                <dt class="col-sm-3">ShippingCharge</dt>
+                <dd class="col-sm-9">@Model.Item.ShippingCharge</dd>
+                <dt class="col-sm-3">RushCharge</dt>
+                <dd class="col-sm-9">@Model.Item.RushCharge</dd>
+                <dt class="col-sm-3">DiscountAmount</dt>
+                <dd class="col-sm-9">@Model.Item.DiscountAmount</dd>
+                <dt class="col-sm-3">OtherCharges</dt>
+                <dd class="col-sm-9">@Model.Item.OtherCharges</dd>
+                <dt class="col-sm-3">TaxAmount</dt>
+                <dd class="col-sm-9">@Model.Item.TaxAmount</dd>
+                <dt class="col-sm-3">TotalAmount</dt>
+                <dd class="col-sm-9">@Model.Item.TotalAmount</dd>
+                <dt class="col-sm-3">Status</dt>
+                <dd class="col-sm-9">@Model.Item.Status</dd>
+                <dt class="col-sm-3">BillToName</dt>
+                <dd class="col-sm-9">@Model.Item.BillToName</dd>
+                <dt class="col-sm-3">BillToAddress1</dt>
+                <dd class="col-sm-9">@Model.Item.BillToAddress1</dd>
+                <dt class="col-sm-3">BillToAddress2</dt>
+                <dd class="col-sm-9">@Model.Item.BillToAddress2</dd>
+                <dt class="col-sm-3">BillToCity</dt>
+                <dd class="col-sm-9">@Model.Item.BillToCity</dd>
+                <dt class="col-sm-3">BillToState</dt>
+                <dd class="col-sm-9">@Model.Item.BillToState</dd>
+                <dt class="col-sm-3">BillToPostalCode</dt>
+                <dd class="col-sm-9">@Model.Item.BillToPostalCode</dd>
+                <dt class="col-sm-3">BillToCountry</dt>
+                <dd class="col-sm-9">@Model.Item.BillToCountry</dd>
+                <dt class="col-sm-3">QBInvoiceTxnID</dt>
+                <dd class="col-sm-9">@Model.Item.QBInvoiceTxnID</dd>
+                <dt class="col-sm-3">QBEditSequence</dt>
+                <dd class="col-sm-9">@Model.Item.QBEditSequence</dd>
+                <dt class="col-sm-3">Notes</dt>
+                <dd class="col-sm-9">@Model.Item.Notes</dd>
+                <dt class="col-sm-3">InternalNotes</dt>
+                <dd class="col-sm-9">@Model.Item.InternalNotes</dd>
+                <dt class="col-sm-3">CreatedDate</dt>
+                <dd class="col-sm-9">@Model.Item.CreatedDate</dd>
+                <dt class="col-sm-3">CreatedBy</dt>
+                <dd class="col-sm-9">@Model.Item.CreatedBy</dd>
+                <dt class="col-sm-3">ModifiedDate</dt>
+                <dd class="col-sm-9">@Model.Item.ModifiedDate</dd>
+                <dt class="col-sm-3">ModifiedBy</dt>
+                <dd class="col-sm-9">@Model.Item.ModifiedBy</dd>
+                <dt class="col-sm-3">RowVersion</dt>
+                <dd class="col-sm-9">@Model.Item.RowVersion</dd>
+            </dl>
+        </div>
+        <div class="card-footer bg-light text-end">
+            <a href="/CustomerInvoice/Edit?id=@Model.Item.InvoiceId" class="btn btn-primary">Edit</a>
+            <a href="/CustomerInvoice" class="btn btn-secondary">Back to List</a>
+        </div>
+    </div>
+</div>

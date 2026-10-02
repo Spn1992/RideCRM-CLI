@@ -1,0 +1,49 @@
+@page
+@model AmusementRideCRM.Pages.WarehouseLocation.DetailsModel
+@{
+    ViewData["Title"] = "WarehouseLocation Details";
+}
+
+<div class="container-fluid">
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-header bg-surface border-bottom py-3">
+            <h5 class="mb-0 fw-semibold text-primary-custom">WarehouseLocation Details</h5>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">LocationId</dt>
+                <dd class="col-sm-9">@Model.Item.LocationId</dd>
+                <dt class="col-sm-3">LocationCode</dt>
+                <dd class="col-sm-9">@Model.Item.LocationCode</dd>
+                <dt class="col-sm-3">LocationName</dt>
+                <dd class="col-sm-9">@Model.Item.LocationName</dd>
+                <dt class="col-sm-3">Zone</dt>
+                <dd class="col-sm-9">@Model.Item.Zone</dd>
+                <dt class="col-sm-3">Aisle</dt>
+                <dd class="col-sm-9">@Model.Item.Aisle</dd>
+                <dt class="col-sm-3">Shelf</dt>
+                <dd class="col-sm-9">@Model.Item.Shelf</dd>
+                <dt class="col-sm-3">Bin</dt>
+                <dd class="col-sm-9">@Model.Item.Bin</dd>
+                <dt class="col-sm-3">IsHoldingArea</dt>
+                <dd class="col-sm-9">@Model.Item.IsHoldingArea</dd>
+                <dt class="col-sm-3">IsActive</dt>
+                <dd class="col-sm-9">@Model.Item.IsActive</dd>
+                <dt class="col-sm-3">Notes</dt>
+                <dd class="col-sm-9">@Model.Item.Notes</dd>
+                <dt class="col-sm-3">CreatedDate</dt>
+                <dd class="col-sm-9">@Model.Item.CreatedDate</dd>
+                <dt class="col-sm-3">CreatedBy</dt>
+                <dd class="col-sm-9">@Model.Item.CreatedBy</dd>
+                <dt class="col-sm-3">ModifiedDate</dt>
+                <dd class="col-sm-9">@Model.Item.ModifiedDate</dd>
+                <dt class="col-sm-3">ModifiedBy</dt>
+                <dd class="col-sm-9">@Model.Item.ModifiedBy</dd>
+            </dl>
+        </div>
+        <div class="card-footer bg-light text-end">
+            <a href="/WarehouseLocation/Edit?id=@Model.Item.LocationId" class="btn btn-primary">Edit</a>
+            <a href="/WarehouseLocation" class="btn btn-secondary">Back to List</a>
+        </div>
+    </div>
+</div>

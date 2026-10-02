@@ -1,0 +1,53 @@
+@page
+@model AmusementRideCRM.Pages.VendorSource.DetailsModel
+@{
+    ViewData["Title"] = "VendorSource Details";
+}
+
+<div class="container-fluid">
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-header bg-surface border-bottom py-3">
+            <h5 class="mb-0 fw-semibold text-primary-custom">VendorSource Details</h5>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">VendorSourceId</dt>
+                <dd class="col-sm-9">@Model.Item.VendorSourceId</dd>
+                <dt class="col-sm-3">PartId</dt>
+                <dd class="col-sm-9">@Model.Item.PartId</dd>
+                <dt class="col-sm-3">VendorId</dt>
+                <dd class="col-sm-9">@Model.Item.VendorId</dd>
+                <dt class="col-sm-3">VendorPartNumber</dt>
+                <dd class="col-sm-9">@Model.Item.VendorPartNumber</dd>
+                <dt class="col-sm-3">VendorDescription</dt>
+                <dd class="col-sm-9">@Model.Item.VendorDescription</dd>
+                <dt class="col-sm-3">LastKnownCostEur</dt>
+                <dd class="col-sm-9">@Model.Item.LastKnownCostEur</dd>
+                <dt class="col-sm-3">LeadTimeDays</dt>
+                <dd class="col-sm-9">@Model.Item.LeadTimeDays</dd>
+                <dt class="col-sm-3">MinOrderQuantity</dt>
+                <dd class="col-sm-9">@Model.Item.MinOrderQuantity</dd>
+                <dt class="col-sm-3">IsPreferred</dt>
+                <dd class="col-sm-9">@Model.Item.IsPreferred</dd>
+                <dt class="col-sm-3">IsActive</dt>
+                <dd class="col-sm-9">@Model.Item.IsActive</dd>
+                <dt class="col-sm-3">LastUpdated</dt>
+                <dd class="col-sm-9">@Model.Item.LastUpdated</dd>
+                <dt class="col-sm-3">CreatedDate</dt>
+                <dd class="col-sm-9">@Model.Item.CreatedDate</dd>
+                <dt class="col-sm-3">CreatedBy</dt>
+                <dd class="col-sm-9">@Model.Item.CreatedBy</dd>
+                <dt class="col-sm-3">ModifiedDate</dt>
+                <dd class="col-sm-9">@Model.Item.ModifiedDate</dd>
+                <dt class="col-sm-3">ModifiedBy</dt>
+                <dd class="col-sm-9">@Model.Item.ModifiedBy</dd>
+                <dt class="col-sm-3">RowVersion</dt>
+                <dd class="col-sm-9">@Model.Item.RowVersion</dd>
+            </dl>
+        </div>
+        <div class="card-footer bg-light text-end">
+            <a href="/VendorSource/Edit?id=@Model.Item.VendorSourceId" class="btn btn-primary">Edit</a>
+            <a href="/VendorSource" class="btn btn-secondary">Back to List</a>
+        </div>
+    </div>
+</div>

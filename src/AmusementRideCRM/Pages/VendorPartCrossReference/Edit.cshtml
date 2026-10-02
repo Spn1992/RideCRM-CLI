@@ -1,0 +1,67 @@
+@page
+@model AmusementRideCRM.Pages.VendorPartCrossReference.EditModel
+@{
+    ViewData["Title"] = "Edit VendorPartCrossReference";
+}
+
+<div class="container-fluid">
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-header bg-surface border-bottom py-3">
+            <h5 class="mb-0 fw-semibold text-primary-custom">Edit VendorPartCrossReference</h5>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                <input type="hidden" asp-for="Item.CrossRefId" />
+                <div class="mb-3">
+                    <label asp-for="Item.VendorId" class="form-label"></label>
+                    <input asp-for="Item.VendorId" class="form-control" />
+                    <span asp-validation-for="Item.VendorId" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.VendorPartNumber" class="form-label"></label>
+                    <input asp-for="Item.VendorPartNumber" class="form-control" />
+                    <span asp-validation-for="Item.VendorPartNumber" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.VendorDescription" class="form-label"></label>
+                    <input asp-for="Item.VendorDescription" class="form-control" />
+                    <span asp-validation-for="Item.VendorDescription" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.PartId" class="form-label"></label>
+                    <input asp-for="Item.PartId" class="form-control" />
+                    <span asp-validation-for="Item.PartId" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.ConfidenceScore" class="form-label"></label>
+                    <input asp-for="Item.ConfidenceScore" class="form-control" />
+                    <span asp-validation-for="Item.ConfidenceScore" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.IsConfirmed" class="form-label"></label>
+                    <input asp-for="Item.IsConfirmed" class="form-control" />
+                    <span asp-validation-for="Item.IsConfirmed" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.ConfirmedByUserId" class="form-label"></label>
+                    <input asp-for="Item.ConfirmedByUserId" class="form-control" />
+                    <span asp-validation-for="Item.ConfirmedByUserId" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.ConfirmedDate" class="form-label"></label>
+                    <input asp-for="Item.ConfirmedDate" class="form-control" />
+                    <span asp-validation-for="Item.ConfirmedDate" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.CreatedDate" class="form-label"></label>
+                    <input asp-for="Item.CreatedDate" class="form-control" />
+                    <span asp-validation-for="Item.CreatedDate" class="text-danger"></span>
+                </div>
+                <div class="text-end mt-4">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <a href="/VendorPartCrossReference" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

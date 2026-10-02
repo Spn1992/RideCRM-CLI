@@ -1,0 +1,7 @@
+MSBuild version 17.8.49+7806cbf7b for .NET
+MSBUILD : error MSB1007: Specify a logger.
+    Full command line: '/usr/lib/dotnet/sdk/8.0.124/MSBuild.dll -maxcpucount -verbosity:m -restore -consoleloggerparameters:Summary src/AmusementRideCRM/AmusementRideCRM.csproj --logger console;verbosity=quiet'
+  Switches appended by response files:
+Switch: --logger
+
+For switch syntax, type "MSBuild -help"

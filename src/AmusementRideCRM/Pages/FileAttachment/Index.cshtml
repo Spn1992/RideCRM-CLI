@@ -1,0 +1,46 @@
+@page
+@model AmusementRideCRM.Pages.FileAttachment.IndexModel
+@{
+    ViewData["Title"] = "FileAttachment List";
+}
+
+<div class="container-fluid">
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-header bg-surface border-bottom d-flex justify-content-between align-items-center py-3">
+            <h5 class="mb-0 fw-semibold text-primary-custom">FileAttachment Management</h5>
+            <a href="/FileAttachment/Create" class="btn btn-primary btn-sm"><i class="bi bi-plus-lg me-1"></i> Create New</a>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover table-custom mb-0">
+                    <thead class="bg-light">
+                        <tr>
+                            <th class="ps-4">ID</th>
+                            <th>EntityType</th>
+                            <th>FileName</th>
+                            <th>FileExtension</th>
+                            <th>ContentType</th>
+                            <th class="text-end pe-4">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Items)
+                        {
+                            <tr>
+                                <td class="ps-4">@item.AttachmentId</td>
+                                <td>@item.EntityType</td>
+                                <td>@item.FileName</td>
+                                <td>@item.FileExtension</td>
+                                <td>@item.ContentType</td>
+                                <td class="text-end pe-4">
+                                    <a href="/FileAttachment/Details?id=@item.AttachmentId" class="btn btn-sm btn-light"><i class="bi bi-eye"></i></a>
+                                    <a href="/FileAttachment/Edit?id=@item.AttachmentId" class="btn btn-sm btn-light"><i class="bi bi-pencil"></i></a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

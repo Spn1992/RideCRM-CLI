@@ -1,0 +1,69 @@
+@page
+@model AmusementRideCRM.Pages.VendorMaster.DetailsModel
+@{
+    ViewData["Title"] = "VendorMaster Details";
+}
+
+<div class="container-fluid">
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-header bg-surface border-bottom py-3">
+            <h5 class="mb-0 fw-semibold text-primary-custom">VendorMaster Details</h5>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">VendorId</dt>
+                <dd class="col-sm-9">@Model.Item.VendorId</dd>
+                <dt class="col-sm-3">VendorName</dt>
+                <dd class="col-sm-9">@Model.Item.VendorName</dd>
+                <dt class="col-sm-3">VendorCode</dt>
+                <dd class="col-sm-9">@Model.Item.VendorCode</dd>
+                <dt class="col-sm-3">ContactName</dt>
+                <dd class="col-sm-9">@Model.Item.ContactName</dd>
+                <dt class="col-sm-3">Email</dt>
+                <dd class="col-sm-9">@Model.Item.Email</dd>
+                <dt class="col-sm-3">Phone</dt>
+                <dd class="col-sm-9">@Model.Item.Phone</dd>
+                <dt class="col-sm-3">Fax</dt>
+                <dd class="col-sm-9">@Model.Item.Fax</dd>
+                <dt class="col-sm-3">Address1</dt>
+                <dd class="col-sm-9">@Model.Item.Address1</dd>
+                <dt class="col-sm-3">Address2</dt>
+                <dd class="col-sm-9">@Model.Item.Address2</dd>
+                <dt class="col-sm-3">City</dt>
+                <dd class="col-sm-9">@Model.Item.City</dd>
+                <dt class="col-sm-3">StateProvince</dt>
+                <dd class="col-sm-9">@Model.Item.StateProvince</dd>
+                <dt class="col-sm-3">PostalCode</dt>
+                <dd class="col-sm-9">@Model.Item.PostalCode</dd>
+                <dt class="col-sm-3">Country</dt>
+                <dd class="col-sm-9">@Model.Item.Country</dd>
+                <dt class="col-sm-3">Currency</dt>
+                <dd class="col-sm-9">@Model.Item.Currency</dd>
+                <dt class="col-sm-3">PaymentTerms</dt>
+                <dd class="col-sm-9">@Model.Item.PaymentTerms</dd>
+                <dt class="col-sm-3">Website</dt>
+                <dd class="col-sm-9">@Model.Item.Website</dd>
+                <dt class="col-sm-3">Notes</dt>
+                <dd class="col-sm-9">@Model.Item.Notes</dd>
+                <dt class="col-sm-3">QBVendorListID</dt>
+                <dd class="col-sm-9">@Model.Item.QBVendorListID</dd>
+                <dt class="col-sm-3">IsActive</dt>
+                <dd class="col-sm-9">@Model.Item.IsActive</dd>
+                <dt class="col-sm-3">CreatedDate</dt>
+                <dd class="col-sm-9">@Model.Item.CreatedDate</dd>
+                <dt class="col-sm-3">CreatedBy</dt>
+                <dd class="col-sm-9">@Model.Item.CreatedBy</dd>
+                <dt class="col-sm-3">ModifiedDate</dt>
+                <dd class="col-sm-9">@Model.Item.ModifiedDate</dd>
+                <dt class="col-sm-3">ModifiedBy</dt>
+                <dd class="col-sm-9">@Model.Item.ModifiedBy</dd>
+                <dt class="col-sm-3">RowVersion</dt>
+                <dd class="col-sm-9">@Model.Item.RowVersion</dd>
+            </dl>
+        </div>
+        <div class="card-footer bg-light text-end">
+            <a href="/VendorMaster/Edit?id=@Model.Item.VendorId" class="btn btn-primary">Edit</a>
+            <a href="/VendorMaster" class="btn btn-secondary">Back to List</a>
+        </div>
+    </div>
+</div>

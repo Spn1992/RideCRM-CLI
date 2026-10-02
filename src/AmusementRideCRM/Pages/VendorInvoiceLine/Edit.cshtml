@@ -1,0 +1,92 @@
+@page
+@model AmusementRideCRM.Pages.VendorInvoiceLine.EditModel
+@{
+    ViewData["Title"] = "Edit VendorInvoiceLine";
+}
+
+<div class="container-fluid">
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-header bg-surface border-bottom py-3">
+            <h5 class="mb-0 fw-semibold text-primary-custom">Edit VendorInvoiceLine</h5>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                <input type="hidden" asp-for="Item.VILineId" />
+                <div class="mb-3">
+                    <label asp-for="Item.VendorInvoiceId" class="form-label"></label>
+                    <input asp-for="Item.VendorInvoiceId" class="form-control" />
+                    <span asp-validation-for="Item.VendorInvoiceId" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.LineNumber" class="form-label"></label>
+                    <input asp-for="Item.LineNumber" class="form-control" />
+                    <span asp-validation-for="Item.LineNumber" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.PartId" class="form-label"></label>
+                    <input asp-for="Item.PartId" class="form-control" />
+                    <span asp-validation-for="Item.PartId" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.VendorPartNumber" class="form-label"></label>
+                    <input asp-for="Item.VendorPartNumber" class="form-control" />
+                    <span asp-validation-for="Item.VendorPartNumber" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.Description" class="form-label"></label>
+                    <input asp-for="Item.Description" class="form-control" />
+                    <span asp-validation-for="Item.Description" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.Quantity" class="form-label"></label>
+                    <input asp-for="Item.Quantity" class="form-control" />
+                    <span asp-validation-for="Item.Quantity" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.UnitCostEur" class="form-label"></label>
+                    <input asp-for="Item.UnitCostEur" class="form-control" />
+                    <span asp-validation-for="Item.UnitCostEur" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.LineTotalEur" class="form-label"></label>
+                    <input asp-for="Item.LineTotalEur" class="form-control" />
+                    <span asp-validation-for="Item.LineTotalEur" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.POLineId" class="form-label"></label>
+                    <input asp-for="Item.POLineId" class="form-control" />
+                    <span asp-validation-for="Item.POLineId" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.AiMatchConfidence" class="form-label"></label>
+                    <input asp-for="Item.AiMatchConfidence" class="form-control" />
+                    <span asp-validation-for="Item.AiMatchConfidence" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.IsMatchConfirmed" class="form-label"></label>
+                    <input asp-for="Item.IsMatchConfirmed" class="form-control" />
+                    <span asp-validation-for="Item.IsMatchConfirmed" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.MatchedByUserId" class="form-label"></label>
+                    <input asp-for="Item.MatchedByUserId" class="form-control" />
+                    <span asp-validation-for="Item.MatchedByUserId" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.CreatedDate" class="form-label"></label>
+                    <input asp-for="Item.CreatedDate" class="form-control" />
+                    <span asp-validation-for="Item.CreatedDate" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.ModifiedDate" class="form-label"></label>
+                    <input asp-for="Item.ModifiedDate" class="form-control" />
+                    <span asp-validation-for="Item.ModifiedDate" class="text-danger"></span>
+                </div>
+                <div class="text-end mt-4">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <a href="/VendorInvoiceLine" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,17 @@
+[Oo]bj/
+[Bb]in/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+packages/
+node_modules/
+dist/
+build/
+target/
+*.pyc
+__pycache__/
+server_output.log
+obj/
+bin/
+server_output_2.log

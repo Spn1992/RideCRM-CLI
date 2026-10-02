@@ -1,0 +1,112 @@
+@page
+@model AmusementRideCRM.Pages.QBSyncQueue.EditModel
+@{
+    ViewData["Title"] = "Edit QBSyncQueue";
+}
+
+<div class="container-fluid">
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-header bg-surface border-bottom py-3">
+            <h5 class="mb-0 fw-semibold text-primary-custom">Edit QBSyncQueue</h5>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                <input type="hidden" asp-for="Item.SyncId" />
+                <div class="mb-3">
+                    <label asp-for="Item.EntityType" class="form-label"></label>
+                    <input asp-for="Item.EntityType" class="form-control" />
+                    <span asp-validation-for="Item.EntityType" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.EntityId" class="form-label"></label>
+                    <input asp-for="Item.EntityId" class="form-control" />
+                    <span asp-validation-for="Item.EntityId" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.SyncDirection" class="form-label"></label>
+                    <input asp-for="Item.SyncDirection" class="form-control" />
+                    <span asp-validation-for="Item.SyncDirection" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.SyncAction" class="form-label"></label>
+                    <input asp-for="Item.SyncAction" class="form-control" />
+                    <span asp-validation-for="Item.SyncAction" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.Status" class="form-label"></label>
+                    <input asp-for="Item.Status" class="form-control" />
+                    <span asp-validation-for="Item.Status" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.QBTxnID" class="form-label"></label>
+                    <input asp-for="Item.QBTxnID" class="form-control" />
+                    <span asp-validation-for="Item.QBTxnID" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.QBEditSequence" class="form-label"></label>
+                    <input asp-for="Item.QBEditSequence" class="form-control" />
+                    <span asp-validation-for="Item.QBEditSequence" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.QBRequestXml" class="form-label"></label>
+                    <input asp-for="Item.QBRequestXml" class="form-control" />
+                    <span asp-validation-for="Item.QBRequestXml" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.QBResponseXml" class="form-label"></label>
+                    <input asp-for="Item.QBResponseXml" class="form-control" />
+                    <span asp-validation-for="Item.QBResponseXml" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.RetryCount" class="form-label"></label>
+                    <input asp-for="Item.RetryCount" class="form-control" />
+                    <span asp-validation-for="Item.RetryCount" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.MaxRetries" class="form-label"></label>
+                    <input asp-for="Item.MaxRetries" class="form-control" />
+                    <span asp-validation-for="Item.MaxRetries" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.ErrorMessage" class="form-label"></label>
+                    <input asp-for="Item.ErrorMessage" class="form-control" />
+                    <span asp-validation-for="Item.ErrorMessage" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.Priority" class="form-label"></label>
+                    <input asp-for="Item.Priority" class="form-control" />
+                    <span asp-validation-for="Item.Priority" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.ScheduledDate" class="form-label"></label>
+                    <input asp-for="Item.ScheduledDate" class="form-control" />
+                    <span asp-validation-for="Item.ScheduledDate" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.ProcessedDate" class="form-label"></label>
+                    <input asp-for="Item.ProcessedDate" class="form-control" />
+                    <span asp-validation-for="Item.ProcessedDate" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.CreatedDate" class="form-label"></label>
+                    <input asp-for="Item.CreatedDate" class="form-control" />
+                    <span asp-validation-for="Item.CreatedDate" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.CreatedBy" class="form-label"></label>
+                    <input asp-for="Item.CreatedBy" class="form-control" />
+                    <span asp-validation-for="Item.CreatedBy" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.ModifiedDate" class="form-label"></label>
+                    <input asp-for="Item.ModifiedDate" class="form-control" />
+                    <span asp-validation-for="Item.ModifiedDate" class="text-danger"></span>
+                </div>
+                <div class="text-end mt-4">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <a href="/QBSyncQueue" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

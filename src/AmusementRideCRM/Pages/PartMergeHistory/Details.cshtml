@@ -1,0 +1,37 @@
+@page
+@model AmusementRideCRM.Pages.PartMergeHistory.DetailsModel
+@{
+    ViewData["Title"] = "PartMergeHistory Details";
+}
+
+<div class="container-fluid">
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-header bg-surface border-bottom py-3">
+            <h5 class="mb-0 fw-semibold text-primary-custom">PartMergeHistory Details</h5>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">MergeId</dt>
+                <dd class="col-sm-9">@Model.Item.MergeId</dd>
+                <dt class="col-sm-3">SurvivorPartId</dt>
+                <dd class="col-sm-9">@Model.Item.SurvivorPartId</dd>
+                <dt class="col-sm-3">MergedPartId</dt>
+                <dd class="col-sm-9">@Model.Item.MergedPartId</dd>
+                <dt class="col-sm-3">MergedDate</dt>
+                <dd class="col-sm-9">@Model.Item.MergedDate</dd>
+                <dt class="col-sm-3">MergedByUserId</dt>
+                <dd class="col-sm-9">@Model.Item.MergedByUserId</dd>
+                <dt class="col-sm-3">MergedByUserName</dt>
+                <dd class="col-sm-9">@Model.Item.MergedByUserName</dd>
+                <dt class="col-sm-3">MergeDetails</dt>
+                <dd class="col-sm-9">@Model.Item.MergeDetails</dd>
+                <dt class="col-sm-3">Notes</dt>
+                <dd class="col-sm-9">@Model.Item.Notes</dd>
+            </dl>
+        </div>
+        <div class="card-footer bg-light text-end">
+            <a href="/PartMergeHistory/Edit?id=@Model.Item.MergeId" class="btn btn-primary">Edit</a>
+            <a href="/PartMergeHistory" class="btn btn-secondary">Back to List</a>
+        </div>
+    </div>
+</div>

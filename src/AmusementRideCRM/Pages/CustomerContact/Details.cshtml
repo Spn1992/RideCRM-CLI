@@ -1,0 +1,55 @@
+@page
+@model AmusementRideCRM.Pages.CustomerContact.DetailsModel
+@{
+    ViewData["Title"] = "CustomerContact Details";
+}
+
+<div class="container-fluid">
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-header bg-surface border-bottom py-3">
+            <h5 class="mb-0 fw-semibold text-primary-custom">CustomerContact Details</h5>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">ContactId</dt>
+                <dd class="col-sm-9">@Model.Item.ContactId</dd>
+                <dt class="col-sm-3">CustomerId</dt>
+                <dd class="col-sm-9">@Model.Item.CustomerId</dd>
+                <dt class="col-sm-3">FirstName</dt>
+                <dd class="col-sm-9">@Model.Item.FirstName</dd>
+                <dt class="col-sm-3">LastName</dt>
+                <dd class="col-sm-9">@Model.Item.LastName</dd>
+                <dt class="col-sm-3">FullName</dt>
+                <dd class="col-sm-9">@Model.Item.FullName</dd>
+                <dt class="col-sm-3">Title</dt>
+                <dd class="col-sm-9">@Model.Item.Title</dd>
+                <dt class="col-sm-3">Email</dt>
+                <dd class="col-sm-9">@Model.Item.Email</dd>
+                <dt class="col-sm-3">Phone</dt>
+                <dd class="col-sm-9">@Model.Item.Phone</dd>
+                <dt class="col-sm-3">MobilePhone</dt>
+                <dd class="col-sm-9">@Model.Item.MobilePhone</dd>
+                <dt class="col-sm-3">IsPrimary</dt>
+                <dd class="col-sm-9">@Model.Item.IsPrimary</dd>
+                <dt class="col-sm-3">IsActive</dt>
+                <dd class="col-sm-9">@Model.Item.IsActive</dd>
+                <dt class="col-sm-3">Notes</dt>
+                <dd class="col-sm-9">@Model.Item.Notes</dd>
+                <dt class="col-sm-3">CreatedDate</dt>
+                <dd class="col-sm-9">@Model.Item.CreatedDate</dd>
+                <dt class="col-sm-3">CreatedBy</dt>
+                <dd class="col-sm-9">@Model.Item.CreatedBy</dd>
+                <dt class="col-sm-3">ModifiedDate</dt>
+                <dd class="col-sm-9">@Model.Item.ModifiedDate</dd>
+                <dt class="col-sm-3">ModifiedBy</dt>
+                <dd class="col-sm-9">@Model.Item.ModifiedBy</dd>
+                <dt class="col-sm-3">RowVersion</dt>
+                <dd class="col-sm-9">@Model.Item.RowVersion</dd>
+            </dl>
+        </div>
+        <div class="card-footer bg-light text-end">
+            <a href="/CustomerContact/Edit?id=@Model.Item.ContactId" class="btn btn-primary">Edit</a>
+            <a href="/CustomerContact" class="btn btn-secondary">Back to List</a>
+        </div>
+    </div>
+</div>

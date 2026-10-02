@@ -1,0 +1,73 @@
+@page
+@model AmusementRideCRM.Pages.Shipment.DetailsModel
+@{
+    ViewData["Title"] = "Shipment Details";
+}
+
+<div class="container-fluid">
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-header bg-surface border-bottom py-3">
+            <h5 class="mb-0 fw-semibold text-primary-custom">Shipment Details</h5>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">ShipmentId</dt>
+                <dd class="col-sm-9">@Model.Item.ShipmentId</dd>
+                <dt class="col-sm-3">ShipmentNumber</dt>
+                <dd class="col-sm-9">@Model.Item.ShipmentNumber</dd>
+                <dt class="col-sm-3">OrderId</dt>
+                <dd class="col-sm-9">@Model.Item.OrderId</dd>
+                <dt class="col-sm-3">ShipmentDate</dt>
+                <dd class="col-sm-9">@Model.Item.ShipmentDate</dd>
+                <dt class="col-sm-3">ShippedByUserId</dt>
+                <dd class="col-sm-9">@Model.Item.ShippedByUserId</dd>
+                <dt class="col-sm-3">Carrier</dt>
+                <dd class="col-sm-9">@Model.Item.Carrier</dd>
+                <dt class="col-sm-3">ServiceType</dt>
+                <dd class="col-sm-9">@Model.Item.ServiceType</dd>
+                <dt class="col-sm-3">TrackingNumber</dt>
+                <dd class="col-sm-9">@Model.Item.TrackingNumber</dd>
+                <dt class="col-sm-3">ShippingLabelUrl</dt>
+                <dd class="col-sm-9">@Model.Item.ShippingLabelUrl</dd>
+                <dt class="col-sm-3">ShippingCostActual</dt>
+                <dd class="col-sm-9">@Model.Item.ShippingCostActual</dd>
+                <dt class="col-sm-3">ShippingCostBilled</dt>
+                <dd class="col-sm-9">@Model.Item.ShippingCostBilled</dd>
+                <dt class="col-sm-3">ShipToName</dt>
+                <dd class="col-sm-9">@Model.Item.ShipToName</dd>
+                <dt class="col-sm-3">ShipToAddress1</dt>
+                <dd class="col-sm-9">@Model.Item.ShipToAddress1</dd>
+                <dt class="col-sm-3">ShipToAddress2</dt>
+                <dd class="col-sm-9">@Model.Item.ShipToAddress2</dd>
+                <dt class="col-sm-3">ShipToCity</dt>
+                <dd class="col-sm-9">@Model.Item.ShipToCity</dd>
+                <dt class="col-sm-3">ShipToState</dt>
+                <dd class="col-sm-9">@Model.Item.ShipToState</dd>
+                <dt class="col-sm-3">ShipToPostalCode</dt>
+                <dd class="col-sm-9">@Model.Item.ShipToPostalCode</dd>
+                <dt class="col-sm-3">ShipToCountry</dt>
+                <dd class="col-sm-9">@Model.Item.ShipToCountry</dd>
+                <dt class="col-sm-3">Status</dt>
+                <dd class="col-sm-9">@Model.Item.Status</dd>
+                <dt class="col-sm-3">IsInvoiced</dt>
+                <dd class="col-sm-9">@Model.Item.IsInvoiced</dd>
+                <dt class="col-sm-3">Notes</dt>
+                <dd class="col-sm-9">@Model.Item.Notes</dd>
+                <dt class="col-sm-3">CreatedDate</dt>
+                <dd class="col-sm-9">@Model.Item.CreatedDate</dd>
+                <dt class="col-sm-3">CreatedBy</dt>
+                <dd class="col-sm-9">@Model.Item.CreatedBy</dd>
+                <dt class="col-sm-3">ModifiedDate</dt>
+                <dd class="col-sm-9">@Model.Item.ModifiedDate</dd>
+                <dt class="col-sm-3">ModifiedBy</dt>
+                <dd class="col-sm-9">@Model.Item.ModifiedBy</dd>
+                <dt class="col-sm-3">RowVersion</dt>
+                <dd class="col-sm-9">@Model.Item.RowVersion</dd>
+            </dl>
+        </div>
+        <div class="card-footer bg-light text-end">
+            <a href="/Shipment/Edit?id=@Model.Item.ShipmentId" class="btn btn-primary">Edit</a>
+            <a href="/Shipment" class="btn btn-secondary">Back to List</a>
+        </div>
+    </div>
+</div>

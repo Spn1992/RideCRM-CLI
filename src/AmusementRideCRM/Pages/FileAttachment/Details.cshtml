@@ -1,0 +1,45 @@
+@page
+@model AmusementRideCRM.Pages.FileAttachment.DetailsModel
+@{
+    ViewData["Title"] = "FileAttachment Details";
+}
+
+<div class="container-fluid">
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-header bg-surface border-bottom py-3">
+            <h5 class="mb-0 fw-semibold text-primary-custom">FileAttachment Details</h5>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">AttachmentId</dt>
+                <dd class="col-sm-9">@Model.Item.AttachmentId</dd>
+                <dt class="col-sm-3">EntityType</dt>
+                <dd class="col-sm-9">@Model.Item.EntityType</dd>
+                <dt class="col-sm-3">EntityId</dt>
+                <dd class="col-sm-9">@Model.Item.EntityId</dd>
+                <dt class="col-sm-3">FileName</dt>
+                <dd class="col-sm-9">@Model.Item.FileName</dd>
+                <dt class="col-sm-3">FileExtension</dt>
+                <dd class="col-sm-9">@Model.Item.FileExtension</dd>
+                <dt class="col-sm-3">ContentType</dt>
+                <dd class="col-sm-9">@Model.Item.ContentType</dd>
+                <dt class="col-sm-3">FileSizeBytes</dt>
+                <dd class="col-sm-9">@Model.Item.FileSizeBytes</dd>
+                <dt class="col-sm-3">StoragePath</dt>
+                <dd class="col-sm-9">@Model.Item.StoragePath</dd>
+                <dt class="col-sm-3">Description</dt>
+                <dd class="col-sm-9">@Model.Item.Description</dd>
+                <dt class="col-sm-3">UploadedDate</dt>
+                <dd class="col-sm-9">@Model.Item.UploadedDate</dd>
+                <dt class="col-sm-3">UploadedBy</dt>
+                <dd class="col-sm-9">@Model.Item.UploadedBy</dd>
+                <dt class="col-sm-3">IsActive</dt>
+                <dd class="col-sm-9">@Model.Item.IsActive</dd>
+            </dl>
+        </div>
+        <div class="card-footer bg-light text-end">
+            <a href="/FileAttachment/Edit?id=@Model.Item.AttachmentId" class="btn btn-primary">Edit</a>
+            <a href="/FileAttachment" class="btn btn-secondary">Back to List</a>
+        </div>
+    </div>
+</div>

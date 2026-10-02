@@ -1,0 +1,47 @@
+@page
+@model AmusementRideCRM.Pages.CustomerInvoiceLine.DetailsModel
+@{
+    ViewData["Title"] = "CustomerInvoiceLine Details";
+}
+
+<div class="container-fluid">
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-header bg-surface border-bottom py-3">
+            <h5 class="mb-0 fw-semibold text-primary-custom">CustomerInvoiceLine Details</h5>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">InvoiceLineId</dt>
+                <dd class="col-sm-9">@Model.Item.InvoiceLineId</dd>
+                <dt class="col-sm-3">InvoiceId</dt>
+                <dd class="col-sm-9">@Model.Item.InvoiceId</dd>
+                <dt class="col-sm-3">LineNumber</dt>
+                <dd class="col-sm-9">@Model.Item.LineNumber</dd>
+                <dt class="col-sm-3">LineType</dt>
+                <dd class="col-sm-9">@Model.Item.LineType</dd>
+                <dt class="col-sm-3">PartId</dt>
+                <dd class="col-sm-9">@Model.Item.PartId</dd>
+                <dt class="col-sm-3">ShipmentLineId</dt>
+                <dd class="col-sm-9">@Model.Item.ShipmentLineId</dd>
+                <dt class="col-sm-3">Description</dt>
+                <dd class="col-sm-9">@Model.Item.Description</dd>
+                <dt class="col-sm-3">Quantity</dt>
+                <dd class="col-sm-9">@Model.Item.Quantity</dd>
+                <dt class="col-sm-3">UnitPrice</dt>
+                <dd class="col-sm-9">@Model.Item.UnitPrice</dd>
+                <dt class="col-sm-3">LineTotal</dt>
+                <dd class="col-sm-9">@Model.Item.LineTotal</dd>
+                <dt class="col-sm-3">Notes</dt>
+                <dd class="col-sm-9">@Model.Item.Notes</dd>
+                <dt class="col-sm-3">CreatedDate</dt>
+                <dd class="col-sm-9">@Model.Item.CreatedDate</dd>
+                <dt class="col-sm-3">ModifiedDate</dt>
+                <dd class="col-sm-9">@Model.Item.ModifiedDate</dd>
+            </dl>
+        </div>
+        <div class="card-footer bg-light text-end">
+            <a href="/CustomerInvoiceLine/Edit?id=@Model.Item.InvoiceLineId" class="btn btn-primary">Edit</a>
+            <a href="/CustomerInvoiceLine" class="btn btn-secondary">Back to List</a>
+        </div>
+    </div>
+</div>

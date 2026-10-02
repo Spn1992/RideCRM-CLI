@@ -1,0 +1,37 @@
+@page
+@model AmusementRideCRM.Pages.ShipmentLine.DetailsModel
+@{
+    ViewData["Title"] = "ShipmentLine Details";
+}
+
+<div class="container-fluid">
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-header bg-surface border-bottom py-3">
+            <h5 class="mb-0 fw-semibold text-primary-custom">ShipmentLine Details</h5>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">ShipmentLineId</dt>
+                <dd class="col-sm-9">@Model.Item.ShipmentLineId</dd>
+                <dt class="col-sm-3">ShipmentId</dt>
+                <dd class="col-sm-9">@Model.Item.ShipmentId</dd>
+                <dt class="col-sm-3">OrderLineId</dt>
+                <dd class="col-sm-9">@Model.Item.OrderLineId</dd>
+                <dt class="col-sm-3">PartId</dt>
+                <dd class="col-sm-9">@Model.Item.PartId</dd>
+                <dt class="col-sm-3">QuantityShipped</dt>
+                <dd class="col-sm-9">@Model.Item.QuantityShipped</dd>
+                <dt class="col-sm-3">LocationId</dt>
+                <dd class="col-sm-9">@Model.Item.LocationId</dd>
+                <dt class="col-sm-3">Notes</dt>
+                <dd class="col-sm-9">@Model.Item.Notes</dd>
+                <dt class="col-sm-3">CreatedDate</dt>
+                <dd class="col-sm-9">@Model.Item.CreatedDate</dd>
+            </dl>
+        </div>
+        <div class="card-footer bg-light text-end">
+            <a href="/ShipmentLine/Edit?id=@Model.Item.ShipmentLineId" class="btn btn-primary">Edit</a>
+            <a href="/ShipmentLine" class="btn btn-secondary">Back to List</a>
+        </div>
+    </div>
+</div>

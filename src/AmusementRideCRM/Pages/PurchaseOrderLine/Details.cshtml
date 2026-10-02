@@ -1,0 +1,63 @@
+@page
+@model AmusementRideCRM.Pages.PurchaseOrderLine.DetailsModel
+@{
+    ViewData["Title"] = "PurchaseOrderLine Details";
+}
+
+<div class="container-fluid">
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-header bg-surface border-bottom py-3">
+            <h5 class="mb-0 fw-semibold text-primary-custom">PurchaseOrderLine Details</h5>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">POLineId</dt>
+                <dd class="col-sm-9">@Model.Item.POLineId</dd>
+                <dt class="col-sm-3">PurchaseOrderId</dt>
+                <dd class="col-sm-9">@Model.Item.PurchaseOrderId</dd>
+                <dt class="col-sm-3">LineNumber</dt>
+                <dd class="col-sm-9">@Model.Item.LineNumber</dd>
+                <dt class="col-sm-3">PartId</dt>
+                <dd class="col-sm-9">@Model.Item.PartId</dd>
+                <dt class="col-sm-3">VendorPartNumber</dt>
+                <dd class="col-sm-9">@Model.Item.VendorPartNumber</dd>
+                <dt class="col-sm-3">VendorDescription</dt>
+                <dd class="col-sm-9">@Model.Item.VendorDescription</dd>
+                <dt class="col-sm-3">Quantity</dt>
+                <dd class="col-sm-9">@Model.Item.Quantity</dd>
+                <dt class="col-sm-3">QuantityReceived</dt>
+                <dd class="col-sm-9">@Model.Item.QuantityReceived</dd>
+                <dt class="col-sm-3">QuantityOutstanding</dt>
+                <dd class="col-sm-9">@Model.Item.QuantityOutstanding</dd>
+                <dt class="col-sm-3">UnitCostEur</dt>
+                <dd class="col-sm-9">@Model.Item.UnitCostEur</dd>
+                <dt class="col-sm-3">LineTotalEur</dt>
+                <dd class="col-sm-9">@Model.Item.LineTotalEur</dd>
+                <dt class="col-sm-3">RideManufacturer</dt>
+                <dd class="col-sm-9">@Model.Item.RideManufacturer</dd>
+                <dt class="col-sm-3">RideModel</dt>
+                <dd class="col-sm-9">@Model.Item.RideModel</dd>
+                <dt class="col-sm-3">SerialNumber</dt>
+                <dd class="col-sm-9">@Model.Item.SerialNumber</dd>
+                <dt class="col-sm-3">OrderPurpose</dt>
+                <dd class="col-sm-9">@Model.Item.OrderPurpose</dd>
+                <dt class="col-sm-3">SourceOrderId</dt>
+                <dd class="col-sm-9">@Model.Item.SourceOrderId</dd>
+                <dt class="col-sm-3">SourceOrderLineId</dt>
+                <dd class="col-sm-9">@Model.Item.SourceOrderLineId</dd>
+                <dt class="col-sm-3">Notes</dt>
+                <dd class="col-sm-9">@Model.Item.Notes</dd>
+                <dt class="col-sm-3">CreatedDate</dt>
+                <dd class="col-sm-9">@Model.Item.CreatedDate</dd>
+                <dt class="col-sm-3">ModifiedDate</dt>
+                <dd class="col-sm-9">@Model.Item.ModifiedDate</dd>
+                <dt class="col-sm-3">RowVersion</dt>
+                <dd class="col-sm-9">@Model.Item.RowVersion</dd>
+            </dl>
+        </div>
+        <div class="card-footer bg-light text-end">
+            <a href="/PurchaseOrderLine/Edit?id=@Model.Item.POLineId" class="btn btn-primary">Edit</a>
+            <a href="/PurchaseOrderLine" class="btn btn-secondary">Back to List</a>
+        </div>
+    </div>
+</div>

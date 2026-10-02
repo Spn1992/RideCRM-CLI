@@ -1,0 +1,137 @@
+@page
+@model AmusementRideCRM.Pages.UserMaster.EditModel
+@{
+    ViewData["Title"] = "Edit UserMaster";
+}
+
+<div class="container-fluid">
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-header bg-surface border-bottom py-3">
+            <h5 class="mb-0 fw-semibold text-primary-custom">Edit UserMaster</h5>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                <input type="hidden" asp-for="Item.UserId" />
+                <div class="mb-3">
+                    <label asp-for="Item.UserName" class="form-label"></label>
+                    <input asp-for="Item.UserName" class="form-control" />
+                    <span asp-validation-for="Item.UserName" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.NormalizedUserName" class="form-label"></label>
+                    <input asp-for="Item.NormalizedUserName" class="form-control" />
+                    <span asp-validation-for="Item.NormalizedUserName" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.Email" class="form-label"></label>
+                    <input asp-for="Item.Email" class="form-control" />
+                    <span asp-validation-for="Item.Email" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.NormalizedEmail" class="form-label"></label>
+                    <input asp-for="Item.NormalizedEmail" class="form-control" />
+                    <span asp-validation-for="Item.NormalizedEmail" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.PasswordHash" class="form-label"></label>
+                    <input asp-for="Item.PasswordHash" class="form-control" />
+                    <span asp-validation-for="Item.PasswordHash" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.FirstName" class="form-label"></label>
+                    <input asp-for="Item.FirstName" class="form-control" />
+                    <span asp-validation-for="Item.FirstName" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.LastName" class="form-label"></label>
+                    <input asp-for="Item.LastName" class="form-control" />
+                    <span asp-validation-for="Item.LastName" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.DisplayName" class="form-label"></label>
+                    <input asp-for="Item.DisplayName" class="form-control" />
+                    <span asp-validation-for="Item.DisplayName" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.PhoneNumber" class="form-label"></label>
+                    <input asp-for="Item.PhoneNumber" class="form-control" />
+                    <span asp-validation-for="Item.PhoneNumber" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.RoleCode" class="form-label"></label>
+                    <input asp-for="Item.RoleCode" class="form-control" />
+                    <span asp-validation-for="Item.RoleCode" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.IsActive" class="form-label"></label>
+                    <input asp-for="Item.IsActive" class="form-control" />
+                    <span asp-validation-for="Item.IsActive" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.IsLocked" class="form-label"></label>
+                    <input asp-for="Item.IsLocked" class="form-control" />
+                    <span asp-validation-for="Item.IsLocked" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.LockoutEnd" class="form-label"></label>
+                    <input asp-for="Item.LockoutEnd" class="form-control" />
+                    <span asp-validation-for="Item.LockoutEnd" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.FailedLoginAttempts" class="form-label"></label>
+                    <input asp-for="Item.FailedLoginAttempts" class="form-control" />
+                    <span asp-validation-for="Item.FailedLoginAttempts" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.LastLoginDate" class="form-label"></label>
+                    <input asp-for="Item.LastLoginDate" class="form-control" />
+                    <span asp-validation-for="Item.LastLoginDate" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.PasswordChangedDate" class="form-label"></label>
+                    <input asp-for="Item.PasswordChangedDate" class="form-control" />
+                    <span asp-validation-for="Item.PasswordChangedDate" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.RefreshToken" class="form-label"></label>
+                    <input asp-for="Item.RefreshToken" class="form-control" />
+                    <span asp-validation-for="Item.RefreshToken" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.RefreshTokenExpiry" class="form-label"></label>
+                    <input asp-for="Item.RefreshTokenExpiry" class="form-control" />
+                    <span asp-validation-for="Item.RefreshTokenExpiry" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.ProfileImageUrl" class="form-label"></label>
+                    <input asp-for="Item.ProfileImageUrl" class="form-control" />
+                    <span asp-validation-for="Item.ProfileImageUrl" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.CreatedDate" class="form-label"></label>
+                    <input asp-for="Item.CreatedDate" class="form-control" />
+                    <span asp-validation-for="Item.CreatedDate" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.CreatedBy" class="form-label"></label>
+                    <input asp-for="Item.CreatedBy" class="form-control" />
+                    <span asp-validation-for="Item.CreatedBy" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.ModifiedDate" class="form-label"></label>
+                    <input asp-for="Item.ModifiedDate" class="form-control" />
+                    <span asp-validation-for="Item.ModifiedDate" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Item.ModifiedBy" class="form-label"></label>
+                    <input asp-for="Item.ModifiedBy" class="form-control" />
+                    <span asp-validation-for="Item.ModifiedBy" class="text-danger"></span>
+                </div>
+                <div class="text-end mt-4">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <a href="/UserMaster" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

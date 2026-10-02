@@ -1,0 +1,49 @@
+@page
+@model AmusementRideCRM.Pages.ReceivingLine.DetailsModel
+@{
+    ViewData["Title"] = "ReceivingLine Details";
+}
+
+<div class="container-fluid">
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-header bg-surface border-bottom py-3">
+            <h5 class="mb-0 fw-semibold text-primary-custom">ReceivingLine Details</h5>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">ReceivingLineId</dt>
+                <dd class="col-sm-9">@Model.Item.ReceivingLineId</dd>
+                <dt class="col-sm-3">ReceivingId</dt>
+                <dd class="col-sm-9">@Model.Item.ReceivingId</dd>
+                <dt class="col-sm-3">POLineId</dt>
+                <dd class="col-sm-9">@Model.Item.POLineId</dd>
+                <dt class="col-sm-3">PartId</dt>
+                <dd class="col-sm-9">@Model.Item.PartId</dd>
+                <dt class="col-sm-3">QuantityExpected</dt>
+                <dd class="col-sm-9">@Model.Item.QuantityExpected</dd>
+                <dt class="col-sm-3">QuantityReceived</dt>
+                <dd class="col-sm-9">@Model.Item.QuantityReceived</dd>
+                <dt class="col-sm-3">QuantityDamaged</dt>
+                <dd class="col-sm-9">@Model.Item.QuantityDamaged</dd>
+                <dt class="col-sm-3">LocationId</dt>
+                <dd class="col-sm-9">@Model.Item.LocationId</dd>
+                <dt class="col-sm-3">HoldingLocationId</dt>
+                <dd class="col-sm-9">@Model.Item.HoldingLocationId</dd>
+                <dt class="col-sm-3">HasDiscrepancy</dt>
+                <dd class="col-sm-9">@Model.Item.HasDiscrepancy</dd>
+                <dt class="col-sm-3">DiscrepancyNotes</dt>
+                <dd class="col-sm-9">@Model.Item.DiscrepancyNotes</dd>
+                <dt class="col-sm-3">LabelQty</dt>
+                <dd class="col-sm-9">@Model.Item.LabelQty</dd>
+                <dt class="col-sm-3">Notes</dt>
+                <dd class="col-sm-9">@Model.Item.Notes</dd>
+                <dt class="col-sm-3">CreatedDate</dt>
+                <dd class="col-sm-9">@Model.Item.CreatedDate</dd>
+            </dl>
+        </div>
+        <div class="card-footer bg-light text-end">
+            <a href="/ReceivingLine/Edit?id=@Model.Item.ReceivingLineId" class="btn btn-primary">Edit</a>
+            <a href="/ReceivingLine" class="btn btn-secondary">Back to List</a>
+        </div>
+    </div>
+</div>

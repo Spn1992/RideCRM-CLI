@@ -1,0 +1,77 @@
+@page
+@model AmusementRideCRM.Pages.Part.DetailsModel
+@{
+    ViewData["Title"] = "Part Details";
+}
+
+<div class="container-fluid">
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-header bg-surface border-bottom py-3">
+            <h5 class="mb-0 fw-semibold text-primary-custom">Part Details</h5>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">PartId</dt>
+                <dd class="col-sm-9">@Model.Item.PartId</dd>
+                <dt class="col-sm-3">PartNumber</dt>
+                <dd class="col-sm-9">@Model.Item.PartNumber</dd>
+                <dt class="col-sm-3">Description</dt>
+                <dd class="col-sm-9">@Model.Item.Description</dd>
+                <dt class="col-sm-3">DetailedDescription</dt>
+                <dd class="col-sm-9">@Model.Item.DetailedDescription</dd>
+                <dt class="col-sm-3">CategoryCode</dt>
+                <dd class="col-sm-9">@Model.Item.CategoryCode</dd>
+                <dt class="col-sm-3">UnitOfMeasure</dt>
+                <dd class="col-sm-9">@Model.Item.UnitOfMeasure</dd>
+                <dt class="col-sm-3">QuantityOnHand</dt>
+                <dd class="col-sm-9">@Model.Item.QuantityOnHand</dd>
+                <dt class="col-sm-3">ReservedQuantity</dt>
+                <dd class="col-sm-9">@Model.Item.ReservedQuantity</dd>
+                <dt class="col-sm-3">AvailableQuantity</dt>
+                <dd class="col-sm-9">@Model.Item.AvailableQuantity</dd>
+                <dt class="col-sm-3">ReorderPoint</dt>
+                <dd class="col-sm-9">@Model.Item.ReorderPoint</dd>
+                <dt class="col-sm-3">ReorderQuantity</dt>
+                <dd class="col-sm-9">@Model.Item.ReorderQuantity</dd>
+                <dt class="col-sm-3">IsNonStocked</dt>
+                <dd class="col-sm-9">@Model.Item.IsNonStocked</dd>
+                <dt class="col-sm-3">LastVendorCostEur</dt>
+                <dd class="col-sm-9">@Model.Item.LastVendorCostEur</dd>
+                <dt class="col-sm-3">SellingPriceUsd</dt>
+                <dd class="col-sm-9">@Model.Item.SellingPriceUsd</dd>
+                <dt class="col-sm-3">PrimaryLocationId</dt>
+                <dd class="col-sm-9">@Model.Item.PrimaryLocationId</dd>
+                <dt class="col-sm-3">Weight</dt>
+                <dd class="col-sm-9">@Model.Item.Weight</dd>
+                <dt class="col-sm-3">PhotoUrl</dt>
+                <dd class="col-sm-9">@Model.Item.PhotoUrl</dd>
+                <dt class="col-sm-3">IsMerged</dt>
+                <dd class="col-sm-9">@Model.Item.IsMerged</dd>
+                <dt class="col-sm-3">MergedIntoPartId</dt>
+                <dd class="col-sm-9">@Model.Item.MergedIntoPartId</dd>
+                <dt class="col-sm-3">MergedDate</dt>
+                <dd class="col-sm-9">@Model.Item.MergedDate</dd>
+                <dt class="col-sm-3">MergedBy</dt>
+                <dd class="col-sm-9">@Model.Item.MergedBy</dd>
+                <dt class="col-sm-3">QBItemListID</dt>
+                <dd class="col-sm-9">@Model.Item.QBItemListID</dd>
+                <dt class="col-sm-3">IsActive</dt>
+                <dd class="col-sm-9">@Model.Item.IsActive</dd>
+                <dt class="col-sm-3">CreatedDate</dt>
+                <dd class="col-sm-9">@Model.Item.CreatedDate</dd>
+                <dt class="col-sm-3">CreatedBy</dt>
+                <dd class="col-sm-9">@Model.Item.CreatedBy</dd>
+                <dt class="col-sm-3">ModifiedDate</dt>
+                <dd class="col-sm-9">@Model.Item.ModifiedDate</dd>
+                <dt class="col-sm-3">ModifiedBy</dt>
+                <dd class="col-sm-9">@Model.Item.ModifiedBy</dd>
+                <dt class="col-sm-3">RowVersion</dt>
+                <dd class="col-sm-9">@Model.Item.RowVersion</dd>
+            </dl>
+        </div>
+        <div class="card-footer bg-light text-end">
+            <a href="/Part/Edit?id=@Model.Item.PartId" class="btn btn-primary">Edit</a>
+            <a href="/Part" class="btn btn-secondary">Back to List</a>
+        </div>
+    </div>
+</div>

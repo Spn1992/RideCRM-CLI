@@ -1,0 +1,41 @@
+@page
+@model AmusementRideCRM.Pages.SystemConfiguration.DetailsModel
+@{
+    ViewData["Title"] = "SystemConfiguration Details";
+}
+
+<div class="container-fluid">
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-header bg-surface border-bottom py-3">
+            <h5 class="mb-0 fw-semibold text-primary-custom">SystemConfiguration Details</h5>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">ConfigId</dt>
+                <dd class="col-sm-9">@Model.Item.ConfigId</dd>
+                <dt class="col-sm-3">ConfigKey</dt>
+                <dd class="col-sm-9">@Model.Item.ConfigKey</dd>
+                <dt class="col-sm-3">ConfigValue</dt>
+                <dd class="col-sm-9">@Model.Item.ConfigValue</dd>
+                <dt class="col-sm-3">DataType</dt>
+                <dd class="col-sm-9">@Model.Item.DataType</dd>
+                <dt class="col-sm-3">Description</dt>
+                <dd class="col-sm-9">@Model.Item.Description</dd>
+                <dt class="col-sm-3">Category</dt>
+                <dd class="col-sm-9">@Model.Item.Category</dd>
+                <dt class="col-sm-3">IsEditable</dt>
+                <dd class="col-sm-9">@Model.Item.IsEditable</dd>
+                <dt class="col-sm-3">ModifiedDate</dt>
+                <dd class="col-sm-9">@Model.Item.ModifiedDate</dd>
+                <dt class="col-sm-3">ModifiedBy</dt>
+                <dd class="col-sm-9">@Model.Item.ModifiedBy</dd>
+                <dt class="col-sm-3">RowVersion</dt>
+                <dd class="col-sm-9">@Model.Item.RowVersion</dd>
+            </dl>
+        </div>
+        <div class="card-footer bg-light text-end">
+            <a href="/SystemConfiguration/Edit?id=@Model.Item.ConfigId" class="btn btn-primary">Edit</a>
+            <a href="/SystemConfiguration" class="btn btn-secondary">Back to List</a>
+        </div>
+    </div>
+</div>

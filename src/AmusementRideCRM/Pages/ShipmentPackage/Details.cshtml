@@ -1,0 +1,45 @@
+@page
+@model AmusementRideCRM.Pages.ShipmentPackage.DetailsModel
+@{
+    ViewData["Title"] = "ShipmentPackage Details";
+}
+
+<div class="container-fluid">
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-header bg-surface border-bottom py-3">
+            <h5 class="mb-0 fw-semibold text-primary-custom">ShipmentPackage Details</h5>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">PackageId</dt>
+                <dd class="col-sm-9">@Model.Item.PackageId</dd>
+                <dt class="col-sm-3">ShipmentId</dt>
+                <dd class="col-sm-9">@Model.Item.ShipmentId</dd>
+                <dt class="col-sm-3">PackageNumber</dt>
+                <dd class="col-sm-9">@Model.Item.PackageNumber</dd>
+                <dt class="col-sm-3">WeightLbs</dt>
+                <dd class="col-sm-9">@Model.Item.WeightLbs</dd>
+                <dt class="col-sm-3">LengthIn</dt>
+                <dd class="col-sm-9">@Model.Item.LengthIn</dd>
+                <dt class="col-sm-3">WidthIn</dt>
+                <dd class="col-sm-9">@Model.Item.WidthIn</dd>
+                <dt class="col-sm-3">HeightIn</dt>
+                <dd class="col-sm-9">@Model.Item.HeightIn</dd>
+                <dt class="col-sm-3">TrackingNumber</dt>
+                <dd class="col-sm-9">@Model.Item.TrackingNumber</dd>
+                <dt class="col-sm-3">LabelImageUrl</dt>
+                <dd class="col-sm-9">@Model.Item.LabelImageUrl</dd>
+                <dt class="col-sm-3">InsuredValue</dt>
+                <dd class="col-sm-9">@Model.Item.InsuredValue</dd>
+                <dt class="col-sm-3">Notes</dt>
+                <dd class="col-sm-9">@Model.Item.Notes</dd>
+                <dt class="col-sm-3">CreatedDate</dt>
+                <dd class="col-sm-9">@Model.Item.CreatedDate</dd>
+            </dl>
+        </div>
+        <div class="card-footer bg-light text-end">
+            <a href="/ShipmentPackage/Edit?id=@Model.Item.PackageId" class="btn btn-primary">Edit</a>
+            <a href="/ShipmentPackage" class="btn btn-secondary">Back to List</a>
+        </div>
+    </div>
+</div>

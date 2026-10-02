@@ -1,0 +1,53 @@
+@page
+@model AmusementRideCRM.Pages.CustomerOrderLine.DetailsModel
+@{
+    ViewData["Title"] = "CustomerOrderLine Details";
+}
+
+<div class="container-fluid">
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-header bg-surface border-bottom py-3">
+            <h5 class="mb-0 fw-semibold text-primary-custom">CustomerOrderLine Details</h5>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">OrderLineId</dt>
+                <dd class="col-sm-9">@Model.Item.OrderLineId</dd>
+                <dt class="col-sm-3">OrderId</dt>
+                <dd class="col-sm-9">@Model.Item.OrderId</dd>
+                <dt class="col-sm-3">LineNumber</dt>
+                <dd class="col-sm-9">@Model.Item.LineNumber</dd>
+                <dt class="col-sm-3">PartId</dt>
+                <dd class="col-sm-9">@Model.Item.PartId</dd>
+                <dt class="col-sm-3">RideId</dt>
+                <dd class="col-sm-9">@Model.Item.RideId</dd>
+                <dt class="col-sm-3">Quantity</dt>
+                <dd class="col-sm-9">@Model.Item.Quantity</dd>
+                <dt class="col-sm-3">UnitPriceUsd</dt>
+                <dd class="col-sm-9">@Model.Item.UnitPriceUsd</dd>
+                <dt class="col-sm-3">LineTotal</dt>
+                <dd class="col-sm-9">@Model.Item.LineTotal</dd>
+                <dt class="col-sm-3">QuantityReserved</dt>
+                <dd class="col-sm-9">@Model.Item.QuantityReserved</dd>
+                <dt class="col-sm-3">QuantityShipped</dt>
+                <dd class="col-sm-9">@Model.Item.QuantityShipped</dd>
+                <dt class="col-sm-3">QuantityBackordered</dt>
+                <dd class="col-sm-9">@Model.Item.QuantityBackordered</dd>
+                <dt class="col-sm-3">LineStatus</dt>
+                <dd class="col-sm-9">@Model.Item.LineStatus</dd>
+                <dt class="col-sm-3">Notes</dt>
+                <dd class="col-sm-9">@Model.Item.Notes</dd>
+                <dt class="col-sm-3">CreatedDate</dt>
+                <dd class="col-sm-9">@Model.Item.CreatedDate</dd>
+                <dt class="col-sm-3">ModifiedDate</dt>
+                <dd class="col-sm-9">@Model.Item.ModifiedDate</dd>
+                <dt class="col-sm-3">RowVersion</dt>
+                <dd class="col-sm-9">@Model.Item.RowVersion</dd>
+            </dl>
+        </div>
+        <div class="card-footer bg-light text-end">
+            <a href="/CustomerOrderLine/Edit?id=@Model.Item.OrderLineId" class="btn btn-primary">Edit</a>
+            <a href="/CustomerOrderLine" class="btn btn-secondary">Back to List</a>
+        </div>
+    </div>
+</div>
