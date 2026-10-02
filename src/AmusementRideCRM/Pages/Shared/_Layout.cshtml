@@ -11,8 +11,8 @@
 <body class="bg-canvas text-primary-custom d-flex flex-column min-vh-100">
     <div class="d-flex flex-grow-1">
         <!-- Sidebar Navigation -->
-        <nav class="sidebar bg-surface border-end d-flex flex-column py-3 px-2 d-none d-md-flex" style="width: 250px; flex-shrink: 0;">
-            <div class="d-flex align-items-center mb-4 px-3">
+        <nav class="sidebar bg-surface border-end d-flex flex-column py-3 px-2 d-none d-md-flex overflow-auto" style="width: 260px; flex-shrink: 0;">
+            <div class="d-flex align-items-center mb-3 px-3">
                 <i class="bi bi-rocket-takeoff-fill text-primary fs-3 me-2"></i>
                 <span class="fs-5 fw-bold">ApexRide ERP</span>
             </div>
@@ -23,30 +23,114 @@
                         <i class="bi bi-grid-1x2 me-2"></i> Command Center
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="/Orders" class="nav-link @(ViewData["ActivePage"]?.ToString() == "Orders" ? "active" : "text-secondary-custom")">
-                        <i class="bi bi-journal-check me-2"></i> Orders &amp; Quotes
-                    </a>
-                </li>
 
+                <li class="nav-header px-3 pt-2 text-uppercase text-muted fw-bold" style="font-size: 0.75rem; letter-spacing: 0.05em;">CRM</li>
                 <li class="nav-item">
-                    <a href="/Customer" class="nav-link @(ViewData["ActivePage"]?.ToString() == "Customers" ? "active" : "text-secondary-custom")">
+                    <a href="/Customer" class="nav-link py-1 @(ViewData["ActivePage"]?.ToString() == "Customers" ? "active" : "text-secondary-custom")">
                         <i class="bi bi-people me-2"></i> Customers
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="/Part" class="nav-link @(ViewData["ActivePage"]?.ToString() == "Parts" ? "active" : "text-secondary-custom")">
-                        <i class="bi bi-box-seam me-2"></i> Inventory Parts
+                    <a href="/CustomerContact" class="nav-link py-1 @(ViewData["ActivePage"]?.ToString() == "Contacts" ? "active" : "text-secondary-custom")">
+                        <i class="bi bi-person-lines-fill me-2"></i> Contacts
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="/PurchaseOrder" class="nav-link @(ViewData["ActivePage"]?.ToString() == "PurchaseOrders" ? "active" : "text-secondary-custom")">
+                    <a href="/CustomerRide" class="nav-link py-1 @(ViewData["ActivePage"]?.ToString() == "Rides" ? "active" : "text-secondary-custom")">
+                        <i class="bi bi-ticket-detailed me-2"></i> Customer Rides
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/CustomerOrder" class="nav-link py-1 @(ViewData["ActivePage"]?.ToString() == "Orders" ? "active" : "text-secondary-custom")">
+                        <i class="bi bi-journal-check me-2"></i> Orders &amp; Quotes
+                    </a>
+                </li>
+
+                <li class="nav-header px-3 pt-2 text-uppercase text-muted fw-bold" style="font-size: 0.75rem; letter-spacing: 0.05em;">Inventory</li>
+                <li class="nav-item">
+                    <a href="/Part" class="nav-link py-1 @(ViewData["ActivePage"]?.ToString() == "Parts" ? "active" : "text-secondary-custom")">
+                        <i class="bi bi-box-seam me-2"></i> Parts
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/WarehouseLocation" class="nav-link py-1 @(ViewData["ActivePage"]?.ToString() == "WarehouseLocations" ? "active" : "text-secondary-custom")">
+                        <i class="bi bi-building me-2"></i> Warehouse Locations
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/HoldingLocation" class="nav-link py-1 @(ViewData["ActivePage"]?.ToString() == "HoldingLocations" ? "active" : "text-secondary-custom")">
+                        <i class="bi bi-geo-alt me-2"></i> Holding Locations
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/InventoryReservation" class="nav-link py-1 @(ViewData["ActivePage"]?.ToString() == "Reservations" ? "active" : "text-secondary-custom")">
+                        <i class="bi bi-bookmark-check me-2"></i> Reservations
+                    </a>
+                </li>
+
+                <li class="nav-header px-3 pt-2 text-uppercase text-muted fw-bold" style="font-size: 0.75rem; letter-spacing: 0.05em;">Purchasing</li>
+                <li class="nav-item">
+                    <a href="/PurchaseOrder" class="nav-link py-1 @(ViewData["ActivePage"]?.ToString() == "PurchaseOrders" ? "active" : "text-secondary-custom")">
                         <i class="bi bi-cart-check me-2"></i> Purchase Orders
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="/VendorMaster" class="nav-link @(ViewData["ActivePage"]?.ToString() == "Vendors" ? "active" : "text-secondary-custom")">
+                    <a href="/VendorMaster" class="nav-link py-1 @(ViewData["ActivePage"]?.ToString() == "Vendors" ? "active" : "text-secondary-custom")">
                         <i class="bi bi-truck me-2"></i> Vendors
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/VendorInvoice" class="nav-link py-1 @(ViewData["ActivePage"]?.ToString() == "VendorInvoices" ? "active" : "text-secondary-custom")">
+                        <i class="bi bi-receipt me-2"></i> Vendor Invoices
+                    </a>
+                </li>
+
+                <li class="nav-header px-3 pt-2 text-uppercase text-muted fw-bold" style="font-size: 0.75rem; letter-spacing: 0.05em;">Fulfillment</li>
+                <li class="nav-item">
+                    <a href="/ReceivingRecord" class="nav-link py-1 @(ViewData["ActivePage"]?.ToString() == "Receiving" ? "active" : "text-secondary-custom")">
+                        <i class="bi bi-box-arrow-in-down me-2"></i> Receiving
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/Shipment" class="nav-link py-1 @(ViewData["ActivePage"]?.ToString() == "Shipments" ? "active" : "text-secondary-custom")">
+                        <i class="bi bi-box-arrow-up-right me-2"></i> Shipments
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/CustomerInvoice" class="nav-link py-1 @(ViewData["ActivePage"]?.ToString() == "CustomerInvoices" ? "active" : "text-secondary-custom")">
+                        <i class="bi bi-file-earmark-spreadsheet me-2"></i> Customer Invoices
+                    </a>
+                </li>
+
+                <li class="nav-header px-3 pt-2 text-uppercase text-muted fw-bold" style="font-size: 0.75rem; letter-spacing: 0.05em;">System</li>
+                <li class="nav-item">
+                    <a href="/SystemConfiguration" class="nav-link py-1 @(ViewData["ActivePage"]?.ToString() == "SystemConfig" ? "active" : "text-secondary-custom")">
+                        <i class="bi bi-gear me-2"></i> Configuration
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/AuditLog" class="nav-link py-1 @(ViewData["ActivePage"]?.ToString() == "AuditLog" ? "active" : "text-secondary-custom")">
+                        <i class="bi bi-clipboard-data me-2"></i> Audit Log
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/ErrorLogging" class="nav-link py-1 @(ViewData["ActivePage"]?.ToString() == "ErrorLog" ? "active" : "text-secondary-custom")">
+                        <i class="bi bi-exclamation-triangle me-2"></i> Error Log
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/FileAttachment" class="nav-link py-1 @(ViewData["ActivePage"]?.ToString() == "Attachments" ? "active" : "text-secondary-custom")">
+                        <i class="bi bi-paperclip me-2"></i> File Attachments
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/NotificationQueue" class="nav-link py-1 @(ViewData["ActivePage"]?.ToString() == "Notifications" ? "active" : "text-secondary-custom")">
+                        <i class="bi bi-bell-fill me-2"></i> Notifications
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/NumberSequence" class="nav-link py-1 @(ViewData["ActivePage"]?.ToString() == "NumberSequences" ? "active" : "text-secondary-custom")">
+                        <i class="bi bi-hash me-2"></i> Number Sequences
                     </a>
                 </li>
             </ul>

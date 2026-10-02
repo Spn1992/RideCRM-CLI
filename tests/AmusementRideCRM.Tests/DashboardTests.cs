@@ -36,6 +36,18 @@ namespace AmusementRideCRM.Tests
                     new Part { PartId = 3, PartNumber = "P3", Description = "Desc3", UnitOfMeasure = "Ea" }
                 );
 
+                context.PurchaseOrder.AddRange(
+                    new PurchaseOrder { PurchaseOrderId = 1, PONumber = "PO-001", Status = "Draft", Currency = "USD" },
+                    new PurchaseOrder { PurchaseOrderId = 2, PONumber = "PO-002", Status = "Sent", Currency = "USD" },
+                    new PurchaseOrder { PurchaseOrderId = 3, PONumber = "PO-003", Status = "Received", Currency = "USD" },
+                    new PurchaseOrder { PurchaseOrderId = 4, PONumber = "PO-004", Status = "Draft", Currency = "USD" }
+                );
+
+                context.Customer.AddRange(
+                    new Customer { CustomerId = 1, CompanyName = "Six Flags" },
+                    new Customer { CustomerId = 2, CompanyName = "Cedar Point" }
+                );
+
                 context.SaveChanges();
             }
 
@@ -50,6 +62,8 @@ namespace AmusementRideCRM.Tests
                 // Assert
                 Assert.Equal(2, pageModel.OrderCount);
                 Assert.Equal(3, pageModel.PartCount);
+                Assert.Equal(4, pageModel.PurchaseOrderCount);
+                Assert.Equal(2, pageModel.CustomerCount);
             }
         }
     }

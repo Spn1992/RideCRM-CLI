@@ -1,42 +1,77 @@
 @page
 @model AmusementRideCRM.Pages.Part.IndexModel
 @{
-    ViewData["Title"] = "Part List";
+    ViewData["Title"] = "Part Inventory";
+    ViewData["ActivePage"] = "Parts";
 }
 
 <div class="container-fluid">
     <div class="card border-0 shadow-sm rounded-4 mb-4">
         <div class="card-header bg-surface border-bottom d-flex justify-content-between align-items-center py-3">
-            <h5 class="mb-0 fw-semibold text-primary-custom">Part Management</h5>
-            <a href="/Part/Create" class="btn btn-primary btn-sm"><i class="bi bi-plus-lg me-1"></i> Create New</a>
+            <h5 class="mb-0 fw-semibold text-primary-custom">Part Inventory Management</h5>
+            <a href="/Part/Create" class="btn btn-primary btn-sm"><i class="bi bi-plus-lg me-1"></i> Create New Part</a>
         </div>
+        
+        <!-- Search Filter Bar -->
+        <div class="card-body bg-light border-bottom py-3">
+            <form method="get" class="row g-2 align-items-center">
+                <div class="col-md-6 col-lg-4">
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-text bg-white"><i class="bi bi-search text-muted"></i></span>
+                        <input type="text" asp-for="SearchTerm" class="form-control" placeholder="Search by Part Number or Description..." />
+                        @if (!string.IsNullOrEmpty(Model.SearchTerm))
+                        {
+                            <a href="/Part" class="btn btn-outline-secondary">Clear</a>
+                        }
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-sm btn-primary">Search</button>
+                </div>
+            </form>
+        </div>
+
         <div class="card-body p-0">
             <div class="table-responsive">
-                <table class="table table-hover table-custom mb-0">
+                <table class="table table-hover table-custom mb-0 align-middle">
                     <thead class="bg-light">
                         <tr>
                             <th class="ps-4">ID</th>
-                            <th>PartNumber</th>
+                            <th>Part Number</th>
                             <th>Description</th>
-                            <th>DetailedDescription</th>
-                            <th>CategoryCode</th>
+                            <th>Category</th>
+                            <th class="text-end">Qty On Hand</th>
+                            <th class="text-end">Qty Reserved</th>
+                            <th class="text-end">Qty Available</th>
                             <th class="text-end pe-4">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in Model.Items)
+                        @if (Model.Items == null || !Model.Items.Any())
                         {
                             <tr>
-                                <td class="ps-4">@item.PartId</td>
-                                <td>@item.PartNumber</td>
-                                <td>@item.Description</td>
-                                <td>@item.DetailedDescription</td>
-                                <td>@item.CategoryCode</td>
-                                <td class="text-end pe-4">
-                                    <a href="/Part/Details?id=@item.PartId" class="btn btn-sm btn-light"><i class="bi bi-eye"></i></a>
-                                    <a href="/Part/Edit?id=@item.PartId" class="btn btn-sm btn-light"><i class="bi bi-pencil"></i></a>
-                                </td>
+                                <td colspan="8" class="text-center py-4 text-muted">No parts found matching your criteria.</td>
                             </tr>
+                        }
+                        else
+                        {
+                            @foreach (var item in Model.Items)
+                            {
+                                decimal available = item.QuantityOnHand - item.ReservedQuantity;
+                                <tr>
+                                    <td class="ps-4">@item.PartId</td>
+                                    <td><span class="badge bg-light text-dark font-monospace fs-6">@item.PartNumber</span></td>
+                                    <td>@item.Description</td>
+                                    <td>@(string.IsNullOrEmpty(item.CategoryCode) ? "-" : item.CategoryCode)</td>
+                                    <td class="text-end fw-semibold">@item.QuantityOnHand.ToString("N2")</td>
+                                    <td class="text-end text-warning">@item.ReservedQuantity.ToString("N2")</td>
+                                    <td class="text-end text-success fw-bold">@available.ToString("N2")</td>
+                                    <td class="text-end pe-4">
+                                        <a href="/Part/Details?id=@item.PartId" class="btn btn-sm btn-light" title="View Details"><i class="bi bi-eye"></i></a>
+                                        <a href="/Part/Edit?id=@item.PartId" class="btn btn-sm btn-light" title="Edit"><i class="bi bi-pencil"></i></a>
+                                    </td>
+                                </tr>
+                            }
                         }
                     </tbody>
                 </table>
