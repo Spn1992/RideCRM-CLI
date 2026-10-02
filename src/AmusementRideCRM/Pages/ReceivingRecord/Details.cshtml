@@ -1,63 +1,158 @@
 @page
 @model AmusementRideCRM.Pages.ReceivingRecord.DetailsModel
 @{
-    ViewData["Title"] = "ReceivingRecord Details";
+    ViewData["Title"] = "Receiving Record Details";
+    ViewData["ActivePage"] = "Receiving";
 }
 
 <div class="container-fluid">
+    <!-- Header with Receiving Number and Status -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h3 class="mb-0 fw-bold">Receiving Record @Model.Item.ReceivingNumber</h3>
+            <span class="text-muted">PO #: @(Model.PurchaseOrder?.PONumber ?? $"PO #{Model.Item.PurchaseOrderId}") | Date: @Model.Item.ReceivingDate.ToString("yyyy-MM-dd")</span>
+        </div>
+        <div class="d-flex align-items-center gap-2">
+            <span class="badge bg-success fs-6 px-3 py-2">Status: @(string.IsNullOrEmpty(Model.Item.Status) ? "Draft" : Model.Item.Status)</span>
+
+            <form method="post" asp-page-handler="UpdateStatus" asp-route-id="@Model.Item.ReceivingId" class="d-inline-flex gap-1">
+                <select name="status" class="form-select form-select-sm" style="width: auto;">
+                    <option value="Draft" selected="@(Model.Item.Status == "Draft")">Draft</option>
+                    <option value="Received" selected="@(Model.Item.Status == "Received")">Received</option>
+                    <option value="Inspected" selected="@(Model.Item.Status == "Inspected")">Inspected</option>
+                    <option value="Completed" selected="@(Model.Item.Status == "Completed")">Completed</option>
+                </select>
+                <button type="submit" class="btn btn-sm btn-outline-success">Update Status</button>
+            </form>
+
+            <a href="/ReceivingRecord/Edit?id=@Model.Item.ReceivingId" class="btn btn-primary btn-sm"><i class="bi bi-pencil me-1"></i> Edit Record</a>
+            <a href="/ReceivingRecord" class="btn btn-secondary btn-sm"><i class="bi bi-arrow-left me-1"></i> Back to List</a>
+        </div>
+    </div>
+
+    <!-- Receiving Summary Card -->
     <div class="card border-0 shadow-sm rounded-4 mb-4">
         <div class="card-header bg-surface border-bottom py-3">
-            <h5 class="mb-0 fw-semibold text-primary-custom">ReceivingRecord Details</h5>
+            <h5 class="mb-0 fw-semibold text-primary-custom">Receiving Information</h5>
         </div>
         <div class="card-body">
-            <dl class="row">
-                <dt class="col-sm-3">ReceivingId</dt>
-                <dd class="col-sm-9">@Model.Item.ReceivingId</dd>
-                <dt class="col-sm-3">ReceivingNumber</dt>
-                <dd class="col-sm-9">@Model.Item.ReceivingNumber</dd>
-                <dt class="col-sm-3">PurchaseOrderId</dt>
-                <dd class="col-sm-9">@Model.Item.PurchaseOrderId</dd>
-                <dt class="col-sm-3">VendorId</dt>
-                <dd class="col-sm-9">@Model.Item.VendorId</dd>
-                <dt class="col-sm-3">ReceivingDate</dt>
-                <dd class="col-sm-9">@Model.Item.ReceivingDate</dd>
-                <dt class="col-sm-3">ReceivedByUserId</dt>
-                <dd class="col-sm-9">@Model.Item.ReceivedByUserId</dd>
-                <dt class="col-sm-3">WarehouseLocationId</dt>
-                <dd class="col-sm-9">@Model.Item.WarehouseLocationId</dd>
-                <dt class="col-sm-3">CarrierName</dt>
-                <dd class="col-sm-9">@Model.Item.CarrierName</dd>
-                <dt class="col-sm-3">TrackingNumber</dt>
-                <dd class="col-sm-9">@Model.Item.TrackingNumber</dd>
-                <dt class="col-sm-3">PackingSlipNumber</dt>
-                <dd class="col-sm-9">@Model.Item.PackingSlipNumber</dd>
-                <dt class="col-sm-3">Status</dt>
-                <dd class="col-sm-9">@Model.Item.Status</dd>
-                <dt class="col-sm-3">HasDiscrepancy</dt>
-                <dd class="col-sm-9">@Model.Item.HasDiscrepancy</dd>
-                <dt class="col-sm-3">DiscrepancyNotes</dt>
-                <dd class="col-sm-9">@Model.Item.DiscrepancyNotes</dd>
-                <dt class="col-sm-3">Notes</dt>
-                <dd class="col-sm-9">@Model.Item.Notes</dd>
-                <dt class="col-sm-3">LabelsPrinted</dt>
-                <dd class="col-sm-9">@Model.Item.LabelsPrinted</dd>
-                <dt class="col-sm-3">LabelCount</dt>
-                <dd class="col-sm-9">@Model.Item.LabelCount</dd>
-                <dt class="col-sm-3">CreatedDate</dt>
-                <dd class="col-sm-9">@Model.Item.CreatedDate</dd>
-                <dt class="col-sm-3">CreatedBy</dt>
-                <dd class="col-sm-9">@Model.Item.CreatedBy</dd>
-                <dt class="col-sm-3">ModifiedDate</dt>
-                <dd class="col-sm-9">@Model.Item.ModifiedDate</dd>
-                <dt class="col-sm-3">ModifiedBy</dt>
-                <dd class="col-sm-9">@Model.Item.ModifiedBy</dd>
-                <dt class="col-sm-3">RowVersion</dt>
-                <dd class="col-sm-9">@Model.Item.RowVersion</dd>
-            </dl>
+            <div class="row g-3">
+                <div class="col-sm-4">
+                    <span class="text-muted small d-block">Vendor</span>
+                    <span class="fw-semibold">@(Model.Vendor?.VendorName ?? $"Vendor #{Model.Item.VendorId}")</span>
+                </div>
+                <div class="col-sm-4">
+                    <span class="text-muted small d-block">Carrier</span>
+                    <span>@(string.IsNullOrEmpty(Model.Item.CarrierName) ? "N/A" : Model.Item.CarrierName)</span>
+                </div>
+                <div class="col-sm-4">
+                    <span class="text-muted small d-block">Tracking Number</span>
+                    <span>@(string.IsNullOrEmpty(Model.Item.TrackingNumber) ? "N/A" : Model.Item.TrackingNumber)</span>
+                </div>
+                <div class="col-sm-4">
+                    <span class="text-muted small d-block">Packing Slip #</span>
+                    <span>@(string.IsNullOrEmpty(Model.Item.PackingSlipNumber) ? "N/A" : Model.Item.PackingSlipNumber)</span>
+                </div>
+                <div class="col-sm-4">
+                    <span class="text-muted small d-block">Has Discrepancy</span>
+                    <span class="badge @(Model.Item.HasDiscrepancy ? "bg-danger" : "bg-secondary")">@(Model.Item.HasDiscrepancy ? "Yes" : "No")</span>
+                </div>
+                <div class="col-sm-4">
+                    <span class="text-muted small d-block">Discrepancy Notes</span>
+                    <span>@(string.IsNullOrEmpty(Model.Item.DiscrepancyNotes) ? "-" : Model.Item.DiscrepancyNotes)</span>
+                </div>
+            </div>
         </div>
-        <div class="card-footer bg-light text-end">
-            <a href="/ReceivingRecord/Edit?id=@Model.Item.ReceivingId" class="btn btn-primary">Edit</a>
-            <a href="/ReceivingRecord" class="btn btn-secondary">Back to List</a>
+    </div>
+
+    <!-- Receiving Lines Section -->
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-header bg-surface border-bottom d-flex justify-content-between align-items-center py-3">
+            <h5 class="mb-0 fw-semibold text-primary-custom"><i class="bi bi-box-arrow-in-down me-2"></i>Received Line Items</h5>
+            <button class="btn btn-sm btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#addRecLineCollapse">
+                <i class="bi bi-plus-lg me-1"></i> Receive Item
+            </button>
+        </div>
+
+        <!-- Receive Line Item Form -->
+        <div class="collapse p-3 bg-light border-bottom" id="addRecLineCollapse">
+            <form method="post" asp-page-handler="AddLine" asp-route-id="@Model.Item.ReceivingId">
+                <div class="row g-3 align-items-end">
+                    <div class="col-md-3">
+                        <label class="form-label small fw-semibold">Part</label>
+                        <select asp-for="NewLine.PartId" class="form-select form-select-sm" required>
+                            <option value="">-- Select Part --</option>
+                            @foreach (var part in Model.AvailableParts)
+                            {
+                                <option value="@part.PartId">@part.PartNumber - @part.Description (Current Stock: @part.QuantityOnHand)</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label small fw-semibold">PO Line Item (Optional)</label>
+                        <select asp-for="NewLine.POLineId" class="form-select form-select-sm">
+                            <option value="0">-- Select PO Line --</option>
+                            @foreach (var poLine in Model.POLines)
+                            {
+                                <option value="@poLine.POLineId">Line #@poLine.LineNumber (Ordered: @poLine.Quantity, Received: @poLine.QuantityReceived)</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label small fw-semibold">Qty Expected</label>
+                        <input asp-for="NewLine.QuantityExpected" class="form-control form-control-sm" type="number" step="0.01" value="1" required />
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label small fw-semibold">Qty Received</label>
+                        <input asp-for="NewLine.QuantityReceived" class="form-control form-control-sm" type="number" step="0.01" value="1" required />
+                    </div>
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-sm btn-success w-100">Receive Item</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover table-custom mb-0 align-middle">
+                    <thead class="bg-light">
+                        <tr>
+                            <th class="ps-4">ID</th>
+                            <th>Part Number</th>
+                            <th>Description</th>
+                            <th class="text-end">Qty Expected</th>
+                            <th class="text-end">Qty Received</th>
+                            <th class="text-end">Qty Damaged</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (!Model.ReceivingLines.Any())
+                        {
+                            <tr>
+                                <td colspan="7" class="text-center py-4 text-muted">No items received in this record yet. Click 'Receive Item' above.</td>
+                            </tr>
+                        }
+                        else
+                        {
+                            @foreach (var line in Model.ReceivingLines)
+                            {
+                                var part = Model.PartsDict.ContainsKey(line.PartId) ? Model.PartsDict[line.PartId] : null;
+                                <tr>
+                                    <td class="ps-4 fw-semibold">@line.ReceivingLineId</td>
+                                    <td><span class="badge bg-light text-dark font-monospace">@(part?.PartNumber ?? $"Part #{line.PartId}")</span></td>
+                                    <td>@(part?.Description ?? "-")</td>
+                                    <td class="text-end">@line.QuantityExpected.ToString("N2")</td>
+                                    <td class="text-end text-success fw-bold">@line.QuantityReceived.ToString("N2")</td>
+                                    <td class="text-end text-danger">@line.QuantityDamaged.ToString("N2")</td>
+                                    <td class="small text-muted">@(string.IsNullOrEmpty(line.Notes) ? "-" : line.Notes)</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>

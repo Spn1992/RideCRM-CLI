@@ -11,6 +11,8 @@ public class IndexModel : PageModel
 
     public int OrderCount { get; set; }
     public int PartCount { get; set; }
+    public int PurchaseOrderCount { get; set; }
+    public int CustomerCount { get; set; }
 
     public IndexModel(ILogger<IndexModel> logger, ApplicationDbContext context)
     {
@@ -22,5 +24,7 @@ public class IndexModel : PageModel
     {
         OrderCount = _context.CustomerOrder.Count();
         PartCount = _context.Part.Count();
+        PurchaseOrderCount = _context.PurchaseOrder.Count();
+        CustomerCount = _context.Customer.Count();
     }
 }

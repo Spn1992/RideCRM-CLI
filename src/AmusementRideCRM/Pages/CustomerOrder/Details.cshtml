@@ -1,105 +1,204 @@
 @page
 @model AmusementRideCRM.Pages.CustomerOrder.DetailsModel
 @{
-    ViewData["Title"] = "CustomerOrder Details";
+    ViewData["Title"] = "Customer Order Details";
+    ViewData["ActivePage"] = "Orders";
 }
 
 <div class="container-fluid">
+    <!-- Header with Order Number and Status -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h3 class="mb-0 fw-bold">Order @Model.Item.OrderNumber</h3>
+            <span class="text-muted">Type: @Model.Item.OrderType | Created: @Model.Item.OrderDate.ToString("yyyy-MM-dd")</span>
+        </div>
+        <div class="d-flex align-items-center gap-2">
+            <span class="badge bg-primary fs-6 px-3 py-2">Status: @(string.IsNullOrEmpty(Model.Item.Status) ? "Draft" : Model.Item.Status)</span>
+            
+            <form method="post" asp-page-handler="UpdateStatus" asp-route-id="@Model.Item.OrderId" class="d-inline-flex gap-1">
+                <select name="status" class="form-select form-select-sm" style="width: auto;">
+                    <option value="Draft" selected="@(Model.Item.Status == "Draft")">Draft</option>
+                    <option value="Pending" selected="@(Model.Item.Status == "Pending")">Pending</option>
+                    <option value="Confirmed" selected="@(Model.Item.Status == "Confirmed")">Confirmed</option>
+                    <option value="Processing" selected="@(Model.Item.Status == "Processing")">Processing</option>
+                    <option value="Shipped" selected="@(Model.Item.Status == "Shipped")">Shipped</option>
+                    <option value="Completed" selected="@(Model.Item.Status == "Completed")">Completed</option>
+                    <option value="Cancelled" selected="@(Model.Item.Status == "Cancelled")">Cancelled</option>
+                </select>
+                <button type="submit" class="btn btn-sm btn-outline-primary">Update Status</button>
+            </form>
+
+            <a href="/CustomerOrder/Edit?id=@Model.Item.OrderId" class="btn btn-primary btn-sm"><i class="bi bi-pencil me-1"></i> Edit Order</a>
+            <a href="/CustomerOrder" class="btn btn-secondary btn-sm"><i class="bi bi-arrow-left me-1"></i> Back to List</a>
+        </div>
+    </div>
+
+    <div class="row g-4 mb-4">
+        <!-- Order & Customer Summary Card -->
+        <div class="col-12 col-lg-8">
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+                <div class="card-header bg-surface border-bottom py-3">
+                    <h5 class="mb-0 fw-semibold text-primary-custom">Order Information</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-sm-6">
+                            <span class="text-muted small d-block">Customer</span>
+                            <span class="fw-semibold">@(Model.Customer?.CompanyName ?? $"Customer #{Model.Item.CustomerId}")</span>
+                        </div>
+                        <div class="col-sm-6">
+                            <span class="text-muted small d-block">Customer PO #</span>
+                            <span>@(string.IsNullOrEmpty(Model.Item.CustomerPONumber) ? "N/A" : Model.Item.CustomerPONumber)</span>
+                        </div>
+                        <div class="col-sm-6">
+                            <span class="text-muted small d-block">Payment Terms</span>
+                            <span>@(string.IsNullOrEmpty(Model.Item.PaymentTerms) ? "Standard" : Model.Item.PaymentTerms)</span>
+                        </div>
+                        <div class="col-sm-6">
+                            <span class="text-muted small d-block">Shipment Preference</span>
+                            <span>@(string.IsNullOrEmpty(Model.Item.ShipmentPreference) ? "Standard" : Model.Item.ShipmentPreference)</span>
+                        </div>
+                        <div class="col-sm-6">
+                            <span class="text-muted small d-block">Shipping Address</span>
+                            <span>@Model.Item.ShippingAddress1 @Model.Item.ShippingCity @Model.Item.ShippingState @Model.Item.ShippingPostalCode</span>
+                        </div>
+                        <div class="col-sm-6">
+                            <span class="text-muted small d-block">Requested Delivery Date</span>
+                            <span>@(Model.Item.RequestedDeliveryDate.HasValue ? Model.Item.RequestedDeliveryDate.Value.ToString("yyyy-MM-dd") : "N/A")</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Financial Summary Card -->
+        <div class="col-12 col-lg-4">
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+                <div class="card-header bg-surface border-bottom py-3">
+                    <h5 class="mb-0 fw-semibold text-primary-custom">Order Financial Summary</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="text-muted">SubTotal:</span>
+                        <span class="fw-semibold">$@Model.Item.SubTotal.ToString("N2")</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="text-muted">Shipping Charge:</span>
+                        <span>$@Model.Item.ShippingCharge.ToString("N2")</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="text-muted">Rush Charge:</span>
+                        <span>$@Model.Item.RushCharge.ToString("N2")</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="text-muted">Other Charges:</span>
+                        <span>$@Model.Item.OtherCharges.ToString("N2")</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2 text-danger">
+                        <span>Discount:</span>
+                        <span>-$@Model.Item.DiscountAmount.ToString("N2")</span>
+                    </div>
+                    <hr />
+                    <div class="d-flex justify-content-between fs-5 fw-bold">
+                        <span>Total Amount:</span>
+                        <span class="text-primary">$@Model.Item.TotalAmount.ToString("N2")</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Line Items Section (Master-Detail) -->
     <div class="card border-0 shadow-sm rounded-4 mb-4">
-        <div class="card-header bg-surface border-bottom py-3">
-            <h5 class="mb-0 fw-semibold text-primary-custom">CustomerOrder Details</h5>
+        <div class="card-header bg-surface border-bottom d-flex justify-content-between align-items-center py-3">
+            <h5 class="mb-0 fw-semibold text-primary-custom"><i class="bi bi-list-task me-2"></i>Order Line Items</h5>
+            <button class="btn btn-sm btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#addLineCollapse">
+                <i class="bi bi-plus-lg me-1"></i> Add Line Item
+            </button>
         </div>
-        <div class="card-body">
-            <dl class="row">
-                <dt class="col-sm-3">OrderId</dt>
-                <dd class="col-sm-9">@Model.Item.OrderId</dd>
-                <dt class="col-sm-3">OrderNumber</dt>
-                <dd class="col-sm-9">@Model.Item.OrderNumber</dd>
-                <dt class="col-sm-3">OrderType</dt>
-                <dd class="col-sm-9">@Model.Item.OrderType</dd>
-                <dt class="col-sm-3">CustomerId</dt>
-                <dd class="col-sm-9">@Model.Item.CustomerId</dd>
-                <dt class="col-sm-3">ContactId</dt>
-                <dd class="col-sm-9">@Model.Item.ContactId</dd>
-                <dt class="col-sm-3">CustomerPONumber</dt>
-                <dd class="col-sm-9">@Model.Item.CustomerPONumber</dd>
-                <dt class="col-sm-3">BillingAddress1</dt>
-                <dd class="col-sm-9">@Model.Item.BillingAddress1</dd>
-                <dt class="col-sm-3">BillingAddress2</dt>
-                <dd class="col-sm-9">@Model.Item.BillingAddress2</dd>
-                <dt class="col-sm-3">BillingCity</dt>
-                <dd class="col-sm-9">@Model.Item.BillingCity</dd>
-                <dt class="col-sm-3">BillingState</dt>
-                <dd class="col-sm-9">@Model.Item.BillingState</dd>
-                <dt class="col-sm-3">BillingPostalCode</dt>
-                <dd class="col-sm-9">@Model.Item.BillingPostalCode</dd>
-                <dt class="col-sm-3">BillingCountry</dt>
-                <dd class="col-sm-9">@Model.Item.BillingCountry</dd>
-                <dt class="col-sm-3">ShippingAddress1</dt>
-                <dd class="col-sm-9">@Model.Item.ShippingAddress1</dd>
-                <dt class="col-sm-3">ShippingAddress2</dt>
-                <dd class="col-sm-9">@Model.Item.ShippingAddress2</dd>
-                <dt class="col-sm-3">ShippingCity</dt>
-                <dd class="col-sm-9">@Model.Item.ShippingCity</dd>
-                <dt class="col-sm-3">ShippingState</dt>
-                <dd class="col-sm-9">@Model.Item.ShippingState</dd>
-                <dt class="col-sm-3">ShippingPostalCode</dt>
-                <dd class="col-sm-9">@Model.Item.ShippingPostalCode</dd>
-                <dt class="col-sm-3">ShippingCountry</dt>
-                <dd class="col-sm-9">@Model.Item.ShippingCountry</dd>
-                <dt class="col-sm-3">OrderDate</dt>
-                <dd class="col-sm-9">@Model.Item.OrderDate</dd>
-                <dt class="col-sm-3">RequestedDeliveryDate</dt>
-                <dd class="col-sm-9">@Model.Item.RequestedDeliveryDate</dd>
-                <dt class="col-sm-3">PaymentTerms</dt>
-                <dd class="col-sm-9">@Model.Item.PaymentTerms</dd>
-                <dt class="col-sm-3">ShipmentPreference</dt>
-                <dd class="col-sm-9">@Model.Item.ShipmentPreference</dd>
-                <dt class="col-sm-3">Status</dt>
-                <dd class="col-sm-9">@Model.Item.Status</dd>
-                <dt class="col-sm-3">HoldingLocationId</dt>
-                <dd class="col-sm-9">@Model.Item.HoldingLocationId</dd>
-                <dt class="col-sm-3">QuoteExpirationDate</dt>
-                <dd class="col-sm-9">@Model.Item.QuoteExpirationDate</dd>
-                <dt class="col-sm-3">QuotePricingLanguage</dt>
-                <dd class="col-sm-9">@Model.Item.QuotePricingLanguage</dd>
-                <dt class="col-sm-3">ConvertedToOrderDate</dt>
-                <dd class="col-sm-9">@Model.Item.ConvertedToOrderDate</dd>
-                <dt class="col-sm-3">OriginalQuoteId</dt>
-                <dd class="col-sm-9">@Model.Item.OriginalQuoteId</dd>
-                <dt class="col-sm-3">SubTotal</dt>
-                <dd class="col-sm-9">@Model.Item.SubTotal</dd>
-                <dt class="col-sm-3">ShippingCharge</dt>
-                <dd class="col-sm-9">@Model.Item.ShippingCharge</dd>
-                <dt class="col-sm-3">RushCharge</dt>
-                <dd class="col-sm-9">@Model.Item.RushCharge</dd>
-                <dt class="col-sm-3">DiscountAmount</dt>
-                <dd class="col-sm-9">@Model.Item.DiscountAmount</dd>
-                <dt class="col-sm-3">OtherCharges</dt>
-                <dd class="col-sm-9">@Model.Item.OtherCharges</dd>
-                <dt class="col-sm-3">TotalAmount</dt>
-                <dd class="col-sm-9">@Model.Item.TotalAmount</dd>
-                <dt class="col-sm-3">CustomerNotes</dt>
-                <dd class="col-sm-9">@Model.Item.CustomerNotes</dd>
-                <dt class="col-sm-3">InternalNotes</dt>
-                <dd class="col-sm-9">@Model.Item.InternalNotes</dd>
-                <dt class="col-sm-3">QBInvoiceTxnID</dt>
-                <dd class="col-sm-9">@Model.Item.QBInvoiceTxnID</dd>
-                <dt class="col-sm-3">CreatedDate</dt>
-                <dd class="col-sm-9">@Model.Item.CreatedDate</dd>
-                <dt class="col-sm-3">CreatedBy</dt>
-                <dd class="col-sm-9">@Model.Item.CreatedBy</dd>
-                <dt class="col-sm-3">ModifiedDate</dt>
-                <dd class="col-sm-9">@Model.Item.ModifiedDate</dd>
-                <dt class="col-sm-3">ModifiedBy</dt>
-                <dd class="col-sm-9">@Model.Item.ModifiedBy</dd>
-                <dt class="col-sm-3">RowVersion</dt>
-                <dd class="col-sm-9">@Model.Item.RowVersion</dd>
-            </dl>
+
+        <!-- Add Line Item Collapse Form -->
+        <div class="collapse p-3 bg-light border-bottom" id="addLineCollapse">
+            <form method="post" asp-page-handler="AddLine" asp-route-id="@Model.Item.OrderId">
+                <div class="row g-3 align-items-end">
+                    <div class="col-md-4">
+                        <label class="form-label small fw-semibold">Part</label>
+                        <select asp-for="NewLine.PartId" class="form-select form-select-sm" required>
+                            <option value="">-- Select Part --</option>
+                            @foreach (var part in Model.AvailableParts)
+                            {
+                                <option value="@part.PartId">@part.PartNumber - @part.Description ($@part.SellingPriceUsd?.ToString("N2"))</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label small fw-semibold">Quantity</label>
+                        <input asp-for="NewLine.Quantity" class="form-control form-control-sm" type="number" step="0.01" value="1" required />
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label small fw-semibold">Unit Price ($)</label>
+                        <input asp-for="NewLine.UnitPriceUsd" class="form-control form-control-sm" type="number" step="0.01" value="0.00" required />
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label small fw-semibold">Notes</label>
+                        <input asp-for="NewLine.Notes" class="form-control form-control-sm" placeholder="Line notes" />
+                    </div>
+                    <div class="col-md-1">
+                        <button type="submit" class="btn btn-sm btn-success w-100">Add</button>
+                    </div>
+                </div>
+            </form>
         </div>
-        <div class="card-footer bg-light text-end">
-            <a href="/CustomerOrder/Edit?id=@Model.Item.OrderId" class="btn btn-primary">Edit</a>
-            <a href="/CustomerOrder" class="btn btn-secondary">Back to List</a>
+
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover table-custom mb-0 align-middle">
+                    <thead class="bg-light">
+                        <tr>
+                            <th class="ps-4" style="width: 70px;">Line #</th>
+                            <th>Part Number</th>
+                            <th>Description</th>
+                            <th class="text-end">Quantity</th>
+                            <th class="text-end">Unit Price</th>
+                            <th class="text-end">Line Total</th>
+                            <th>Status</th>
+                            <th>Notes</th>
+                            <th class="text-end pe-4">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (!Model.OrderLines.Any())
+                        {
+                            <tr>
+                                <td colspan="9" class="text-center py-4 text-muted">No line items added yet. Click 'Add Line Item' above.</td>
+                            </tr>
+                        }
+                        else
+                        {
+                            @foreach (var line in Model.OrderLines)
+                            {
+                                var part = Model.PartsDict.ContainsKey(line.PartId) ? Model.PartsDict[line.PartId] : null;
+                                decimal lineTotalVal = line.Quantity * line.UnitPriceUsd;
+                                <tr>
+                                    <td class="ps-4 fw-semibold">@line.LineNumber</td>
+                                    <td><span class="badge bg-light text-dark font-monospace">@(part?.PartNumber ?? $"Part #{line.PartId}")</span></td>
+                                    <td>@(part?.Description ?? "-")</td>
+                                    <td class="text-end">@line.Quantity.ToString("N2")</td>
+                                    <td class="text-end">$@line.UnitPriceUsd.ToString("N2")</td>
+                                    <td class="text-end fw-semibold">$@lineTotalVal.ToString("N2")</td>
+                                    <td><span class="badge bg-secondary">@(string.IsNullOrEmpty(line.LineStatus) ? "Open" : line.LineStatus)</span></td>
+                                    <td class="small text-muted">@(string.IsNullOrEmpty(line.Notes) ? "-" : line.Notes)</td>
+                                    <td class="text-end pe-4">
+                                        <form method="post" asp-page-handler="DeleteLine" asp-route-id="@Model.Item.OrderId" asp-route-lineId="@line.OrderLineId" class="d-inline" onsubmit="return confirm('Delete this line item?');">
+                                            <button type="submit" class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
