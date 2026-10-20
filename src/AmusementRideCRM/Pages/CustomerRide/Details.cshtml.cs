@@ -1,8 +1,10 @@
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using AmusementRideCRM.Models;
-using System.Threading.Tasks;
+using AmusementRideCRM.Services;
 
 namespace AmusementRideCRM.Pages.CustomerRide
 {
@@ -16,6 +18,8 @@ namespace AmusementRideCRM.Pages.CustomerRide
         }
 
         public AmusementRideCRM.Models.CustomerRide Item { get; set; } = default!;
+        public AmusementRideCRM.Models.Customer Customer { get; set; }
+        public List<SerializedPartUnit> InstalledComponents { get; set; } = new();
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
@@ -25,6 +29,14 @@ namespace AmusementRideCRM.Pages.CustomerRide
                 return NotFound();
             }
             Item = item;
+
+            if (Item.CustomerId > 0)
+            {
+                Customer = await _context.Customer.FirstOrDefaultAsync(c => c.CustomerId == Item.CustomerId);
+            }
+
+            InstalledComponents = await SerializedPartService.GetRideComponentHistoryAsync(_context, id);
+
             return Page();
         }
     }
