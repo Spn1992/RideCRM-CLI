@@ -26,7 +26,7 @@ namespace AmusementRideCRM.Pages.Part
         {
             if (_context.Part != null)
             {
-                var query = _context.Part.AsQueryable();
+                var query = _context.Part.Where(p => !p.IsMerged);
 
                 if (!string.IsNullOrWhiteSpace(SearchTerm))
                 {

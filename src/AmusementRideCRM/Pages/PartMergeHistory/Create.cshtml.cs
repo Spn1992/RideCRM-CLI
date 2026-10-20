@@ -1,17 +1,18 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using AmusementRideCRM.Models;
+using AmusementRideCRM.Services;
 using System.Threading.Tasks;
 
 namespace AmusementRideCRM.Pages.PartMergeHistory
 {
     public class CreateModel : PageModel
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IPartMergeService _partMergeService;
 
-        public CreateModel(ApplicationDbContext context)
+        public CreateModel(IPartMergeService partMergeService)
         {
-            _context = context;
+            _partMergeService = partMergeService;
         }
 
         [BindProperty]
@@ -25,8 +26,28 @@ namespace AmusementRideCRM.Pages.PartMergeHistory
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid) return Page();
-            _context.PartMergeHistory.Add(Item);
-            await _context.SaveChangesAsync();
+
+            if (Item.SurvivorPartId == Item.MergedPartId)
+            {
+                ModelState.AddModelError(string.Empty, "Survivor part ID and Merged part ID cannot be the same.");
+                return Page();
+            }
+
+            var result = await _partMergeService.ExecuteMergeAsync(
+                Item.SurvivorPartId,
+                Item.MergedPartId,
+                Item.MergedByUserName,
+                Item.Notes,
+                Item.MergedByUserId,
+                Item.MergeDetails
+            );
+
+            if (!result.Success)
+            {
+                ModelState.AddModelError(string.Empty, result.ErrorMessage ?? "Failed to perform part merge.");
+                return Page();
+            }
+
             return RedirectToPage("./Index");
         }
     }

@@ -1,10 +1,12 @@
 using Microsoft.EntityFrameworkCore;
 using AmusementRideCRM.Models;
+using AmusementRideCRM.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddScoped<IPartMergeService, PartMergeService>();
 
 // Configure EF Core with In-Memory Database for testing/mocking
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
