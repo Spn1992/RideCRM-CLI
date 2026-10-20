@@ -2,13 +2,17 @@ using Microsoft.EntityFrameworkCore;
 using SoapCore;
 using AmusementRideCRM.Models;
 using AmusementRideCRM.Services;
+using AmusementRideCRM.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<IAuditUserProvider, AuditUserProvider>();
 builder.Services.AddScoped<IOrderExceptionValidationService, OrderExceptionValidationService>();
 builder.Services.AddScoped<ICurrencyExchangeService, CurrencyExchangeService>();
+builder.Services.AddScoped<IVendorInvoiceVarianceService, VendorInvoiceVarianceService>();
 
 // Configure EF Core with In-Memory Database for testing/mocking
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -67,6 +71,8 @@ using (var scope = app.Services.CreateScope())
 }
 
 // Configure the HTTP request pipeline.
+app.UseMiddleware<GlobalExceptionMiddleware>();
+
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");

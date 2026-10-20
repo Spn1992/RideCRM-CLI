@@ -1,3 +1,6 @@
+using System;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using AmusementRideCRM.Models;
@@ -16,10 +19,19 @@ namespace AmusementRideCRM.Pages.VendorInvoice
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
             _currencyExchangeService = currencyExchangeService ?? throw new ArgumentNullException(nameof(currencyExchangeService));
+        private readonly IVendorInvoiceVarianceService _varianceService;
+
+        public CreateModel(ApplicationDbContext context, IVendorInvoiceVarianceService varianceService)
+        {
+            _context = context;
+            _varianceService = varianceService;
         }
 
         [BindProperty]
         public AmusementRideCRM.Models.VendorInvoice Item { get; set; } = new();
+
+        [BindProperty]
+        public IFormFile? UploadedFile { get; set; }
 
         public async Task<IActionResult> OnGetAsync()
         {
@@ -48,6 +60,9 @@ namespace AmusementRideCRM.Pages.VendorInvoice
             Item.FreightUsd = freightUsd;
             Item.TotalUsd = totalUsd;
 
+            Item.InvoiceDate = DateTime.Today;
+            Item.DueDate = DateTime.Today.AddDays(30);
+            Item.Currency = "EUR";
             return Page();
         }
 
@@ -81,10 +96,29 @@ namespace AmusementRideCRM.Pages.VendorInvoice
             {
                 Item.UploadedDate = DateTime.UtcNow;
             }
+            if (UploadedFile != null && UploadedFile.Length > 0)
+            {
+                var processedInvoice = await _varianceService.ProcessUploadedInvoiceAsync(
+                    UploadedFile,
+                    Item.VendorId,
+                    Item.PurchaseOrderId,
+                    User?.Identity?.Name ?? "Admin");
+
+                return RedirectToPage("./Details", new { id = processedInvoice.VendorInvoiceId });
+            }
+
+            if (!ModelState.IsValid) return Page();
+
+            Item.CreatedDate = DateTime.UtcNow;
+            Item.CreatedBy = User?.Identity?.Name ?? "Admin";
+            Item.UploadedDate = DateTime.UtcNow;
 
             _context.VendorInvoice.Add(Item);
             await _context.SaveChangesAsync();
-            return RedirectToPage("./Index");
+
+            await _varianceService.EvaluateInvoiceVariancesAsync(Item.VendorInvoiceId);
+
+            return RedirectToPage("./Details", new { id = Item.VendorInvoiceId });
         }
     }
 }

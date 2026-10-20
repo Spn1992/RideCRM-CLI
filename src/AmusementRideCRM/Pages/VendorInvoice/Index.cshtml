@@ -1,41 +1,85 @@
 @page
 @model AmusementRideCRM.Pages.VendorInvoice.IndexModel
 @{
-    ViewData["Title"] = "VendorInvoice List";
+    ViewData["Title"] = "Vendor Invoices & Review Gate";
 }
 
-<div class="container-fluid">
+<div class="container-fluid py-3">
     <div class="card border-0 shadow-sm rounded-4 mb-4">
-        <div class="card-header bg-surface border-bottom d-flex justify-content-between align-items-center py-3">
-            <h5 class="mb-0 fw-semibold text-primary-custom">VendorInvoice Management</h5>
-            <a href="/VendorInvoice/Create" class="btn btn-primary btn-sm"><i class="bi bi-plus-lg me-1"></i> Create New</a>
+        <div class="card-header bg-surface border-bottom d-flex justify-content-between align-items-center py-3 px-4">
+            <div>
+                <h5 class="mb-0 fw-semibold text-primary-custom"><i class="bi bi-file-earmark-diff me-2"></i>Vendor Invoice Management & Review Gate</h5>
+                <small class="text-muted">Upload invoices, monitor cost variance shifts (> 5%), and approve pending gate reviews</small>
+            </div>
+            <a href="/VendorInvoice/Create" class="btn btn-primary"><i class="bi bi-cloud-upload me-1"></i> Upload & Create Invoice</a>
         </div>
         <div class="card-body p-0">
             <div class="table-responsive">
-                <table class="table table-hover table-custom mb-0">
-                    <thead class="bg-light">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
                         <tr>
                             <th class="ps-4">ID</th>
-                            <th>InvoiceNumber</th>
-                            <th>InvoiceDate</th>
-                            <th>DueDate</th>
-                            <th>Currency</th>
+                            <th>Invoice Number</th>
+                            <th>Invoice Date</th>
+                            <th>Vendor ID</th>
+                            <th>PO ID</th>
+                            <th class="text-end">Total (€)</th>
+                            <th class="text-center">Status</th>
+                            <th class="text-center">Review Gate</th>
                             <th class="text-end pe-4">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in Model.Items)
+                        @if (Model.Items != null && Model.Items.Any())
+                        {
+                            @foreach (var item in Model.Items)
+                            {
+                                <tr class="@(item.Status == "Pending Review" ? "table-warning" : "")">
+                                    <td class="ps-4 fw-bold">#@item.VendorInvoiceId</td>
+                                    <td class="fw-semibold">@item.InvoiceNumber</td>
+                                    <td>@item.InvoiceDate?.ToString("yyyy-MM-dd")</td>
+                                    <td>@(item.VendorId?.ToString() ?? "N/A")</td>
+                                    <td>@(item.PurchaseOrderId?.ToString() ?? "N/A")</td>
+                                    <td class="text-end fw-bold">€@((item.TotalEur ?? 0m).ToString("F2"))</td>
+                                    <td class="text-center">
+                                        @if (item.Status == "Pending Review")
+                                        {
+                                            <span class="badge bg-danger shadow-sm"><i class="bi bi-exclamation-triangle-fill me-1"></i>Pending Review</span>
+                                        }
+                                        else if (item.Status == "Approved")
+                                        {
+                                            <span class="badge bg-success shadow-sm"><i class="bi bi-check-circle-fill me-1"></i>Approved</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-secondary">@item.Status</span>
+                                        }
+                                    </td>
+                                    <td class="text-center">
+                                        @if (item.HasDiscrepancy)
+                                        {
+                                            <span class="badge bg-warning text-dark"><i class="bi bi-shield-exclamation me-1"></i>Cost Shift > 5%</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-light text-success border border-success"><i class="bi bi-shield-check me-1"></i>Verified</span>
+                                        }
+                                    </td>
+                                    <td class="text-end pe-4">
+                                        <a href="/VendorInvoice/Details?id=@item.VendorInvoiceId" class="btn btn-sm btn-primary" title="Review Split-Screen Viewer">
+                                            <i class="bi bi-layout-split me-1"></i> Review
+                                        </a>
+                                        <a href="/VendorInvoice/Edit?id=@item.VendorInvoiceId" class="btn btn-sm btn-outline-secondary">
+                                            <i class="bi bi-pencil"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
                         {
                             <tr>
-                                <td class="ps-4">@item.VendorInvoiceId</td>
-                                <td>@item.InvoiceNumber</td>
-                                <td>@item.InvoiceDate</td>
-                                <td>@item.DueDate</td>
-                                <td>@item.Currency</td>
-                                <td class="text-end pe-4">
-                                    <a href="/VendorInvoice/Details?id=@item.VendorInvoiceId" class="btn btn-sm btn-light"><i class="bi bi-eye"></i></a>
-                                    <a href="/VendorInvoice/Edit?id=@item.VendorInvoiceId" class="btn btn-sm btn-light"><i class="bi bi-pencil"></i></a>
-                                </td>
+                                <td colspan="9" class="text-center text-muted p-4">No vendor invoices found.</td>
                             </tr>
                         }
                     </tbody>

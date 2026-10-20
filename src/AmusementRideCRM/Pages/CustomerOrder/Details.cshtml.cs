@@ -13,11 +13,16 @@ namespace AmusementRideCRM.Pages.CustomerOrder
     {
         private readonly ApplicationDbContext _context;
         private readonly IOrderExceptionValidationService _validationService;
+        private readonly IInventoryReservationService _inventoryService;
 
-        public DetailsModel(ApplicationDbContext context, IOrderExceptionValidationService validationService)
+        public DetailsModel(
+            ApplicationDbContext context,
+            IOrderExceptionValidationService validationService,
+            IInventoryReservationService inventoryService)
         {
             _context = context;
             _validationService = validationService;
+            _inventoryService = inventoryService;
         }
 
         public AmusementRideCRM.Models.CustomerOrder Item { get; set; } = default!;
@@ -123,6 +128,9 @@ namespace AmusementRideCRM.Pages.CustomerOrder
 
             _context.CustomerOrderLine.Add(NewLine);
             await _context.SaveChangesAsync();
+
+            // Reserve inventory and route deficit to purchasing queue
+            await _inventoryService.ReserveForCustomerOrderLineAsync(NewLine.OrderLineId, User?.Identity?.Name ?? "SalesRep");
 
             // Recalculate Order totals
             var allLines = await _context.CustomerOrderLine.Where(l => l.OrderId == id).ToListAsync();
