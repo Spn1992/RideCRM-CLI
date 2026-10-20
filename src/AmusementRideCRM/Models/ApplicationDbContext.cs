@@ -57,6 +57,24 @@ public class ApplicationDbContext : DbContext
         modelBuilder.Entity<WarehouseLocation>().HasKey(e => e.LocationId);
         modelBuilder.Entity<HoldingLocation>().HasKey(e => e.HoldingLocationId);
         modelBuilder.Entity<Part>().HasKey(e => e.PartId);
+        modelBuilder.Entity<Part>()
+            .Property(p => p.AvailableQuantity)
+            .HasComputedColumnSql("QuantityOnHand - ReservedQuantity", stored: true);
+        modelBuilder.Entity<Part>()
+            .Property(p => p.RowVersion)
+            .IsRowVersion();
+
+        modelBuilder.Entity<InventoryReservation>()
+            .Property(r => r.RowVersion)
+            .IsRowVersion();
+
+        modelBuilder.Entity<PurchasingQueueItem>()
+            .Property(q => q.RowVersion)
+            .IsRowVersion();
+
+        modelBuilder.Entity<CustomerOrderLine>()
+            .Property(l => l.RowVersion)
+            .IsRowVersion();
         modelBuilder.Entity<VendorSource>().HasKey(e => e.VendorSourceId);
         modelBuilder.Entity<PartRideApplication>().HasKey(e => e.PartRideAppId);
         modelBuilder.Entity<CustomerOrder>().HasKey(e => e.OrderId);
