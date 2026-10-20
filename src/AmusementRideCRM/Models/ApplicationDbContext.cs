@@ -42,10 +42,12 @@ public class ApplicationDbContext : DbContext
     public DbSet<NumberSequence> NumberSequence { get; set; }
     public DbSet<SerializedPartUnit> SerializedPartUnit { get; set; }
     public DbSet<ZplPrintJob> ZplPrintJob { get; set; }
+    public DbSet<CurrencyExchangeRate> CurrencyExchangeRate { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+        modelBuilder.Entity<CurrencyExchangeRate>().HasKey(e => e.CurrencyExchangeRateId);
         modelBuilder.Entity<UserMaster>().HasKey(e => e.UserId);
         modelBuilder.Entity<ErrorLogging>().HasKey(e => e.ErrorLogId);
         modelBuilder.Entity<AuditLog>().HasKey(e => e.AuditLogId);

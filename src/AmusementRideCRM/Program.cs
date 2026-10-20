@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddScoped<IOrderExceptionValidationService, OrderExceptionValidationService>();
+builder.Services.AddScoped<ICurrencyExchangeService, CurrencyExchangeService>();
 
 // Configure EF Core with In-Memory Database for testing/mocking
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -52,6 +53,14 @@ using (var scope = app.Services.CreateScope())
         context.Part.AddRange(
             new Part { PartId = 1, PartNumber = "P-100", Description = "Widget A", UnitOfMeasure = "Ea" },
             new Part { PartId = 2, PartNumber = "P-101", Description = "Widget B", UnitOfMeasure = "Ea" }
+        );
+        context.SaveChanges();
+    }
+
+    if (!context.CurrencyExchangeRate.Any())
+    {
+        context.CurrencyExchangeRate.AddRange(
+            new CurrencyExchangeRate { SourceCurrency = "EUR", TargetCurrency = "USD", ExchangeRate = 1.08m, EffectiveDate = DateTime.UtcNow.AddYears(-1), CreatedDate = DateTime.UtcNow, CreatedBy = "System" }
         );
         context.SaveChanges();
     }

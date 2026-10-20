@@ -63,8 +63,37 @@
                 </div>
                 <div class="mb-3">
                     <label asp-for="Item.TotalEur" class="form-label"></label>
-                    <input asp-for="Item.TotalEur" class="form-control" />
+                    <input asp-for="Item.TotalEur" class="form-control" id="totalEurInput" />
                     <span asp-validation-for="Item.TotalEur" class="text-danger"></span>
+                </div>
+                <div class="card bg-light p-3 mb-3 border">
+                    <h6 class="fw-bold mb-3 text-secondary">Exchange Rate Snapshot & USD Mirror</h6>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Item.ExchangeRate" class="form-label">Exchange Rate (USD per foreign unit)</label>
+                            <input asp-for="Item.ExchangeRate" class="form-control" id="exchangeRateInput" step="0.0001" />
+                            <span asp-validation-for="Item.ExchangeRate" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Item.ExchangeRateDate" class="form-label">Exchange Rate Snapshot Date</label>
+                            <input asp-for="Item.ExchangeRateDate" class="form-control" type="date" />
+                            <span asp-validation-for="Item.ExchangeRateDate" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 mb-2">
+                            <label asp-for="Item.SubTotalUsd" class="form-label">SubTotal (USD)</label>
+                            <input asp-for="Item.SubTotalUsd" class="form-control" id="subTotalUsdInput" readonly />
+                        </div>
+                        <div class="col-md-4 mb-2">
+                            <label asp-for="Item.FreightUsd" class="form-label">Freight (USD)</label>
+                            <input asp-for="Item.FreightUsd" class="form-control" id="freightUsdInput" readonly />
+                        </div>
+                        <div class="col-md-4 mb-2">
+                            <label asp-for="Item.TotalUsd" class="form-label">Total (USD)</label>
+                            <input asp-for="Item.TotalUsd" class="form-control" id="totalUsdInput" readonly />
+                        </div>
+                    </div>
                 </div>
                 <div class="mb-3">
                     <label asp-for="Item.VendorNotes" class="form-label"></label>
@@ -109,3 +138,40 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const subTotalEur = document.querySelector('input[name="Item.SubTotalEur"]');
+            const freightEur = document.querySelector('input[name="Item.FreightEur"]');
+            const totalEur = document.querySelector('input[name="Item.TotalEur"]');
+            const exchangeRate = document.querySelector('input[name="Item.ExchangeRate"]');
+
+            const subTotalUsd = document.querySelector('input[name="Item.SubTotalUsd"]');
+            const freightUsd = document.querySelector('input[name="Item.FreightUsd"]');
+            const totalUsd = document.querySelector('input[name="Item.TotalUsd"]');
+
+            function recalculateUsd() {
+                const rate = parseFloat(exchangeRate?.value) || 1.0;
+                const sub = parseFloat(subTotalEur?.value) || 0.0;
+                const freight = parseFloat(freightEur?.value) || 0.0;
+                let tot = parseFloat(totalEur?.value);
+                if (isNaN(tot)) {
+                    tot = sub + freight;
+                }
+
+                if (subTotalUsd) subTotalUsd.value = (sub * rate).toFixed(2);
+                if (freightUsd) freightUsd.value = (freight * rate).toFixed(2);
+                if (totalUsd) totalUsd.value = (tot * rate).toFixed(2);
+            }
+
+            [subTotalEur, freightEur, totalEur, exchangeRate].forEach(el => {
+                if (el) {
+                    el.addEventListener("input", recalculateUsd);
+                    el.addEventListener("change", recalculateUsd);
+                }
+            });
+            recalculateUsd();
+        });
+    </script>
+}
