@@ -148,6 +148,9 @@
                             <th class="ps-4" style="width: 70px;">Line #</th>
                             <th>Part Number</th>
                             <th>Vendor Part #</th>
+                            <th>Ride Mfg / Model</th>
+                            <th>Serial #</th>
+                            <th>Source Line ID</th>
                             <th class="text-end">Qty Ordered</th>
                             <th class="text-end">Qty Received</th>
                             <th class="text-end">Qty Outstanding</th>
@@ -160,7 +163,7 @@
                         @if (!Model.POLines.Any())
                         {
                             <tr>
-                                <td colspan="9" class="text-center py-4 text-muted">No PO line items added yet. Click 'Add Line Item' above.</td>
+                                <td colspan="12" class="text-center py-4 text-muted">No PO line items added yet. Click 'Add Line Item' above.</td>
                             </tr>
                         }
                         else
@@ -174,6 +177,12 @@
                                     <td class="ps-4 fw-semibold">@line.LineNumber</td>
                                     <td><span class="badge bg-light text-dark font-monospace">@(part?.PartNumber ?? $"Part #{line.PartId}")</span></td>
                                     <td>@(string.IsNullOrEmpty(line.VendorPartNumber) ? "-" : line.VendorPartNumber)</td>
+                                    <td>
+                                        <span class="fw-semibold">@(string.IsNullOrEmpty(line.RideManufacturer) ? "-" : line.RideManufacturer)</span>
+                                        <span class="text-muted small">/ @(string.IsNullOrEmpty(line.RideModel) ? "N/A" : line.RideModel)</span>
+                                    </td>
+                                    <td>@(string.IsNullOrEmpty(line.SerialNumber) ? "-" : line.SerialNumber)</td>
+                                    <td>@(line.SourceOrderLineId.HasValue ? $"#{line.SourceOrderLineId.Value}" : "-")</td>
                                     <td class="text-end">@line.Quantity.ToString("N2")</td>
                                     <td class="text-end text-success fw-semibold">@line.QuantityReceived.ToString("N2")</td>
                                     <td class="text-end text-warning fw-semibold">@outstandingVal.ToString("N2")</td>

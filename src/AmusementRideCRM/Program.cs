@@ -12,6 +12,7 @@ builder.Services.AddHttpClient();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IAuditUserProvider, AuditUserProvider>();
 builder.Services.AddScoped<IOrderExceptionValidationService, OrderExceptionValidationService>();
+builder.Services.AddScoped<IPurchasingQueueAggregationService, PurchasingQueueAggregationService>();
 builder.Services.AddScoped<IShippingService, UpsShippingService>();
 builder.Services.AddScoped<IPartMergeService, PartMergeService>();
 builder.Services.AddScoped<ICurrencyExchangeService, CurrencyExchangeService>();
