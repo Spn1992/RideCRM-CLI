@@ -110,7 +110,7 @@ namespace AmusementRideCRM.Tests
 
                 // Stock increased from 10 to 20
                 Assert.Equal(20m, part.QuantityOnHand);
-                Assert.Equal("18", part.AvailableQuantity); // 20 on hand - 2 reserved = 18
+                Assert.Equal(18m, part.AvailableQuantity); // 20 on hand - 2 reserved = 18
 
                 // PO Line updated
                 Assert.Equal(10m, poLine.QuantityReceived);
