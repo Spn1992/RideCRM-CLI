@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddScoped<IOrderExceptionValidationService, OrderExceptionValidationService>();
+builder.Services.AddScoped<IPurchasingQueueAggregationService, PurchasingQueueAggregationService>();
 
 // Configure EF Core with In-Memory Database for testing/mocking
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
