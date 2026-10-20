@@ -1,18 +1,21 @@
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using AmusementRideCRM.Models;
-using System.Threading.Tasks;
+using AmusementRideCRM.Services;
 
 namespace AmusementRideCRM.Pages.VendorInvoice
 {
     public class EditModel : PageModel
     {
         private readonly ApplicationDbContext _context;
+        private readonly IVendorInvoiceVarianceService _varianceService;
 
-        public EditModel(ApplicationDbContext context)
+        public EditModel(ApplicationDbContext context, IVendorInvoiceVarianceService varianceService)
         {
             _context = context;
+            _varianceService = varianceService;
         }
 
         [BindProperty]
@@ -29,9 +32,14 @@ namespace AmusementRideCRM.Pages.VendorInvoice
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid) return Page();
+
+            Item.ModifiedDate = System.DateTime.UtcNow;
             _context.Attach(Item).State = EntityState.Modified;
             await _context.SaveChangesAsync();
-            return RedirectToPage("./Index");
+
+            await _varianceService.EvaluateInvoiceVariancesAsync(Item.VendorInvoiceId);
+
+            return RedirectToPage("./Details", new { id = Item.VendorInvoiceId });
         }
     }
 }
