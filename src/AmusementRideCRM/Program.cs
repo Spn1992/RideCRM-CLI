@@ -7,7 +7,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddHttpClient();
 builder.Services.AddScoped<IOrderExceptionValidationService, OrderExceptionValidationService>();
+builder.Services.AddScoped<IShippingService, UpsShippingService>();
 
 // Configure EF Core with In-Memory Database for testing/mocking
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -32,7 +34,12 @@ using (var scope = app.Services.CreateScope())
         context.SystemConfiguration.AddRange(
             new SystemConfiguration { ConfigKey = "MinimumGrossMargin", ConfigValue = "0.20", DataType = "Decimal", Description = "Minimum Gross Margin Threshold (20%)", Category = "Pricing", IsEditable = true },
             new SystemConfiguration { ConfigKey = "EuroConversionFactor", ConfigValue = "1.10", DataType = "Decimal", Description = "EUR to USD conversion factor", Category = "Pricing", IsEditable = true },
-            new SystemConfiguration { ConfigKey = "PricingMarkup", ConfigValue = "1.40", DataType = "Decimal", Description = "Markup multiplier", Category = "Pricing", IsEditable = true }
+            new SystemConfiguration { ConfigKey = "PricingMarkup", ConfigValue = "1.40", DataType = "Decimal", Description = "Markup multiplier", Category = "Pricing", IsEditable = true },
+            new SystemConfiguration { ConfigKey = "UPS_ClientId", ConfigValue = "MOCK_CLIENT_ID", DataType = "String", Description = "UPS REST OAuth Client ID", Category = "Shipping", IsEditable = true },
+            new SystemConfiguration { ConfigKey = "UPS_ClientSecret", ConfigValue = "MOCK_CLIENT_SECRET", DataType = "String", Description = "UPS REST OAuth Client Secret", Category = "Shipping", IsEditable = true },
+            new SystemConfiguration { ConfigKey = "UPS_AccountNumber", ConfigValue = "A12345", DataType = "String", Description = "UPS Shipper Account Number", Category = "Shipping", IsEditable = true },
+            new SystemConfiguration { ConfigKey = "UPS_BaseUrl", ConfigValue = "https://wwwcie.ups.com", DataType = "String", Description = "UPS REST Base URL", Category = "Shipping", IsEditable = true },
+            new SystemConfiguration { ConfigKey = "UPS_ApiTimeoutSeconds", ConfigValue = "10", DataType = "Integer", Description = "UPS REST API Timeout in seconds", Category = "Shipping", IsEditable = true }
         );
         context.SaveChanges();
     }
