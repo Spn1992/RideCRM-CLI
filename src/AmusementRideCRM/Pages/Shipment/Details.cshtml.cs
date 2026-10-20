@@ -172,6 +172,9 @@ namespace AmusementRideCRM.Pages.Shipment
             NewPackage.CreatedDate = DateTime.UtcNow;
 
             _context.ShipmentPackage.Add(NewPackage);
+            // Decrement part stock quantities
+            part.QuantityOnHand = Math.Max(0, part.QuantityOnHand - NewLine.QuantityShipped);
+            part.ModifiedDate = DateTime.UtcNow;
             await _context.SaveChangesAsync();
 
             return RedirectToPage(new { id });

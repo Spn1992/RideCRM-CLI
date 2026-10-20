@@ -18,5 +18,6 @@ public interface IQbXmlSerializer
     string BuildCustomerAddRq(Customer customer, int requestId = 1);
     string BuildInvoiceAddRq(CustomerInvoice invoice, List<CustomerInvoiceLine> lines, Customer customer, int requestId = 1);
     string BuildBillAddRq(VendorInvoice bill, List<VendorInvoiceLine> lines, VendorMaster vendor, int requestId = 1);
+    string BuildPurchaseOrderAddRq(PurchaseOrder po, List<PurchaseOrderLine> lines, VendorMaster vendor, int requestId = 1);
     QbXmlResponseResult ParseResponseXml(string xmlResponse);
 }

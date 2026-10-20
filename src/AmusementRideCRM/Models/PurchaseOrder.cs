@@ -14,6 +14,11 @@ public class PurchaseOrder
     public decimal SubTotalEur { get; set; }
     public decimal FreightEur { get; set; }
     public string? TotalEur { get; set; }
+    public decimal? ExchangeRate { get; set; }
+    public DateTime? ExchangeRateDate { get; set; }
+    public decimal? SubTotalUsd { get; set; }
+    public decimal? FreightUsd { get; set; }
+    public decimal? TotalUsd { get; set; }
     public string? VendorNotes { get; set; }
     public string? InternalNotes { get; set; }
     public string? QBPOTxnID { get; set; }
