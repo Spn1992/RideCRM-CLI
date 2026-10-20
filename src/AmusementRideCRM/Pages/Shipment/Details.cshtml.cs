@@ -152,7 +152,6 @@ namespace AmusementRideCRM.Pages.Shipment
             part.QuantityOnHand = Math.Max(0, part.QuantityOnHand - NewLine.QuantityShipped);
             part.ModifiedDate = DateTime.UtcNow;
             await _context.SaveChangesAsync();
-
             return RedirectToPage(new { id });
         }
 
