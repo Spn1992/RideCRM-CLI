@@ -1,3 +1,4 @@
+#nullable enable
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using AmusementRideCRM.Models;
@@ -18,6 +19,9 @@ namespace AmusementRideCRM.Pages.ReceivingLine
         [BindProperty]
         public AmusementRideCRM.Models.ReceivingLine Item { get; set; } = default!;
 
+        [BindProperty]
+        public string? SupervisorUsername { get; set; }
+
         public IActionResult OnGet()
         {
             return Page();
@@ -30,8 +34,22 @@ namespace AmusementRideCRM.Pages.ReceivingLine
             _context.ReceivingLine.Add(Item);
             await _context.SaveChangesAsync();
 
-            // Process Receiving Line: update Part stock levels & PO line receiving progress
-            await ReceivingWorkflow.ProcessReceivingLineAsync(_context, Item);
+            try
+            {
+                // Process Receiving Line: update Part stock levels, PO line receiving progress, discrepancy gates, holding bin allocations
+                await ReceivingWorkflow.ProcessReceivingLineAsync(
+                    _context,
+                    Item,
+                    user: User.Identity?.Name,
+                    supervisorUsername: SupervisorUsername,
+                    discrepancyNotes: Item.DiscrepancyNotes,
+                    isSupervisorApproved: !string.IsNullOrWhiteSpace(SupervisorUsername));
+            }
+            catch (System.Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, ex.Message);
+                return Page();
+            }
 
             return RedirectToPage("./Index");
         }
