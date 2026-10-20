@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using AmusementRideCRM.Models;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace AmusementRideCRM.Pages.Part
@@ -16,6 +18,7 @@ namespace AmusementRideCRM.Pages.Part
         }
 
         public AmusementRideCRM.Models.Part Item { get; set; } = default!;
+        public List<SerializedPartUnit> SerializedUnits { get; set; } = new();
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
@@ -25,6 +28,16 @@ namespace AmusementRideCRM.Pages.Part
                 return NotFound();
             }
             Item = item;
+
+            if (Item.IsSerialized)
+            {
+                SerializedUnits = await _context.SerializedPartUnit
+                    .Include(u => u.CustomerRide)
+                    .Where(u => u.PartId == id)
+                    .OrderByDescending(u => u.CreatedDate)
+                    .ToListAsync();
+            }
+
             return Page();
         }
     }

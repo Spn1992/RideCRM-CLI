@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -8,12 +9,39 @@ namespace AmusementRideCRM.Services
 {
     public static class ReceivingWorkflow
     {
-        public static async Task ProcessReceivingLineAsync(ApplicationDbContext context, ReceivingLine receivingLine)
+        public static async Task ProcessReceivingLineAsync(
+            ApplicationDbContext context,
+            ReceivingLine receivingLine,
+            List<string>? serialNumbers = null,
+            string? user = null)
         {
             if (receivingLine == null || receivingLine.QuantityReceived <= 0) return;
 
-            // 1. Update Part Stock Levels
             var part = await context.Part.FirstOrDefaultAsync(p => p.PartId == receivingLine.PartId);
+
+            // If part is serialized, validate and process serial numbers
+            if (part != null && part.IsSerialized)
+            {
+                var validSerials = serialNumbers?
+                    .Where(s => !string.IsNullOrWhiteSpace(s))
+                    .Select(s => s.Trim())
+                    .ToList() ?? new List<string>();
+
+                if (validSerials.Count != (int)receivingLine.QuantityReceived)
+                {
+                    throw new InvalidOperationException($"Part {part.PartNumber} is serialized. Exactly {(int)receivingLine.QuantityReceived} serial number(s) must be provided, but {validSerials.Count} were supplied.");
+                }
+
+                await SerializedPartService.ReceiveSerializedUnitsAsync(
+                    context,
+                    part.PartId,
+                    receivingLine.ReceivingId,
+                    receivingLine.ReceivingLineId,
+                    validSerials,
+                    user ?? "System");
+            }
+
+            // 1. Update Part Stock Levels
             if (part != null)
             {
                 part.QuantityOnHand += receivingLine.QuantityReceived;

@@ -84,7 +84,7 @@
                             <option value="">-- Select Part --</option>
                             @foreach (var part in Model.AvailableParts)
                             {
-                                <option value="@part.PartId">@part.PartNumber - @part.Description (Current Stock: @part.QuantityOnHand)</option>
+                                <option value="@part.PartId">@part.PartNumber - @part.Description @(part.IsSerialized ? "[SERIALIZED]" : "")</option>
                             }
                         </select>
                     </div>
@@ -108,6 +108,10 @@
                     </div>
                     <div class="col-md-2">
                         <button type="submit" class="btn btn-sm btn-success w-100">Receive Item</button>
+                    </div>
+                    <div class="col-12 mt-2">
+                        <label class="form-label small fw-semibold">Serial Numbers (If Serialized Part - one per line or comma separated)</label>
+                        <textarea asp-for="SerialNumbersInput" class="form-control form-control-sm" rows="2" placeholder="e.g. SN-001, SN-002"></textarea>
                     </div>
                 </div>
             </form>
@@ -155,4 +159,78 @@
             </div>
         </div>
     </div>
+
+    @if (Model.SerializedUnits.Any())
+    {
+        <!-- Serialized Part Units Card -->
+        <div class="card border-0 shadow-sm rounded-4 mb-4">
+            <div class="card-header bg-surface border-bottom py-3">
+                <h5 class="mb-0 fw-semibold text-primary-custom"><i class="bi bi-qr-code me-2"></i>Serialized Units Received</h5>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0 align-middle">
+                        <thead class="bg-light">
+                            <tr>
+                                <th class="ps-4">Unit ID</th>
+                                <th>Part Number</th>
+                                <th>Serial Number</th>
+                                <th>Status</th>
+                                <th>Received Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var unit in Model.SerializedUnits)
+                            {
+                                <tr>
+                                    <td class="ps-4 fw-semibold">@unit.SerializedPartUnitId</td>
+                                    <td><span class="badge bg-light text-dark font-monospace">@(unit.Part?.PartNumber ?? $"Part #{unit.PartId}")</span></td>
+                                    <td><span class="badge bg-secondary font-monospace">@unit.SerialNumber</span></td>
+                                    <td><span class="badge bg-info text-dark">@unit.Status</span></td>
+                                    <td>@unit.ReceivedDate?.ToString("yyyy-MM-dd HH:mm")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+
+    @if (Model.PrintJobs.Any())
+    {
+        <!-- Spooled ZPL Print Jobs Card -->
+        <div class="card border-0 shadow-sm rounded-4 mb-4">
+            <div class="card-header bg-surface border-bottom py-3">
+                <h5 class="mb-0 fw-semibold text-primary-custom"><i class="bi bi-printer me-2"></i>Spooled ZPL Barcode Print Jobs</h5>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0 align-middle">
+                        <thead class="bg-light">
+                            <tr>
+                                <th class="ps-4">Job ID</th>
+                                <th>Printer</th>
+                                <th>Status</th>
+                                <th>Created Date</th>
+                                <th>ZPL Preview</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var job in Model.PrintJobs)
+                            {
+                                <tr>
+                                    <td class="ps-4 fw-semibold">@job.PrintJobId</td>
+                                    <td>@job.PrinterName</td>
+                                    <td><span class="badge bg-success">@job.Status</span></td>
+                                    <td>@job.CreatedDate.ToString("yyyy-MM-dd HH:mm")</td>
+                                    <td><code class="small text-muted">@job.ZplCommand.Replace("\r", "").Replace("\n", " ")</code></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
 </div>

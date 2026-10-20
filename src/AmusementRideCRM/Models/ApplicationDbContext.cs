@@ -40,6 +40,8 @@ public class ApplicationDbContext : DbContext
     public DbSet<NotificationQueue> NotificationQueue { get; set; }
     public DbSet<FileAttachment> FileAttachment { get; set; }
     public DbSet<NumberSequence> NumberSequence { get; set; }
+    public DbSet<SerializedPartUnit> SerializedPartUnit { get; set; }
+    public DbSet<ZplPrintJob> ZplPrintJob { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -78,5 +80,35 @@ public class ApplicationDbContext : DbContext
         modelBuilder.Entity<NotificationQueue>().HasKey(e => e.NotificationId);
         modelBuilder.Entity<FileAttachment>().HasKey(e => e.AttachmentId);
         modelBuilder.Entity<NumberSequence>().HasNoKey();
+        modelBuilder.Entity<SerializedPartUnit>().HasKey(e => e.SerializedPartUnitId);
+        modelBuilder.Entity<SerializedPartUnit>()
+            .HasIndex(u => new { u.PartId, u.SerialNumber })
+            .IsUnique();
+        modelBuilder.Entity<SerializedPartUnit>()
+            .HasOne(u => u.Part)
+            .WithMany()
+            .HasForeignKey(u => u.PartId);
+        modelBuilder.Entity<SerializedPartUnit>()
+            .HasOne(u => u.CustomerRide)
+            .WithMany()
+            .HasForeignKey(u => u.RideId);
+        modelBuilder.Entity<SerializedPartUnit>()
+            .HasOne(u => u.ReceivingRecord)
+            .WithMany()
+            .HasForeignKey(u => u.ReceivingId);
+        modelBuilder.Entity<SerializedPartUnit>()
+            .HasOne(u => u.Shipment)
+            .WithMany()
+            .HasForeignKey(u => u.ShipmentId);
+
+        modelBuilder.Entity<ZplPrintJob>().HasKey(e => e.PrintJobId);
+        modelBuilder.Entity<ZplPrintJob>()
+            .HasOne(j => j.Part)
+            .WithMany()
+            .HasForeignKey(j => j.PartId);
+        modelBuilder.Entity<ZplPrintJob>()
+            .HasOne(j => j.SerializedPartUnit)
+            .WithMany()
+            .HasForeignKey(j => j.SerializedPartUnitId);
     }
 }

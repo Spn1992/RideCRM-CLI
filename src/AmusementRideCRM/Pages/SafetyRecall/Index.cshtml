@@ -1,0 +1,118 @@
+@page
+@model AmusementRideCRM.Pages.SafetyRecall.IndexModel
+@{
+    ViewData["Title"] = "Safety Recall & Warranty Trace Report";
+    ViewData["ActivePage"] = "Recall";
+}
+
+<div class="container-fluid">
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-header bg-surface border-bottom py-3">
+            <h5 class="mb-0 fw-semibold text-danger"><i class="bi bi-exclamation-triangle me-2"></i>Safety Recall & Warranty Trace Query</h5>
+        </div>
+
+        <div class="card-body bg-light border-bottom py-3">
+            <form method="get" class="row g-3 align-items-end">
+                <div class="col-md-3">
+                    <label class="form-label small fw-semibold">Part Number</label>
+                    <input type="text" asp-for="PartNumber" class="form-control form-control-sm" placeholder="e.g. PART-101" />
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label small fw-semibold">Serial Number / Pattern</label>
+                    <input type="text" asp-for="SerialNumber" class="form-control form-control-sm" placeholder="e.g. SN-100" />
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label small fw-semibold">Warranty Start From</label>
+                    <input type="date" asp-for="WarrantyStartFrom" class="form-control form-control-sm" />
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label small fw-semibold">Warranty Start To</label>
+                    <input type="date" asp-for="WarrantyStartTo" class="form-control form-control-sm" />
+                </div>
+                <div class="col-md-2 d-flex gap-2">
+                    <button type="submit" class="btn btn-sm btn-danger w-100"><i class="bi bi-search me-1"></i> Search Recall</button>
+                    <a href="/SafetyRecall" class="btn btn-sm btn-outline-secondary">Reset</a>
+                </div>
+                <div class="col-12">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" asp-for="ActiveWarrantyOnly" id="activeWarrantyCheck">
+                        <label class="form-check-label small" for="activeWarrantyCheck">
+                            Show Active Warranties Only
+                        </label>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0 align-middle">
+                    <thead class="bg-light">
+                        <tr>
+                            <th class="ps-4">Unit ID</th>
+                            <th>Part Number</th>
+                            <th>Part Description</th>
+                            <th>Serial Number</th>
+                            <th>Customer Ride Location</th>
+                            <th>Installation Date</th>
+                            <th>Warranty End Date</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.RecallResults == null || !Model.RecallResults.Any())
+                        {
+                            <tr>
+                                <td colspan="9" class="text-center py-4 text-muted">No serialized part units match the search criteria.</td>
+                            </tr>
+                        }
+                        else
+                        {
+                            @foreach (var unit in Model.RecallResults)
+                            {
+                                var isExpired = unit.WarrantyEndDate.HasValue && unit.WarrantyEndDate.Value < DateTime.UtcNow;
+                                <tr>
+                                    <td class="ps-4 fw-semibold">@unit.SerializedPartUnitId</td>
+                                    <td><span class="badge bg-light text-dark font-monospace">@(unit.Part?.PartNumber ?? $"Part #{unit.PartId}")</span></td>
+                                    <td>@(unit.Part?.Description ?? "-")</td>
+                                    <td><span class="badge bg-danger font-monospace">@unit.SerialNumber</span></td>
+                                    <td>
+                                        @if (unit.CustomerRide != null)
+                                        {
+                                            <a href="/CustomerRide/Details?id=@unit.RideId" class="fw-semibold text-decoration-none">
+                                                @unit.CustomerRide.RideManufacturer @unit.CustomerRide.RideModel (S/N: @unit.CustomerRide.SerialNumber)
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">In Warehouse Inventory</span>
+                                        }
+                                    </td>
+                                    <td>@(unit.ShippedDate?.ToString("yyyy-MM-dd") ?? unit.ReceivedDate?.ToString("yyyy-MM-dd") ?? "-")</td>
+                                    <td>
+                                        @if (unit.WarrantyEndDate.HasValue)
+                                        {
+                                            <span class="badge @(isExpired ? "bg-secondary" : "bg-success")">@unit.WarrantyEndDate.Value.ToString("yyyy-MM-dd") @(isExpired ? "(Expired)" : "(Active)")</span>
+                                        }
+                                        else
+                                        {
+                                            <span>-</span>
+                                        }
+                                    </td>
+                                    <td><span class="badge bg-info text-dark">@unit.Status</span></td>
+                                    <td>
+                                        @if (unit.RideId.HasValue)
+                                        {
+                                            <a href="/CustomerRide/Details?id=@unit.RideId" class="btn btn-sm btn-outline-primary" title="View Customer Ride"><i class="bi bi-eye"></i> View Ride</a>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
