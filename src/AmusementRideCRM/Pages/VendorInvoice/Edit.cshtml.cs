@@ -19,6 +19,7 @@ namespace AmusementRideCRM.Pages.VendorInvoice
             ApplicationDbContext context,
             ICurrencyExchangeService currencyExchangeService,
             IVendorInvoiceVarianceService varianceService)
+        public EditModel(ApplicationDbContext context, ICurrencyExchangeService currencyExchangeService, IVendorInvoiceVarianceService varianceService)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
             _currencyExchangeService = currencyExchangeService ?? throw new ArgumentNullException(nameof(currencyExchangeService));
