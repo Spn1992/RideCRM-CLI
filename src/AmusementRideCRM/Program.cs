@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using SoapCore;
 using AmusementRideCRM.Models;
 using AmusementRideCRM.Services;
 
@@ -11,6 +12,13 @@ builder.Services.AddScoped<IOrderExceptionValidationService, OrderExceptionValid
 // Configure EF Core with In-Memory Database for testing/mocking
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseInMemoryDatabase("AmusementRideCRM"));
+
+// Register SoapCore & QB Sync services
+builder.Services.AddSoapCore();
+builder.Services.AddSingleton<IQBSessionManager, QBSessionManager>();
+builder.Services.AddScoped<IQbXmlSerializer, QbXmlSerializer>();
+builder.Services.AddScoped<IQBSyncQueueService, QBSyncQueueService>();
+builder.Services.AddScoped<IQBWebConnectorSvc, QBWebConnectorSvc>();
 
 var app = builder.Build();
 
@@ -59,6 +67,11 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseRouting();
 app.UseAuthorization();
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.UseSoapEndpoint<IQBWebConnectorSvc>("/QBWebConnectorSvc.asmx", new SoapEncoderOptions(), SoapSerializer.XmlSerializer);
+});
 
 // Serve static files
 app.UseStaticFiles();
