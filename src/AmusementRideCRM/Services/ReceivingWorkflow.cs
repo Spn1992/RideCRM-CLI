@@ -45,7 +45,6 @@ namespace AmusementRideCRM.Services
             if (part != null)
             {
                 part.QuantityOnHand += receivingLine.QuantityReceived;
-                part.AvailableQuantity = (part.QuantityOnHand - part.ReservedQuantity).ToString("F0");
                 part.ModifiedDate = DateTime.UtcNow;
             }
 
