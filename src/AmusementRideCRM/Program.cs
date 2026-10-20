@@ -7,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddScoped<IPartMergeService, PartMergeService>();
+builder.Services.AddScoped<IOrderExceptionValidationService, OrderExceptionValidationService>();
 
 // Configure EF Core with In-Memory Database for testing/mocking
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -18,6 +19,16 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+
+    if (!context.SystemConfiguration.Any())
+    {
+        context.SystemConfiguration.AddRange(
+            new SystemConfiguration { ConfigKey = "MinimumGrossMargin", ConfigValue = "0.20", DataType = "Decimal", Description = "Minimum Gross Margin Threshold (20%)", Category = "Pricing", IsEditable = true },
+            new SystemConfiguration { ConfigKey = "EuroConversionFactor", ConfigValue = "1.10", DataType = "Decimal", Description = "EUR to USD conversion factor", Category = "Pricing", IsEditable = true },
+            new SystemConfiguration { ConfigKey = "PricingMarkup", ConfigValue = "1.40", DataType = "Decimal", Description = "Markup multiplier", Category = "Pricing", IsEditable = true }
+        );
+        context.SaveChanges();
+    }
 
     if (!context.CustomerOrder.Any())
     {

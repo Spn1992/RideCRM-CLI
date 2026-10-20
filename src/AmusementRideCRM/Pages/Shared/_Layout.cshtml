@@ -45,6 +45,11 @@
                         <i class="bi bi-journal-check me-2"></i> Orders &amp; Quotes
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="/CustomerOrder/Exceptions" class="nav-link py-1 @(ViewData["ActivePage"]?.ToString() == "OrderExceptions" ? "active" : "text-secondary-custom")">
+                        <i class="bi bi-exclamation-octagon me-2"></i> Order Exceptions
+                    </a>
+                </li>
 
                 <li class="nav-header px-3 pt-2 text-uppercase text-muted fw-bold" style="font-size: 0.75rem; letter-spacing: 0.05em;">Inventory</li>
                 <li class="nav-item">

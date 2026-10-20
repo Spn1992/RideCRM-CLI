@@ -39,6 +39,12 @@ public class CustomerOrder
     public string? CustomerNotes { get; set; }
     public string? InternalNotes { get; set; }
     public string? QBInvoiceTxnID { get; set; }
+    public bool HasException { get; set; }
+    public string? ExceptionReason { get; set; }
+    public string? ExceptionStatus { get; set; }
+    public string? ApprovedBy { get; set; }
+    public DateTime? ApprovedDate { get; set; }
+    public string? SupervisorComments { get; set; }
     public DateTime CreatedDate { get; set; }
     public string? CreatedBy { get; set; }
     public DateTime? ModifiedDate { get; set; }
