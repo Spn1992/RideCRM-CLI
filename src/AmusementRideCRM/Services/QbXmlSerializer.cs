@@ -127,6 +127,8 @@ public class QbXmlSerializer : IQbXmlSerializer
     {
         if (bill == null) throw new ArgumentNullException(nameof(bill));
 
+        var rate = bill.ExchangeRate.HasValue && bill.ExchangeRate.Value > 0 ? bill.ExchangeRate.Value : 1.0m;
+
         var vendorRef = new XElement("VendorRef");
         if (vendor != null && !string.IsNullOrWhiteSpace(vendor.QBVendorListID))
         {
@@ -156,22 +158,26 @@ public class QbXmlSerializer : IQbXmlSerializer
                 var itemName = !string.IsNullOrWhiteSpace(line.VendorPartNumber) ? line.VendorPartNumber : "Supplies";
                 var desc = !string.IsNullOrWhiteSpace(line.Description) ? line.Description : itemName;
                 var qty = line.Quantity.HasValue && line.Quantity.Value > 0 ? line.Quantity.Value : 1m;
-                var cost = line.UnitCostEur.HasValue ? line.UnitCostEur.Value : 0m;
+                var costEur = line.UnitCostEur.HasValue ? line.UnitCostEur.Value : 0m;
+                var costUsd = Math.Round(costEur * rate, 2, MidpointRounding.AwayFromZero);
 
                 billAdd.Add(new XElement("ItemLineAdd",
                     new XElement("ItemRef", new XElement("FullName", itemName)),
                     new XElement("Desc", desc),
                     new XElement("Quantity", qty.ToString("0.00")),
-                    new XElement("Cost", cost.ToString("0.00"))
+                    new XElement("Cost", costUsd.ToString("0.00"))
                 ));
             }
         }
         else
         {
-            var total = bill.TotalEur.HasValue ? bill.TotalEur.Value : 0m;
+            var totalUsd = bill.TotalUsd.HasValue
+                ? bill.TotalUsd.Value
+                : Math.Round((bill.TotalEur.HasValue ? bill.TotalEur.Value : 0m) * rate, 2, MidpointRounding.AwayFromZero);
+
             billAdd.Add(new XElement("ExpenseLineAdd",
                 new XElement("AccountRef", new XElement("FullName", "Accounts Payable")),
-                new XElement("Amount", total.ToString("0.00")),
+                new XElement("Amount", totalUsd.ToString("0.00")),
                 new XElement("Memo", !string.IsNullOrWhiteSpace(bill.ReviewNotes) ? bill.ReviewNotes : "Vendor Bill")
             ));
         }
@@ -185,6 +191,95 @@ public class QbXmlSerializer : IQbXmlSerializer
                     new XElement("BillAddRq",
                         new XAttribute("requestID", requestId.ToString()),
                         billAdd
+                    )
+                )
+            )
+        );
+
+        return DocumentToString(doc);
+    }
+
+    public string BuildPurchaseOrderAddRq(PurchaseOrder po, List<PurchaseOrderLine> lines, VendorMaster vendor, int requestId = 1)
+    {
+        if (po == null) throw new ArgumentNullException(nameof(po));
+
+        var rate = po.ExchangeRate.HasValue && po.ExchangeRate.Value > 0 ? po.ExchangeRate.Value : 1.0m;
+
+        var vendorRef = new XElement("VendorRef");
+        if (vendor != null && !string.IsNullOrWhiteSpace(vendor.QBVendorListID))
+        {
+            vendorRef.Add(new XElement("ListID", vendor.QBVendorListID));
+        }
+        else if (vendor != null && !string.IsNullOrWhiteSpace(vendor.VendorName))
+        {
+            vendorRef.Add(new XElement("FullName", vendor.VendorName));
+        }
+        else
+        {
+            vendorRef.Add(new XElement("FullName", $"Vendor_{po.VendorId}"));
+        }
+
+        var memoText = !string.IsNullOrWhiteSpace(po.VendorNotes)
+            ? po.VendorNotes
+            : (!string.IsNullOrWhiteSpace(po.InternalNotes) ? po.InternalNotes : null);
+
+        var poAdd = new XElement("PurchaseOrderAdd",
+            vendorRef,
+            new XElement("TxnDate", (po.OrderDate != default ? po.OrderDate : DateTime.Today).ToString("yyyy-MM-dd")),
+            !string.IsNullOrWhiteSpace(po.PONumber) ? new XElement("RefNumber", po.PONumber) : null,
+            !string.IsNullOrWhiteSpace(memoText) ? new XElement("Memo", memoText) : null
+        );
+
+        if (lines != null && lines.Count > 0)
+        {
+            foreach (var line in lines)
+            {
+                var itemName = !string.IsNullOrWhiteSpace(line.VendorPartNumber) ? line.VendorPartNumber : $"Part_{line.PartId}";
+                var desc = !string.IsNullOrWhiteSpace(line.VendorDescription) ? line.VendorDescription : itemName;
+                var qty = line.Quantity > 0 ? line.Quantity : 1m;
+                var costUsd = Math.Round(line.UnitCostEur * rate, 2, MidpointRounding.AwayFromZero);
+
+                poAdd.Add(new XElement("PurchaseOrderLineAdd",
+                    new XElement("ItemRef", new XElement("FullName", itemName)),
+                    new XElement("Desc", desc),
+                    new XElement("Quantity", qty.ToString("0.00")),
+                    new XElement("Rate", costUsd.ToString("0.00"))
+                ));
+            }
+        }
+        else
+        {
+            decimal totalEurVal = 0m;
+            if (!string.IsNullOrWhiteSpace(po.TotalEur))
+            {
+                decimal.TryParse(po.TotalEur, out totalEurVal);
+            }
+            if (totalEurVal <= 0m)
+            {
+                totalEurVal = po.SubTotalEur + po.FreightEur;
+            }
+
+            var totalUsd = po.TotalUsd.HasValue
+                ? po.TotalUsd.Value
+                : Math.Round(totalEurVal * rate, 2, MidpointRounding.AwayFromZero);
+
+            poAdd.Add(new XElement("PurchaseOrderLineAdd",
+                new XElement("ItemRef", new XElement("FullName", "Supplies")),
+                new XElement("Desc", !string.IsNullOrWhiteSpace(memoText) ? memoText : "Purchase Order"),
+                new XElement("Quantity", "1.00"),
+                new XElement("Rate", totalUsd.ToString("0.00"))
+            ));
+        }
+
+        var doc = new XDocument(
+            new XDeclaration("1.0", "utf-8", null),
+            new XProcessingInstruction("qbxml", "version=\"13.0\""),
+            new XElement("QBXML",
+                new XElement("QBXMLMsgsRq",
+                    new XAttribute("onError", "stopOnError"),
+                    new XElement("PurchaseOrderAddRq",
+                        new XAttribute("requestID", requestId.ToString()),
+                        poAdd
                     )
                 )
             )

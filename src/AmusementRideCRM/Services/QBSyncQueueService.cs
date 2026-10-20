@@ -169,6 +169,16 @@ public class QBSyncQueueService : IQBSyncQueueService
                     vendor.ModifiedDate = now;
                 }
                 break;
+
+            case "purchaseorder":
+            case "po":
+                var po = await _dbContext.PurchaseOrder.FindAsync(entityId);
+                if (po != null)
+                {
+                    po.QBPOTxnID = txnOrListId;
+                    po.ModifiedDate = now;
+                }
+                break;
         }
     }
 }

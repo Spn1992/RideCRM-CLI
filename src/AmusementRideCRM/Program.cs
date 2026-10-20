@@ -12,6 +12,7 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IAuditUserProvider, AuditUserProvider>();
 builder.Services.AddScoped<IOrderExceptionValidationService, OrderExceptionValidationService>();
 builder.Services.AddScoped<IPurchasingQueueAggregationService, PurchasingQueueAggregationService>();
+builder.Services.AddScoped<ICurrencyExchangeService, CurrencyExchangeService>();
 builder.Services.AddScoped<IVendorInvoiceVarianceService, VendorInvoiceVarianceService>();
 
 // Configure EF Core with In-Memory Database for testing/mocking
@@ -57,6 +58,14 @@ using (var scope = app.Services.CreateScope())
         context.Part.AddRange(
             new Part { PartId = 1, PartNumber = "P-100", Description = "Widget A", UnitOfMeasure = "Ea" },
             new Part { PartId = 2, PartNumber = "P-101", Description = "Widget B", UnitOfMeasure = "Ea" }
+        );
+        context.SaveChanges();
+    }
+
+    if (!context.CurrencyExchangeRate.Any())
+    {
+        context.CurrencyExchangeRate.AddRange(
+            new CurrencyExchangeRate { SourceCurrency = "EUR", TargetCurrency = "USD", ExchangeRate = 1.08m, EffectiveDate = DateTime.UtcNow.AddYears(-1), CreatedDate = DateTime.UtcNow, CreatedBy = "System" }
         );
         context.SaveChanges();
     }
