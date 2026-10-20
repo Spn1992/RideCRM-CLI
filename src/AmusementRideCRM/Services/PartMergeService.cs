@@ -63,7 +63,7 @@ namespace AmusementRideCRM.Services
                 // 1. Transfer Stock Quantities and Recalculate Available
                 survivorPart.QuantityOnHand += duplicatePart.QuantityOnHand;
                 survivorPart.ReservedQuantity += duplicatePart.ReservedQuantity;
-                survivorPart.AvailableQuantity = (survivorPart.QuantityOnHand - survivorPart.ReservedQuantity).ToString("F0");
+                survivorPart.AvailableQuantity = survivorPart.QuantityOnHand - survivorPart.ReservedQuantity;
                 survivorPart.ModifiedDate = DateTime.UtcNow;
                 if (!string.IsNullOrWhiteSpace(userName))
                 {
@@ -72,7 +72,7 @@ namespace AmusementRideCRM.Services
 
                 duplicatePart.QuantityOnHand = 0m;
                 duplicatePart.ReservedQuantity = 0m;
-                duplicatePart.AvailableQuantity = "0";
+                duplicatePart.AvailableQuantity = 0m;
                 duplicatePart.IsMerged = true;
                 duplicatePart.IsActive = false;
                 duplicatePart.MergedIntoPartId = survivorPartId;

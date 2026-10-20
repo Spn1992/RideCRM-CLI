@@ -31,7 +31,7 @@ namespace AmusementRideCRM.Tests
                     UnitOfMeasure = "Ea",
                     QuantityOnHand = 10m,
                     ReservedQuantity = 2m,
-                    AvailableQuantity = "8",
+                    AvailableQuantity = 8m,
                     IsActive = true,
                     IsMerged = false
                 };
@@ -44,7 +44,7 @@ namespace AmusementRideCRM.Tests
                     UnitOfMeasure = "Ea",
                     QuantityOnHand = 15m,
                     ReservedQuantity = 5m,
-                    AvailableQuantity = "10",
+                    AvailableQuantity = 10m,
                     IsActive = true,
                     IsMerged = false
                 };
@@ -69,13 +69,13 @@ namespace AmusementRideCRM.Tests
                 // Master part stock updated
                 Assert.Equal(25m, master.QuantityOnHand);
                 Assert.Equal(7m, master.ReservedQuantity);
-                Assert.Equal("18", master.AvailableQuantity);
+                Assert.Equal(18m, master.AvailableQuantity);
                 Assert.Equal("AdminUser", master.ModifiedBy);
 
                 // Duplicate part updated
                 Assert.Equal(0m, duplicate.QuantityOnHand);
                 Assert.Equal(0m, duplicate.ReservedQuantity);
-                Assert.Equal("0", duplicate.AvailableQuantity);
+                Assert.Equal(0m, duplicate.AvailableQuantity);
                 Assert.True(duplicate.IsMerged);
                 Assert.False(duplicate.IsActive);
                 Assert.Equal(1, duplicate.MergedIntoPartId);

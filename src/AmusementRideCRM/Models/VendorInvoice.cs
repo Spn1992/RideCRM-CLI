@@ -13,6 +13,11 @@ public class VendorInvoice
     public decimal? FreightEur { get; set; }
     public decimal? TaxEur { get; set; }
     public decimal? TotalEur { get; set; }
+    public decimal? ExchangeRate { get; set; }
+    public DateTime? ExchangeRateDate { get; set; }
+    public decimal? SubTotalUsd { get; set; }
+    public decimal? FreightUsd { get; set; }
+    public decimal? TotalUsd { get; set; }
     public string Status { get; set; }
     public string? UploadedFileName { get; set; }
     public string? UploadedFilePath { get; set; }

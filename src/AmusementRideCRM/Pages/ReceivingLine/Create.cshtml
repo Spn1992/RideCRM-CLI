@@ -5,6 +5,12 @@
 }
 
 <div class="container-fluid">
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger" role="alert">
+            <div asp-validation-summary="All"></div>
+        </div>
+    }
     <div class="card border-0 shadow-sm rounded-4 mb-4">
         <div class="card-header bg-surface border-bottom py-3">
             <h5 class="mb-0 fw-semibold text-primary-custom">Create ReceivingLine</h5>
@@ -40,6 +46,10 @@
                     <label asp-for="Item.QuantityDamaged" class="form-label"></label>
                     <input asp-for="Item.QuantityDamaged" class="form-control" />
                     <span asp-validation-for="Item.QuantityDamaged" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="SupervisorUsername" class="form-label">Supervisor Username (Required if Over-Delivery / Discrepancy)</label>
+                    <input asp-for="SupervisorUsername" class="form-control" placeholder="e.g. SupervisorUser" />
                 </div>
                 <div class="mb-3">
                     <label asp-for="Item.LocationId" class="form-label"></label>
