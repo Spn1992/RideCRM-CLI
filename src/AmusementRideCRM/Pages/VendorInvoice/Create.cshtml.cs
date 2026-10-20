@@ -5,8 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using AmusementRideCRM.Models;
 using AmusementRideCRM.Services;
-using System;
-using System.Threading.Tasks;
 
 namespace AmusementRideCRM.Pages.VendorInvoice
 {
@@ -20,7 +18,6 @@ namespace AmusementRideCRM.Pages.VendorInvoice
             ApplicationDbContext context,
             ICurrencyExchangeService currencyExchangeService,
             IVendorInvoiceVarianceService varianceService)
-        public CreateModel(ApplicationDbContext context, ICurrencyExchangeService currencyExchangeService, IVendorInvoiceVarianceService varianceService)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
             _currencyExchangeService = currencyExchangeService ?? throw new ArgumentNullException(nameof(currencyExchangeService));
@@ -60,9 +57,10 @@ namespace AmusementRideCRM.Pages.VendorInvoice
             Item.FreightUsd = freightUsd;
             Item.TotalUsd = totalUsd;
 
-            Item.InvoiceDate = DateTime.Today;
-            Item.DueDate = DateTime.Today.AddDays(30);
-            Item.Currency = "EUR";
+            if (!Item.DueDate.HasValue)
+            {
+                Item.DueDate = DateTime.Today.AddDays(30);
+            }
             return Page();
         }
 

@@ -1,11 +1,10 @@
+using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using AmusementRideCRM.Models;
 using AmusementRideCRM.Services;
-using System;
-using System.Threading.Tasks;
 
 namespace AmusementRideCRM.Pages.VendorInvoice
 {
@@ -19,7 +18,6 @@ namespace AmusementRideCRM.Pages.VendorInvoice
             ApplicationDbContext context,
             ICurrencyExchangeService currencyExchangeService,
             IVendorInvoiceVarianceService varianceService)
-        public EditModel(ApplicationDbContext context, ICurrencyExchangeService currencyExchangeService, IVendorInvoiceVarianceService varianceService)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
             _currencyExchangeService = currencyExchangeService ?? throw new ArgumentNullException(nameof(currencyExchangeService));
@@ -101,7 +99,6 @@ namespace AmusementRideCRM.Pages.VendorInvoice
 
             if (!ModelState.IsValid) return Page();
 
-            Item.ModifiedDate = System.DateTime.UtcNow;
             _context.Attach(Item).State = EntityState.Modified;
             await _context.SaveChangesAsync();
 
