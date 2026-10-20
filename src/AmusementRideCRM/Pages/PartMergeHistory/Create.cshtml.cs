@@ -1,17 +1,20 @@
+using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using AmusementRideCRM.Models;
 using AmusementRideCRM.Services;
-using System.Threading.Tasks;
 
 namespace AmusementRideCRM.Pages.PartMergeHistory
 {
     public class CreateModel : PageModel
     {
+        private readonly ApplicationDbContext _context;
         private readonly IPartMergeService _partMergeService;
 
-        public CreateModel(IPartMergeService partMergeService)
+        public CreateModel(ApplicationDbContext context, IPartMergeService partMergeService)
         {
+            _context = context;
             _partMergeService = partMergeService;
         }
 
@@ -25,30 +28,29 @@ namespace AmusementRideCRM.Pages.PartMergeHistory
 
         public async Task<IActionResult> OnPostAsync()
         {
+            if (Item != null && Item.SurvivorPartId == Item.MergedPartId)
+            {
+                ModelState.AddModelError("Item.MergedPartId", "Survivor part ID cannot be the same as merged part ID.");
+            }
+
             if (!ModelState.IsValid) return Page();
 
-            if (Item.SurvivorPartId == Item.MergedPartId)
+            try
             {
-                ModelState.AddModelError(string.Empty, "Survivor part ID and Merged part ID cannot be the same.");
+                await _partMergeService.ExecuteMergeAsync(
+                    Item.SurvivorPartId,
+                    Item.MergedPartId,
+                    Item.MergedByUserName,
+                    Item.Notes,
+                    Item.MergedByUserId);
+
+                return RedirectToPage("./Index");
+            }
+            catch (Exception ex) when (ex is ArgumentException || ex is InvalidOperationException || ex is KeyNotFoundException)
+            {
+                ModelState.AddModelError(string.Empty, ex.Message);
                 return Page();
             }
-
-            var result = await _partMergeService.ExecuteMergeAsync(
-                Item.SurvivorPartId,
-                Item.MergedPartId,
-                Item.MergedByUserName,
-                Item.Notes,
-                Item.MergedByUserId,
-                Item.MergeDetails
-            );
-
-            if (!result.Success)
-            {
-                ModelState.AddModelError(string.Empty, result.ErrorMessage ?? "Failed to perform part merge.");
-                return Page();
-            }
-
-            return RedirectToPage("./Index");
         }
     }
 }

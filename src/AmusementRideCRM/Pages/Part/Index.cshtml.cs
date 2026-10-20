@@ -1,3 +1,4 @@
+#nullable enable
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -37,11 +38,6 @@ namespace AmusementRideCRM.Pages.Part
                 }
 
                 Items = await query.Take(100).ToListAsync();
-
-                foreach (var item in Items)
-                {
-                    item.AvailableQuantity = (item.QuantityOnHand - item.ReservedQuantity).ToString("F0");
-                }
             }
         }
     }

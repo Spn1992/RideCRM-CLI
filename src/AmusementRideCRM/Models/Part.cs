@@ -10,10 +10,12 @@ public class Part
     public string UnitOfMeasure { get; set; }
     public decimal QuantityOnHand { get; set; }
     public decimal ReservedQuantity { get; set; }
-    public string? AvailableQuantity { get; set; }
+    public decimal AvailableQuantity { get => QuantityOnHand - ReservedQuantity; set { } }
     public decimal? ReorderPoint { get; set; }
     public decimal? ReorderQuantity { get; set; }
     public bool IsNonStocked { get; set; }
+    public bool IsSerialized { get; set; }
+    public int WarrantyDurationMonths { get; set; }
     public decimal? LastVendorCostEur { get; set; }
     public decimal? SellingPriceUsd { get; set; }
     public int? PrimaryLocationId { get; set; }

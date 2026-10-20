@@ -2,72 +2,444 @@
 @model AmusementRideCRM.Pages.Shipment.DetailsModel
 @{
     ViewData["Title"] = "Shipment Details";
+    ViewData["ActivePage"] = "Shipments";
+    var isDispatched = Model.Item.Status == "Dispatched" || Model.Item.Status == "Shipped";
 }
 
 <div class="container-fluid">
-    <div class="card border-0 shadow-sm rounded-4 mb-4">
-        <div class="card-header bg-surface border-bottom py-3">
-            <h5 class="mb-0 fw-semibold text-primary-custom">Shipment Details</h5>
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h3 class="mb-0 fw-bold">Shipment @Model.Item.ShipmentNumber</h3>
+            <span class="text-muted">Order #: @Model.Item.OrderId | Date: @Model.Item.ShipmentDate.ToString("yyyy-MM-dd")</span>
         </div>
-        <div class="card-body">
-            <dl class="row">
-                <dt class="col-sm-3">ShipmentId</dt>
-                <dd class="col-sm-9">@Model.Item.ShipmentId</dd>
-                <dt class="col-sm-3">ShipmentNumber</dt>
-                <dd class="col-sm-9">@Model.Item.ShipmentNumber</dd>
-                <dt class="col-sm-3">OrderId</dt>
-                <dd class="col-sm-9">@Model.Item.OrderId</dd>
-                <dt class="col-sm-3">ShipmentDate</dt>
-                <dd class="col-sm-9">@Model.Item.ShipmentDate</dd>
-                <dt class="col-sm-3">ShippedByUserId</dt>
-                <dd class="col-sm-9">@Model.Item.ShippedByUserId</dd>
-                <dt class="col-sm-3">Carrier</dt>
-                <dd class="col-sm-9">@Model.Item.Carrier</dd>
-                <dt class="col-sm-3">ServiceType</dt>
-                <dd class="col-sm-9">@Model.Item.ServiceType</dd>
-                <dt class="col-sm-3">TrackingNumber</dt>
-                <dd class="col-sm-9">@Model.Item.TrackingNumber</dd>
-                <dt class="col-sm-3">ShippingLabelUrl</dt>
-                <dd class="col-sm-9">@Model.Item.ShippingLabelUrl</dd>
-                <dt class="col-sm-3">ShippingCostActual</dt>
-                <dd class="col-sm-9">@Model.Item.ShippingCostActual</dd>
-                <dt class="col-sm-3">ShippingCostBilled</dt>
-                <dd class="col-sm-9">@Model.Item.ShippingCostBilled</dd>
-                <dt class="col-sm-3">ShipToName</dt>
-                <dd class="col-sm-9">@Model.Item.ShipToName</dd>
-                <dt class="col-sm-3">ShipToAddress1</dt>
-                <dd class="col-sm-9">@Model.Item.ShipToAddress1</dd>
-                <dt class="col-sm-3">ShipToAddress2</dt>
-                <dd class="col-sm-9">@Model.Item.ShipToAddress2</dd>
-                <dt class="col-sm-3">ShipToCity</dt>
-                <dd class="col-sm-9">@Model.Item.ShipToCity</dd>
-                <dt class="col-sm-3">ShipToState</dt>
-                <dd class="col-sm-9">@Model.Item.ShipToState</dd>
-                <dt class="col-sm-3">ShipToPostalCode</dt>
-                <dd class="col-sm-9">@Model.Item.ShipToPostalCode</dd>
-                <dt class="col-sm-3">ShipToCountry</dt>
-                <dd class="col-sm-9">@Model.Item.ShipToCountry</dd>
-                <dt class="col-sm-3">Status</dt>
-                <dd class="col-sm-9">@Model.Item.Status</dd>
-                <dt class="col-sm-3">IsInvoiced</dt>
-                <dd class="col-sm-9">@Model.Item.IsInvoiced</dd>
-                <dt class="col-sm-3">Notes</dt>
-                <dd class="col-sm-9">@Model.Item.Notes</dd>
-                <dt class="col-sm-3">CreatedDate</dt>
-                <dd class="col-sm-9">@Model.Item.CreatedDate</dd>
-                <dt class="col-sm-3">CreatedBy</dt>
-                <dd class="col-sm-9">@Model.Item.CreatedBy</dd>
-                <dt class="col-sm-3">ModifiedDate</dt>
-                <dd class="col-sm-9">@Model.Item.ModifiedDate</dd>
-                <dt class="col-sm-3">ModifiedBy</dt>
-                <dd class="col-sm-9">@Model.Item.ModifiedBy</dd>
-                <dt class="col-sm-3">RowVersion</dt>
-                <dd class="col-sm-9">@Model.Item.RowVersion</dd>
-            </dl>
-        </div>
-        <div class="card-footer bg-light text-end">
-            <a href="/Shipment/Edit?id=@Model.Item.ShipmentId" class="btn btn-primary">Edit</a>
-            <a href="/Shipment" class="btn btn-secondary">Back to List</a>
+        <div class="d-flex align-items-center gap-2">
+            <span class="badge @(isDispatched ? "bg-success" : "bg-warning text-dark") fs-6 px-3 py-2">
+                Status: @(string.IsNullOrEmpty(Model.Item.Status) ? "Draft" : Model.Item.Status)
+            </span>
+            <a href="/Shipment/Edit?id=@Model.Item.ShipmentId" class="btn btn-primary btn-sm"><i class="bi bi-pencil me-1"></i> Edit Shipment</a>
+            <a href="/Shipment" class="btn btn-secondary btn-sm"><i class="bi bi-arrow-left me-1"></i> Back to List</a>
         </div>
     </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
+            <i class="bi bi-check-circle-fill me-2"></i> @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @if (!ModelState.IsValid)
+    {
+        <div class="alert alert-danger mb-4">
+            <div asp-validation-summary="All" class="text-danger mb-0"></div>
+        </div>
+    }
+
+    <!-- Shipment Information Card -->
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-header bg-surface border-bottom py-3">
+            <h5 class="mb-0 fw-semibold text-primary-custom">Shipment & Delivery Details</h5>
+        </div>
+        <div class="card-body">
+            <div class="row g-3">
+                <div class="col-sm-3">
+                    <span class="text-muted small d-block">Carrier</span>
+                    <span class="fw-semibold">@(string.IsNullOrEmpty(Model.Item.Carrier) ? "UPS" : Model.Item.Carrier)</span>
+                </div>
+                <div class="col-sm-3">
+                    <span class="text-muted small d-block">Service Type</span>
+                    <span class="fw-semibold">@(string.IsNullOrEmpty(Model.Item.ServiceType) ? "UPS Ground (03)" : Model.Item.ServiceType)</span>
+                </div>
+                <div class="col-sm-3">
+                    <span class="text-muted small d-block">Master Tracking Number</span>
+                    <span class="font-monospace fw-bold text-primary">@(string.IsNullOrEmpty(Model.Item.TrackingNumber) ? "N/A" : Model.Item.TrackingNumber)</span>
+                </div>
+                <div class="col-sm-3">
+                    <span class="text-muted small d-block">Actual Cost</span>
+                    <span class="fw-bold text-success">@(Model.Item.ShippingCostActual.HasValue ? $"${Model.Item.ShippingCostActual.Value:N2}" : "N/A")</span>
+                </div>
+                <div class="col-sm-4">
+                    <span class="text-muted small d-block">Ship To Name</span>
+                    <span>@(string.IsNullOrEmpty(Model.Item.ShipToName) ? "N/A" : Model.Item.ShipToName)</span>
+                </div>
+                <div class="col-sm-4">
+                    <span class="text-muted small d-block">Destination Address</span>
+                    <span>@Model.Item.ShipToAddress1 @Model.Item.ShipToCity, @Model.Item.ShipToState @Model.Item.ShipToPostalCode</span>
+                </div>
+                <div class="col-sm-4">
+                    <span class="text-muted small d-block">Shipping Label</span>
+                    @if (!string.IsNullOrEmpty(Model.Item.ShippingLabelUrl))
+                    {
+                        <a href="@Model.Item.ShippingLabelUrl" target="_blank" class="btn btn-sm btn-outline-primary"><i class="bi bi-printer me-1"></i> View / Print Label</a>
+                    }
+                    else
+                    {
+                        <span class="text-muted">Not Generated</span>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Package Dimensions & Weight Card -->
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-header bg-surface border-bottom d-flex justify-content-between align-items-center py-3">
+            <h5 class="mb-0 fw-semibold text-primary-custom"><i class="bi bi-box me-2"></i>Shipment Packages (Dimensions & Weight)</h5>
+            @if (!isDispatched)
+            {
+                <button class="btn btn-sm btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#addPackageCollapse">
+                    <i class="bi bi-plus-lg me-1"></i> Add Package
+                </button>
+            }
+        </div>
+
+        @if (!isDispatched)
+        {
+            <!-- Add Package Form -->
+            <div class="collapse p-3 bg-light border-bottom" id="addPackageCollapse">
+                <form method="post" asp-page-handler="AddPackage" asp-route-id="@Model.Item.ShipmentId">
+                    <div class="row g-3">
+                        <div class="col-md-2">
+                            <label class="form-label small fw-semibold">Weight (lbs)</label>
+                            <input asp-for="NewPackage.WeightLbs" class="form-control form-control-sm" type="number" step="0.1" value="5.0" min="0.1" required />
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label small fw-semibold">Length (in)</label>
+                            <input asp-for="NewPackage.LengthIn" class="form-control form-control-sm" type="number" step="0.1" value="12.0" min="0.1" required />
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label small fw-semibold">Width (in)</label>
+                            <input asp-for="NewPackage.WidthIn" class="form-control form-control-sm" type="number" step="0.1" value="10.0" min="0.1" required />
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label small fw-semibold">Height (in)</label>
+                            <input asp-for="NewPackage.HeightIn" class="form-control form-control-sm" type="number" step="0.1" value="8.0" min="0.1" required />
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label small fw-semibold">Insured Value ($)</label>
+                            <input asp-for="NewPackage.InsuredValue" class="form-control form-control-sm" type="number" step="1" value="100" min="0" />
+                        </div>
+                        <div class="col-md-2 d-flex align-items-end">
+                            <button type="submit" class="btn btn-sm btn-success w-100"><i class="bi bi-check-lg me-1"></i> Add Package</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        }
+
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0 align-middle">
+                    <thead class="bg-light">
+                        <tr>
+                            <th class="ps-4">Pkg #</th>
+                            <th>Weight</th>
+                            <th>Dimensions (L x W x H)</th>
+                            <th>Insured Value</th>
+                            <th>Tracking Number</th>
+                            <th>Label Image</th>
+                            @if (!isDispatched)
+                            {
+                                <th class="text-end pe-4">Actions</th>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (!Model.Packages.Any())
+                        {
+                            <tr>
+                                <td colspan="7" class="text-center py-4 text-muted">No packages added yet. Enter package dimensions and weight above.</td>
+                            </tr>
+                        }
+                        else
+                        {
+                            @foreach (var pkg in Model.Packages)
+                            {
+                                <tr>
+                                    <td class="ps-4 fw-semibold">Package #@pkg.PackageNumber</td>
+                                    <td><span class="badge bg-light text-dark fw-bold">@pkg.WeightLbs lbs</span></td>
+                                    <td>@pkg.LengthIn" x @pkg.WidthIn" x @pkg.HeightIn"</td>
+                                    <td>@(pkg.InsuredValue.HasValue ? $"${pkg.InsuredValue.Value:N2}" : "-")</td>
+                                    <td>
+                                        @if (!string.IsNullOrEmpty(pkg.TrackingNumber))
+                                        {
+                                            <span class="badge bg-primary font-monospace">@pkg.TrackingNumber</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">Pending Dispatch</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (!string.IsNullOrEmpty(pkg.LabelImageUrl))
+                                        {
+                                            <a href="@pkg.LabelImageUrl" target="_blank" class="btn btn-sm btn-outline-secondary"><i class="bi bi-image me-1"></i> Label</a>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">-</span>
+                                        }
+                                    </td>
+                                    @if (!isDispatched)
+                                    {
+                                        <td class="text-end pe-4">
+                                            <form method="post" asp-page-handler="DeletePackage" asp-route-packageId="@pkg.PackageId" asp-route-id="@Model.Item.ShipmentId" class="d-inline">
+                                                <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Remove package #@pkg.PackageNumber?')">
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    }
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- UPS REST Carrier Rating & Synchronous Dispatch Card -->
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-header bg-surface border-bottom py-3">
+            <h5 class="mb-0 fw-semibold text-primary-custom"><i class="bi bi-truck me-2"></i>UPS REST Shipping & Rate Execution</h5>
+        </div>
+        <div class="card-body">
+            @if (isDispatched)
+            {
+                <div class="alert alert-success mb-0 d-flex align-items-center">
+                    <i class="bi bi-check-circle-fill fs-4 me-3"></i>
+                    <div>
+                        <h6 class="mb-1 fw-bold">Shipment Dispatched & Stock Released</h6>
+                        <p class="mb-0 small text-dark">
+                            Carrier label generated, tracking number <strong>@Model.Item.TrackingNumber</strong> stored, and holding location stock reservations released.
+                        </p>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <label class="form-label small fw-semibold">Shipping Carrier</label>
+                        <select asp-for="SelectedCarrier" class="form-select form-select-sm" disabled>
+                            <option value="UPS" selected>UPS (United Parcel Service)</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label small fw-semibold">Service Type</label>
+                        <select asp-for="SelectedServiceType" class="form-select form-select-sm" form="dispatchForm">
+                            <option value="03">UPS Ground (03)</option>
+                            <option value="02">UPS 2nd Day Air (02)</option>
+                            <option value="01">UPS Next Day Air (01)</option>
+                            <option value="12">UPS 3 Day Select (12)</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4 d-flex align-items-end gap-2">
+                        <form method="post" asp-page-handler="GetRateQuote" asp-route-id="@Model.Item.ShipmentId" class="w-50">
+                            <input type="hidden" name="SelectedCarrier" value="UPS" />
+                            <input type="hidden" name="SelectedServiceType" id="rateServiceType" value="03" />
+                            <button type="submit" class="btn btn-sm btn-outline-info w-100">
+                                <i class="bi bi-calculator me-1"></i> Get Rate Quote
+                            </button>
+                        </form>
+                        <form method="post" asp-page-handler="Dispatch" asp-route-id="@Model.Item.ShipmentId" id="dispatchForm" class="w-50">
+                            <input type="hidden" name="SelectedCarrier" value="UPS" />
+                            <button type="submit" class="btn btn-sm btn-success w-100" onclick="return confirm('Confirm dispatch with UPS? This will generate shipping labels and release reserved stock from holding locations.')">
+                                <i class="bi bi-box-arrow-right me-1"></i> Dispatch Shipment
+                            </button>
+                        </form>
+                    </div>
+
+                    @if (Model.RateQuote != null)
+                    {
+                        <div class="col-12 mt-3">
+                            <div class="p-3 bg-light rounded-3 border">
+                                <h6 class="fw-bold mb-2 text-primary"><i class="bi bi-tag me-1"></i> Negotiated UPS Rate Quote</h6>
+                                <p class="mb-1">Estimated Cost: <strong class="fs-5 text-success">$@Model.RateQuote.TotalEstimatedCost.ToString("N2") @Model.RateQuote.Currency</strong></p>
+                                @if (Model.RateQuote.RatesByService != null && Model.RateQuote.RatesByService.Any())
+                                {
+                                    <div class="d-flex gap-3 mt-2">
+                                        @foreach (var rate in Model.RateQuote.RatesByService)
+                                        {
+                                            <span class="badge bg-white text-dark border p-2">
+                                                Code @rate.Key: <strong>$@rate.Value.ToString("N2")</strong>
+                                            </span>
+                                        }
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+
+    <!-- Shipment Line Items Card -->
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-header bg-surface border-bottom d-flex justify-content-between align-items-center py-3">
+            <h5 class="mb-0 fw-semibold text-primary-custom"><i class="bi bi-box-seam me-2"></i>Shipped Line Items</h5>
+            @if (!isDispatched)
+            {
+                <button class="btn btn-sm btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#addShipLineCollapse">
+                    <i class="bi bi-plus-lg me-1"></i> Add Shipment Line
+                </button>
+            }
+        </div>
+
+        @if (!isDispatched)
+        {
+            <!-- Add Shipment Line Form -->
+            <div class="collapse p-3 bg-light border-bottom" id="addShipLineCollapse">
+                <form method="post" asp-page-handler="AddLine" asp-route-id="@Model.Item.ShipmentId">
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <label class="form-label small fw-semibold">Part Item</label>
+                            <select asp-for="NewLine.PartId" class="form-select form-select-sm" required>
+                                <option value="">-- Select Part --</option>
+                                @foreach (var part in Model.AvailableParts)
+                                {
+                                    <option value="@part.PartId">@part.PartNumber - @part.Description @(part.IsSerialized ? $"[SERIALIZED - Warranty {part.WarrantyDurationMonths}m]" : "")</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label small fw-semibold">Customer Ride Installation</label>
+                            <select asp-for="RideId" class="form-select form-select-sm">
+                                <option value="0">-- Select Customer Ride --</option>
+                                @foreach (var ride in Model.CustomerRides)
+                                {
+                                    <option value="@ride.RideId">@ride.RideManufacturer @ride.RideModel (S/N: @ride.SerialNumber)</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label small fw-semibold">Qty Shipped</label>
+                            <input asp-for="NewLine.QuantityShipped" class="form-control form-control-sm" type="number" step="1" value="1" min="1" required />
+                        </div>
+                        <div class="col-md-3 d-flex align-items-end">
+                            <button type="submit" class="btn btn-sm btn-success w-100">Add Line Item</button>
+                        </div>
+
+                        <div class="col-12 mt-2">
+                            <label class="form-label small fw-semibold">Select In-Stock Serial Units (Mandatory for Serialized Parts)</label>
+                            <select name="SelectedUnitIds" class="form-select form-select-sm" multiple style="height: 100px;">
+                                @foreach (var unit in Model.AvailableInStockUnits)
+                                {
+                                    <option value="@unit.SerializedPartUnitId">@(unit.Part?.PartNumber) - Serial: @unit.SerialNumber (Status: @unit.Status)</option>
+                                }
+                            </select>
+                            <div class="form-text text-muted small">Hold Ctrl/Cmd to select multiple serial units matching Qty Shipped.</div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        }
+
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0 align-middle">
+                    <thead class="bg-light">
+                        <tr>
+                            <th class="ps-4">Line ID</th>
+                            <th>Part Number</th>
+                            <th>Description</th>
+                            <th class="text-end">Qty Shipped</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (!Model.ShipmentLines.Any())
+                        {
+                            <tr>
+                                <td colspan="5" class="text-center py-4 text-muted">No line items dispatched in this shipment yet.</td>
+                            </tr>
+                        }
+                        else
+                        {
+                            @foreach (var line in Model.ShipmentLines)
+                            {
+                                var part = Model.PartsDict.ContainsKey(line.PartId) ? Model.PartsDict[line.PartId] : null;
+                                <tr>
+                                    <td class="ps-4 fw-semibold">@line.ShipmentLineId</td>
+                                    <td><span class="badge bg-light text-dark font-monospace">@(part?.PartNumber ?? $"Part #{line.PartId}")</span></td>
+                                    <td>@(part?.Description ?? "-")</td>
+                                    <td class="text-end text-success fw-bold">@line.QuantityShipped.ToString("N0")</td>
+                                    <td class="small text-muted">@(string.IsNullOrEmpty(line.Notes) ? "-" : line.Notes)</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    @if (Model.SerializedUnits.Any())
+    {
+        <!-- Installed Serialized Component Units & Warranty Card -->
+        <div class="card border-0 shadow-sm rounded-4 mb-4">
+            <div class="card-header bg-surface border-bottom py-3">
+                <h5 class="mb-0 fw-semibold text-primary-custom"><i class="bi bi-shield-check me-2"></i>Shipped Serialized Units & Active Warranties</h5>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0 align-middle">
+                        <thead class="bg-light">
+                            <tr>
+                                <th class="ps-4">Unit ID</th>
+                                <th>Part Number</th>
+                                <th>Serial Number</th>
+                                <th>Installed Customer Ride</th>
+                                <th>Warranty Start</th>
+                                <th>Warranty End</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var unit in Model.SerializedUnits)
+                            {
+                                <tr>
+                                    <td class="ps-4 fw-semibold">@unit.SerializedPartUnitId</td>
+                                    <td><span class="badge bg-light text-dark font-monospace">@(unit.Part?.PartNumber ?? $"Part #{unit.PartId}")</span></td>
+                                    <td><span class="badge bg-primary font-monospace">@unit.SerialNumber</span></td>
+                                    <td>@(unit.CustomerRide != null ? $"{unit.CustomerRide.RideManufacturer} {unit.CustomerRide.RideModel} (S/N: {unit.CustomerRide.SerialNumber})" : "Unassigned")</td>
+                                    <td>@unit.WarrantyStartDate?.ToString("yyyy-MM-dd")</td>
+                                    <td>
+                                        @if (unit.WarrantyEndDate.HasValue)
+                                        {
+                                            var isExpired = unit.WarrantyEndDate.Value < DateTime.UtcNow;
+                                            <span class="badge @(isExpired ? "bg-secondary" : "bg-success")">@unit.WarrantyEndDate.Value.ToString("yyyy-MM-dd") @(isExpired ? "(Expired)" : "(Active)")</span>
+                                        }
+                                        else
+                                        {
+                                            <span>-</span>
+                                        }
+                                    </td>
+                                    <td><span class="badge bg-info text-dark">@unit.Status</span></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
 </div>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var serviceSelect = document.querySelector('select[name="SelectedServiceType"]');
+            var hiddenServiceInput = document.getElementById('rateServiceType');
+            if (serviceSelect && hiddenServiceInput) {
+                serviceSelect.addEventListener('change', function() {
+                    hiddenServiceInput.value = this.value;
+                });
+            }
+        });
+    </script>
+}

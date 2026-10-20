@@ -35,6 +35,10 @@
                 <dd class="col-sm-9">@Model.Item.ReorderQuantity</dd>
                 <dt class="col-sm-3">IsNonStocked</dt>
                 <dd class="col-sm-9">@Model.Item.IsNonStocked</dd>
+                <dt class="col-sm-3">IsSerialized</dt>
+                <dd class="col-sm-9">@Model.Item.IsSerialized</dd>
+                <dt class="col-sm-3">WarrantyDurationMonths</dt>
+                <dd class="col-sm-9">@Model.Item.WarrantyDurationMonths Months</dd>
                 <dt class="col-sm-3">LastVendorCostEur</dt>
                 <dd class="col-sm-9">@Model.Item.LastVendorCostEur</dd>
                 <dt class="col-sm-3">SellingPriceUsd</dt>
@@ -74,4 +78,61 @@
             <a href="/Part" class="btn btn-secondary">Back to List</a>
         </div>
     </div>
+
+    @if (Model.SerializedUnits.Any())
+    {
+        <div class="card border-0 shadow-sm rounded-4 mb-4">
+            <div class="card-header bg-surface border-bottom py-3">
+                <h5 class="mb-0 fw-semibold text-primary-custom"><i class="bi bi-qr-code me-2"></i>Serialized Inventory Units</h5>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0 align-middle">
+                        <thead class="bg-light">
+                            <tr>
+                                <th class="ps-4">Unit ID</th>
+                                <th>Serial Number</th>
+                                <th>Status</th>
+                                <th>Installed Ride Location</th>
+                                <th>Received Date</th>
+                                <th>Warranty Expiration</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var unit in Model.SerializedUnits)
+                            {
+                                var isExpired = unit.WarrantyEndDate.HasValue && unit.WarrantyEndDate.Value < DateTime.UtcNow;
+                                <tr>
+                                    <td class="ps-4 fw-semibold">@unit.SerializedPartUnitId</td>
+                                    <td><span class="badge bg-primary font-monospace">@unit.SerialNumber</span></td>
+                                    <td><span class="badge bg-info text-dark">@unit.Status</span></td>
+                                    <td>
+                                        @if (unit.CustomerRide != null)
+                                        {
+                                            <a href="/CustomerRide/Details?id=@unit.RideId">@unit.CustomerRide.RideManufacturer @unit.CustomerRide.RideModel (S/N: @unit.CustomerRide.SerialNumber)</a>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">In Warehouse Stock</span>
+                                        }
+                                    </td>
+                                    <td>@unit.ReceivedDate?.ToString("yyyy-MM-dd")</td>
+                                    <td>
+                                        @if (unit.WarrantyEndDate.HasValue)
+                                        {
+                                            <span class="badge @(isExpired ? "bg-secondary" : "bg-success")">@unit.WarrantyEndDate.Value.ToString("yyyy-MM-dd") @(isExpired ? "(Expired)" : "(Active)")</span>
+                                        }
+                                        else
+                                        {
+                                            <span>-</span>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
 </div>

@@ -1,46 +1,215 @@
 @page
 @model AmusementRideCRM.Pages.PurchasingQueueItem.IndexModel
 @{
-    ViewData["Title"] = "PurchasingQueueItem List";
+    ViewData["Title"] = "Purchasing Queue Management";
+    ViewData["ActivePage"] = "PurchasingQueue";
 }
 
 <div class="container-fluid">
-    <div class="card border-0 shadow-sm rounded-4 mb-4">
-        <div class="card-header bg-surface border-bottom d-flex justify-content-between align-items-center py-3">
-            <h5 class="mb-0 fw-semibold text-primary-custom">PurchasingQueueItem Management</h5>
-            <a href="/PurchasingQueueItem/Create" class="btn btn-primary btn-sm"><i class="bi bi-plus-lg me-1"></i> Create New</a>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+            <h3 class="fw-bold mb-0">Purchasing Queue Aggregation & Order Batching</h3>
+            <span class="text-muted small">Aggregate pending deficits into draft Purchase Orders grouped by vendor and ride model.</span>
         </div>
-        <div class="card-body p-0">
-            <div class="table-responsive">
-                <table class="table table-hover table-custom mb-0">
-                    <thead class="bg-light">
-                        <tr>
-                            <th class="ps-4">ID</th>
-                            <th>SourceType</th>
-                            <th>QuantityRequired</th>
-                            <th>QuantityOrdered</th>
-                            <th>SuggestedCostEur</th>
-                            <th class="text-end pe-4">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model.Items)
-                        {
-                            <tr>
-                                <td class="ps-4">@item.QueueItemId</td>
-                                <td>@item.SourceType</td>
-                                <td>@item.QuantityRequired</td>
-                                <td>@item.QuantityOrdered</td>
-                                <td>@item.SuggestedCostEur</td>
-                                <td class="text-end pe-4">
-                                    <a href="/PurchasingQueueItem/Details?id=@item.QueueItemId" class="btn btn-sm btn-light"><i class="bi bi-eye"></i></a>
-                                    <a href="/PurchasingQueueItem/Edit?id=@item.QueueItemId" class="btn btn-sm btn-light"><i class="bi bi-pencil"></i></a>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
+        <div>
+            <a href="/PurchasingQueueItem/Create" class="btn btn-outline-primary btn-sm"><i class="bi bi-plus-lg me-1"></i> Add Queue Record</a>
         </div>
     </div>
+
+    @if (!string.IsNullOrEmpty(Model.SuccessMessage))
+    {
+        <div class="alert alert-success alert-dismissible fade show shadow-sm rounded-3 mb-3" role="alert">
+            <i class="bi bi-check-circle-fill me-2"></i><strong>Success:</strong> @Model.SuccessMessage
+            @if (Model.CreatedPOIds.Any())
+            {
+                <div class="mt-2 fw-semibold">
+                    Generated Draft Purchase Orders:
+                    @foreach (var poId in Model.CreatedPOIds)
+                    {
+                        <a href="/PurchaseOrder/Details?id=@poId" class="badge bg-primary text-decoration-none me-1 fs-6">PO #@poId</a>
+                    }
+                </div>
+            }
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+    {
+        <div class="alert alert-danger alert-dismissible fade show shadow-sm rounded-3 mb-3" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i><strong>Validation / Consolidation Error:</strong> @Model.ErrorMessage
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @if (Model.Warnings.Any())
+    {
+        <div class="alert alert-warning alert-dismissible fade show shadow-sm rounded-3 mb-3" role="alert">
+            <i class="bi bi-exclamation-triangle me-2"></i><strong>Validation Warnings:</strong>
+            <ul class="mb-0 ps-3 mt-1">
+                @foreach (var warn in Model.Warnings)
+                {
+                    <li>@warn.Message</li>
+                }
+            </ul>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <!-- Filtering Bar -->
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-body py-3">
+            <form method="get" class="row g-2 align-items-center">
+                <div class="col-md-3">
+                    <label class="form-label small fw-semibold mb-1">Filter by Vendor</label>
+                    <select asp-for="VendorFilter" class="form-select form-select-sm">
+                        <option value="">-- All Vendors --</option>
+                        @foreach (var v in Model.AvailableVendors)
+                        {
+                            <option value="@v.VendorId" selected="@(Model.VendorFilter == v.VendorId)">@v.VendorName</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label small fw-semibold mb-1">Filter by Ride Model</label>
+                    <select asp-for="RideModelFilter" class="form-select form-select-sm">
+                        <option value="">-- All Ride Models --</option>
+                        @foreach (var rm in Model.AvailableRideModels)
+                        {
+                            <option value="@rm" selected="@(Model.RideModelFilter == rm)">@rm</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label small fw-semibold mb-1">Filter by Status</label>
+                    <select asp-for="StatusFilter" class="form-select form-select-sm">
+                        <option value="">-- All Statuses --</option>
+                        <option value="Pending" selected="@(Model.StatusFilter == "Pending")">Pending</option>
+                        <option value="Consolidated" selected="@(Model.StatusFilter == "Consolidated")">Consolidated</option>
+                        <option value="Ordered" selected="@(Model.StatusFilter == "Ordered")">Ordered</option>
+                    </select>
+                </div>
+                <div class="col-md-3 d-flex gap-2 align-self-end">
+                    <button type="submit" class="btn btn-primary btn-sm w-50"><i class="bi bi-filter me-1"></i> Filter</button>
+                    <a href="/PurchasingQueueItem" class="btn btn-light btn-sm w-50"><i class="bi bi-x-circle me-1"></i> Reset</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Consolidation Form & Queue Items Table -->
+    <form method="post" asp-page-handler="Consolidate" id="consolidationForm">
+        <div class="card border-0 shadow-sm rounded-4 mb-4">
+            <div class="card-header bg-surface border-bottom d-flex justify-content-between align-items-center py-3">
+                <h5 class="mb-0 fw-semibold text-primary-custom"><i class="bi bi-layers me-2"></i>Purchasing Queue Items</h5>
+                <button type="submit" class="btn btn-success btn-sm px-3 fw-semibold" onclick="return confirm('Consolidate selected pending items into draft Purchase Orders?');">
+                    <i class="bi bi-boxes me-1"></i> Consolidate Selected into Draft POs
+                </button>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover table-custom mb-0 align-middle">
+                        <thead class="bg-light">
+                            <tr>
+                                <th class="ps-3" style="width: 40px;">
+                                    <input type="checkbox" id="selectAll" class="form-check-input" onclick="toggleSelectAll(this)" />
+                                </th>
+                                <th>ID</th>
+                                <th>Vendor</th>
+                                <th>Part Number</th>
+                                <th>Ride Manufacturer / Model</th>
+                                <th>Serial Number</th>
+                                <th>Source Line ID</th>
+                                <th class="text-end">Qty Required</th>
+                                <th class="text-end">Suggested Cost (€)</th>
+                                <th class="text-center">Status</th>
+                                <th>PO Line Ref</th>
+                                <th class="text-end pe-3">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (!Model.Items.Any())
+                            {
+                                <tr>
+                                    <td colspan="12" class="text-center py-4 text-muted">No purchasing queue items match the current filters.</td>
+                                </tr>
+                            }
+                            else
+                            {
+                                @foreach (var item in Model.Items)
+                                {
+                                    bool isEligible = string.IsNullOrEmpty(item.Status) || (!item.Status.Equals("Consolidated", StringComparison.OrdinalIgnoreCase) && !item.Status.Equals("Ordered", StringComparison.OrdinalIgnoreCase));
+                                    var vendorName = item.SuggestedVendorId.HasValue && Model.VendorsDict.ContainsKey(item.SuggestedVendorId.Value)
+                                        ? Model.VendorsDict[item.SuggestedVendorId.Value].VendorName
+                                        : (item.SuggestedVendorId.HasValue ? $"Vendor #{item.SuggestedVendorId}" : "<span class='text-danger fw-semibold'>Unassigned</span>");
+                                    var partNum = Model.PartsDict.ContainsKey(item.PartId) ? Model.PartsDict[item.PartId].PartNumber : $"Part #{item.PartId}";
+
+                                    <tr class="@(isEligible ? "" : "table-light text-muted")">
+                                        <td class="ps-3">
+                                            @if (isEligible)
+                                            {
+                                                <input type="checkbox" name="selectedItemIds" value="@item.QueueItemId" class="form-check-input item-checkbox" />
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" disabled class="form-check-input" />
+                                            }
+                                        </td>
+                                        <td class="fw-semibold">#@item.QueueItemId</td>
+                                        <td>@Html.Raw(vendorName)</td>
+                                        <td><span class="badge bg-light text-dark font-monospace">@partNum</span></td>
+                                        <td>
+                                            <span class="fw-semibold">@(string.IsNullOrEmpty(item.RideManufacturer) ? "-" : item.RideManufacturer)</span>
+                                            <span class="text-muted small">/ @(string.IsNullOrEmpty(item.RideModel) ? "N/A" : item.RideModel)</span>
+                                        </td>
+                                        <td>@(string.IsNullOrEmpty(item.SerialNumber) ? "-" : item.SerialNumber)</td>
+                                        <td>@(item.SourceOrderLineId.HasValue ? $"#{item.SourceOrderLineId}" : "-")</td>
+                                        <td class="text-end fw-semibold">@item.QuantityRequired.ToString("N2")</td>
+                                        <td class="text-end">€@(item.SuggestedCostEur.HasValue ? item.SuggestedCostEur.Value.ToString("N2") : "0.00")</td>
+                                        <td class="text-center">
+                                            @if (item.Status == "Consolidated")
+                                            {
+                                                <span class="badge bg-info text-dark">Consolidated</span>
+                                            }
+                                            else if (item.Status == "Ordered")
+                                            {
+                                                <span class="badge bg-success">Ordered</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge bg-warning text-dark">@(string.IsNullOrEmpty(item.Status) ? "Pending" : item.Status)</span>
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (item.PurchaseOrderLineId.HasValue)
+                                            {
+                                                <span class="badge bg-secondary">POLine #@item.PurchaseOrderLineId</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="text-muted">-</span>
+                                            }
+                                        </td>
+                                        <td class="text-end pe-3">
+                                            <a href="/PurchasingQueueItem/Details?id=@item.QueueItemId" class="btn btn-sm btn-light"><i class="bi bi-eye"></i></a>
+                                            <a href="/PurchasingQueueItem/Edit?id=@item.QueueItemId" class="btn btn-sm btn-light"><i class="bi bi-pencil"></i></a>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </form>
 </div>
+
+<script>
+    function toggleSelectAll(master) {
+        var checkboxes = document.querySelectorAll('.item-checkbox');
+        for (var i = 0; i < checkboxes.length; i++) {
+            checkboxes[i].checked = master.checked;
+        }
+    }
+</script>
