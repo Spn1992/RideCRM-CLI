@@ -143,7 +143,9 @@ public class ExchangeRateAndCurrencyConversionTests
         await context.SaveChangesAsync();
 
         var exchangeService = new CurrencyExchangeService(context);
-        var createPageModel = new AmusementRideCRM.Pages.VendorInvoice.CreateModel(context, exchangeService)
+        var qbSyncQueueService = new QBSyncQueueService(context);
+        var varianceService = new VendorInvoiceVarianceService(context, qbSyncQueueService);
+        var createPageModel = new AmusementRideCRM.Pages.VendorInvoice.CreateModel(context, exchangeService, varianceService)
         {
             Item = new VendorInvoice
             {
