@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using AmusementRideCRM.Models;
+using AmusementRideCRM.Services;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,10 +12,12 @@ namespace AmusementRideCRM.Pages.CustomerOrder
     public class DetailsModel : PageModel
     {
         private readonly ApplicationDbContext _context;
+        private readonly IOrderExceptionValidationService _validationService;
 
-        public DetailsModel(ApplicationDbContext context)
+        public DetailsModel(ApplicationDbContext context, IOrderExceptionValidationService validationService)
         {
             _context = context;
+            _validationService = validationService;
         }
 
         public AmusementRideCRM.Models.CustomerOrder Item { get; set; } = default!;
@@ -26,6 +29,9 @@ namespace AmusementRideCRM.Pages.CustomerOrder
         [BindProperty]
         public AmusementRideCRM.Models.CustomerOrderLine NewLine { get; set; } = new();
 
+        [TempData]
+        public string? StatusErrorMessage { get; set; }
+
         public async Task<IActionResult> OnGetAsync(int id)
         {
             var item = await _context.CustomerOrder.FirstOrDefaultAsync(m => m.OrderId == id);
@@ -33,7 +39,12 @@ namespace AmusementRideCRM.Pages.CustomerOrder
             {
                 return NotFound();
             }
-            Item = item;
+
+            // Run synchronous exception validation
+            await _validationService.ValidateAndApplyExceptionsAsync(id);
+
+            // Reload order after validation updates
+            Item = await _context.CustomerOrder.FirstAsync(m => m.OrderId == id);
 
             if (Item.CustomerId > 0)
             {
@@ -79,6 +90,16 @@ namespace AmusementRideCRM.Pages.CustomerOrder
             var order = await _context.CustomerOrder.FirstOrDefaultAsync(m => m.OrderId == id);
             if (order == null) return NotFound();
 
+            // Run validation
+            await _validationService.ValidateAndApplyExceptionsAsync(id);
+            order = await _context.CustomerOrder.FirstAsync(m => m.OrderId == id);
+
+            if ((status == "Confirmed" || status == "Approved") && order.HasException && order.ExceptionStatus != "Approved")
+            {
+                StatusErrorMessage = "Cannot confirm order with unresolved pricing or stock exceptions. Supervisor approval is required.";
+                return RedirectToPage(new { id });
+            }
+
             order.Status = status;
             order.ModifiedDate = System.DateTime.UtcNow;
             await _context.SaveChangesAsync();
@@ -110,6 +131,9 @@ namespace AmusementRideCRM.Pages.CustomerOrder
             order.TotalAmount = order.SubTotal + order.ShippingCharge + order.RushCharge + order.OtherCharges - order.DiscountAmount;
             await _context.SaveChangesAsync();
 
+            // Validate exceptions synchronously after adding line
+            await _validationService.ValidateAndApplyExceptionsAsync(id);
+
             return RedirectToPage(new { id });
         }
 
@@ -130,6 +154,9 @@ namespace AmusementRideCRM.Pages.CustomerOrder
             order.SubTotal = subtotal;
             order.TotalAmount = order.SubTotal + order.ShippingCharge + order.RushCharge + order.OtherCharges - order.DiscountAmount;
             await _context.SaveChangesAsync();
+
+            // Validate exceptions synchronously after deleting line
+            await _validationService.ValidateAndApplyExceptionsAsync(id);
 
             return RedirectToPage(new { id });
         }
