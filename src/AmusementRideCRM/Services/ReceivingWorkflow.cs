@@ -136,7 +136,6 @@ namespace AmusementRideCRM.Services
                 if (part != null)
                 {
                     part.QuantityOnHand += receivingLine.QuantityReceived;
-                    part.AvailableQuantity = (part.QuantityOnHand - part.ReservedQuantity).ToString("F0");
                     part.ModifiedDate = DateTime.UtcNow;
                 }
 
@@ -226,7 +225,6 @@ namespace AmusementRideCRM.Services
                         if (part != null)
                         {
                             part.ReservedQuantity += qtyToReserve;
-                            part.AvailableQuantity = (part.QuantityOnHand - part.ReservedQuantity).ToString("F0");
                         }
 
                         unallocatedQty -= qtyToReserve;
