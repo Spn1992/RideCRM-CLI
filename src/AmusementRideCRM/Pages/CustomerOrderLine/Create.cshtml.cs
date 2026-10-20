@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using AmusementRideCRM.Models;
+using AmusementRideCRM.Services;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -10,10 +11,12 @@ namespace AmusementRideCRM.Pages.CustomerOrderLine
     public class CreateModel : PageModel
     {
         private readonly ApplicationDbContext _context;
+        private readonly IOrderExceptionValidationService _validationService;
 
-        public CreateModel(ApplicationDbContext context)
+        public CreateModel(ApplicationDbContext context, IOrderExceptionValidationService validationService)
         {
             _context = context;
+            _validationService = validationService;
         }
 
         [BindProperty]
@@ -43,6 +46,9 @@ namespace AmusementRideCRM.Pages.CustomerOrderLine
                 parentOrder.TotalAmount = parentOrder.SubTotal + parentOrder.ShippingCharge + parentOrder.RushCharge + parentOrder.OtherCharges - parentOrder.DiscountAmount;
                 await _context.SaveChangesAsync();
             }
+
+            // Validate exceptions synchronously after line creation
+            await _validationService.ValidateAndApplyExceptionsAsync(Item.OrderId);
 
             return RedirectToPage("./Index");
         }

@@ -15,6 +15,11 @@ public class CustomerOrderLine
     public string? QuantityBackordered { get; set; }
     public string LineStatus { get; set; }
     public string? Notes { get; set; }
+    public bool HasMarginException { get; set; }
+    public bool HasStockException { get; set; }
+    public string? ExceptionReason { get; set; }
+    public decimal? CostUsd { get; set; }
+    public decimal? Margin { get; set; }
     public DateTime CreatedDate { get; set; }
     public DateTime? ModifiedDate { get; set; }
     public byte[] RowVersion { get; set; }

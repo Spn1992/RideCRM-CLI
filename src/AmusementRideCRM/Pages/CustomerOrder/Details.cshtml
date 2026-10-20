@@ -6,6 +6,15 @@
 }
 
 <div class="container-fluid">
+    @if (!string.IsNullOrEmpty(Model.StatusErrorMessage))
+    {
+        <div class="alert alert-danger alert-dismissible fade show mb-4" role="alert">
+            <i class="bi bi-exclamation-octagon-fill me-2 fs-5 align-middle"></i>
+            <strong>Status Transition Blocked:</strong> @Model.StatusErrorMessage
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
     <!-- Header with Order Number and Status -->
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
@@ -19,6 +28,7 @@
                 <select name="status" class="form-select form-select-sm" style="width: auto;">
                     <option value="Draft" selected="@(Model.Item.Status == "Draft")">Draft</option>
                     <option value="Pending" selected="@(Model.Item.Status == "Pending")">Pending</option>
+                    <option value="Pending Exception Review" selected="@(Model.Item.Status == "Pending Exception Review")">Pending Exception Review</option>
                     <option value="Confirmed" selected="@(Model.Item.Status == "Confirmed")">Confirmed</option>
                     <option value="Processing" selected="@(Model.Item.Status == "Processing")">Processing</option>
                     <option value="Shipped" selected="@(Model.Item.Status == "Shipped")">Shipped</option>
@@ -32,6 +42,30 @@
             <a href="/CustomerOrder" class="btn btn-secondary btn-sm"><i class="bi bi-arrow-left me-1"></i> Back to List</a>
         </div>
     </div>
+
+    <!-- Exception Status Banner -->
+    @if (Model.Item.HasException)
+    {
+        string bannerClass = Model.Item.ExceptionStatus == "Approved" ? "alert-success" : (Model.Item.ExceptionStatus == "Rejected" ? "alert-danger" : "alert-warning");
+        string badgeClass = Model.Item.ExceptionStatus == "Approved" ? "bg-success" : (Model.Item.ExceptionStatus == "Rejected" ? "bg-danger" : "bg-warning text-dark");
+
+        <div class="alert @bannerClass shadow-sm border mb-4 rounded-3 p-3">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <div class="d-flex align-items-center gap-2">
+                    <i class="bi bi-exclamation-triangle-fill fs-4"></i>
+                    <h5 class="mb-0 fw-bold">Order Exception: <span class="badge @badgeClass">@(Model.Item.ExceptionStatus ?? "Pending Review")</span></h5>
+                </div>
+                <a href="/CustomerOrder/Exceptions" class="btn btn-sm btn-dark">
+                    <i class="bi bi-shield-lock me-1"></i> Open Supervisor Review Workspace
+                </a>
+            </div>
+            <p class="mb-1"><strong>Reason:</strong> @Model.Item.ExceptionReason</p>
+            @if (!string.IsNullOrEmpty(Model.Item.SupervisorComments))
+            {
+                <p class="mb-0 small text-muted"><strong>Supervisor Notes (@Model.Item.ApprovedBy at @Model.Item.ApprovedDate?.ToString("g")):</strong> @Model.Item.SupervisorComments</p>
+            }
+        </div>
+    }
 
     <div class="row g-4 mb-4">
         <!-- Order & Customer Summary Card -->
@@ -155,14 +189,15 @@
                 <table class="table table-hover table-custom mb-0 align-middle">
                     <thead class="bg-light">
                         <tr>
-                            <th class="ps-4" style="width: 70px;">Line #</th>
+                            <th class="ps-4" style="width: 60px;">Line #</th>
                             <th>Part Number</th>
                             <th>Description</th>
                             <th class="text-end">Quantity</th>
+                            <th class="text-end">Avail Stock</th>
                             <th class="text-end">Unit Price</th>
-                            <th class="text-end">Line Total</th>
-                            <th>Status</th>
-                            <th>Notes</th>
+                            <th class="text-end">Catalog Cost</th>
+                            <th class="text-end">Margin</th>
+                            <th>Exceptions</th>
                             <th class="text-end pe-4">Actions</th>
                         </tr>
                     </thead>
@@ -170,7 +205,7 @@
                         @if (!Model.OrderLines.Any())
                         {
                             <tr>
-                                <td colspan="9" class="text-center py-4 text-muted">No line items added yet. Click 'Add Line Item' above.</td>
+                                <td colspan="10" class="text-center py-4 text-muted">No line items added yet. Click 'Add Line Item' above.</td>
                             </tr>
                         }
                         else
@@ -179,15 +214,35 @@
                             {
                                 var part = Model.PartsDict.ContainsKey(line.PartId) ? Model.PartsDict[line.PartId] : null;
                                 decimal lineTotalVal = line.Quantity * line.UnitPriceUsd;
-                                <tr>
+                                decimal avail = part != null ? (part.QuantityOnHand - part.ReservedQuantity) : 0m;
+
+                                <tr class="@(line.HasMarginException || line.HasStockException ? "table-warning" : "")">
                                     <td class="ps-4 fw-semibold">@line.LineNumber</td>
                                     <td><span class="badge bg-light text-dark font-monospace">@(part?.PartNumber ?? $"Part #{line.PartId}")</span></td>
                                     <td>@(part?.Description ?? "-")</td>
-                                    <td class="text-end">@line.Quantity.ToString("N2")</td>
+                                    <td class="text-end fw-bold">@line.Quantity.ToString("G29")</td>
+                                    <td class="text-end @(line.HasStockException ? "text-danger fw-bold" : "")">
+                                        @avail.ToString("G29")
+                                    </td>
                                     <td class="text-end">$@line.UnitPriceUsd.ToString("N2")</td>
-                                    <td class="text-end fw-semibold">$@lineTotalVal.ToString("N2")</td>
-                                    <td><span class="badge bg-secondary">@(string.IsNullOrEmpty(line.LineStatus) ? "Open" : line.LineStatus)</span></td>
-                                    <td class="small text-muted">@(string.IsNullOrEmpty(line.Notes) ? "-" : line.Notes)</td>
+                                    <td class="text-end">$@(line.CostUsd?.ToString("N2") ?? "0.00")</td>
+                                    <td class="text-end @(line.HasMarginException ? "text-danger fw-bold" : "")">
+                                        @(line.Margin.HasValue ? line.Margin.Value.ToString("P1") : "0%")
+                                    </td>
+                                    <td>
+                                        @if (line.HasMarginException)
+                                        {
+                                            <span class="badge bg-danger me-1"><i class="bi bi-tag-fill me-1"></i> Margin Exception</span>
+                                        }
+                                        @if (line.HasStockException)
+                                        {
+                                            <span class="badge bg-warning text-dark"><i class="bi bi-box-seam me-1"></i> Stock Shortage</span>
+                                        }
+                                        @if (!line.HasMarginException && !line.HasStockException)
+                                        {
+                                            <span class="badge bg-success-subtle text-success border border-success"><i class="bi bi-check me-1"></i> OK</span>
+                                        }
+                                    </td>
                                     <td class="text-end pe-4">
                                         <form method="post" asp-page-handler="DeleteLine" asp-route-id="@Model.Item.OrderId" asp-route-lineId="@line.OrderLineId" class="d-inline" onsubmit="return confirm('Delete this line item?');">
                                             <button type="submit" class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
