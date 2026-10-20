@@ -11,6 +11,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IAuditUserProvider, AuditUserProvider>();
 builder.Services.AddScoped<IOrderExceptionValidationService, OrderExceptionValidationService>();
+builder.Services.AddScoped<IPartMergeService, PartMergeService>();
 builder.Services.AddScoped<ICurrencyExchangeService, CurrencyExchangeService>();
 builder.Services.AddScoped<IVendorInvoiceVarianceService, VendorInvoiceVarianceService>();
 

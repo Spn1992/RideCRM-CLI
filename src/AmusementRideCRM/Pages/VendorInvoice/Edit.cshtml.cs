@@ -13,17 +13,13 @@ namespace AmusementRideCRM.Pages.VendorInvoice
     {
         private readonly ApplicationDbContext _context;
         private readonly ICurrencyExchangeService _currencyExchangeService;
+        private readonly IVendorInvoiceVarianceService _varianceService;
 
-        public EditModel(ApplicationDbContext context, ICurrencyExchangeService currencyExchangeService)
+        public EditModel(ApplicationDbContext context, ICurrencyExchangeService currencyExchangeService, IVendorInvoiceVarianceService varianceService)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
             _currencyExchangeService = currencyExchangeService ?? throw new ArgumentNullException(nameof(currencyExchangeService));
-        private readonly IVendorInvoiceVarianceService _varianceService;
-
-        public EditModel(ApplicationDbContext context, IVendorInvoiceVarianceService varianceService)
-        {
-            _context = context;
-            _varianceService = varianceService;
+            _varianceService = varianceService ?? throw new ArgumentNullException(nameof(varianceService));
         }
 
         [BindProperty]
