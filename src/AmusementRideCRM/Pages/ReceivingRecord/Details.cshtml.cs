@@ -10,6 +10,18 @@ using System.Threading.Tasks;
 
 namespace AmusementRideCRM.Pages.ReceivingRecord
 {
+    public class PutawayDirectiveViewModel
+    {
+        public int PartId { get; set; }
+        public string PartNumber { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
+        public decimal Quantity { get; set; }
+        public string DestinationType { get; set; } = string.Empty; // "Holding Allocation" or "Standard Putaway"
+        public string LocationCode { get; set; } = string.Empty;
+        public string GuidanceNotes { get; set; } = string.Empty;
+        public int? OrderId { get; set; }
+    }
+
     public class DetailsModel : PageModel
     {
         private readonly ApplicationDbContext _context;
@@ -28,12 +40,21 @@ namespace AmusementRideCRM.Pages.ReceivingRecord
         public AmusementRideCRM.Models.VendorMaster? Vendor { get; set; }
         public List<AmusementRideCRM.Models.SerializedPartUnit> SerializedUnits { get; set; } = new();
         public List<AmusementRideCRM.Models.ZplPrintJob> PrintJobs { get; set; } = new();
+        public List<PutawayDirectiveViewModel> PutawayDirectives { get; set; } = new();
+        public List<AuditLog> DiscrepancyAuditLogs { get; set; } = new();
+        public Dictionary<int, AmusementRideCRM.Models.HoldingLocation> HoldingLocationsDict { get; set; } = new();
 
         [BindProperty]
         public AmusementRideCRM.Models.ReceivingLine NewLine { get; set; } = new();
 
         [BindProperty]
         public string? SerialNumbersInput { get; set; }
+
+        [BindProperty]
+        public string? SupervisorUsername { get; set; }
+
+        [BindProperty]
+        public string? DiscrepancyNotesInput { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
@@ -79,6 +100,72 @@ namespace AmusementRideCRM.Pages.ReceivingRecord
             PrintJobs = await _context.ZplPrintJob
                 .Where(j => j.ReceivingId == receivingId)
                 .ToListAsync();
+
+            var lineIdsStr = ReceivingLines.Select(l => l.ReceivingLineId.ToString()).ToList();
+            DiscrepancyAuditLogs = await _context.AuditLog
+                .Where(a => a.EntityName == "ReceivingLine" && lineIdsStr.Contains(a.EntityId))
+                .OrderByDescending(a => a.AuditDate)
+                .ToListAsync();
+
+            var hLocIds = ReceivingLines.Where(l => l.HoldingLocationId.HasValue).Select(l => l.HoldingLocationId!.Value).Distinct().ToList();
+            var hLocs = await _context.HoldingLocation.Where(h => hLocIds.Contains(h.HoldingLocationId)).ToListAsync();
+            HoldingLocationsDict = hLocs.ToDictionary(h => h.HoldingLocationId);
+
+            // Build Putaway Directives
+            PutawayDirectives = new List<PutawayDirectiveViewModel>();
+            foreach (var line in ReceivingLines)
+            {
+                var part = PartsDict.ContainsKey(line.PartId) ? PartsDict[line.PartId] : null;
+                var partNum = part?.PartNumber ?? $"Part #{line.PartId}";
+                var desc = part?.Description ?? "N/A";
+
+                // Check reservations tied to this part
+                var reservations = await _context.InventoryReservation
+                    .Where(r => r.PartId == line.PartId && r.HoldingLocationId.HasValue)
+                    .ToListAsync();
+
+                decimal totalReserved = 0;
+                foreach (var res in reservations)
+                {
+                    totalReserved += res.QuantityReserved;
+                    AmusementRideCRM.Models.HoldingLocation? hBin = null;
+                    if (res.HoldingLocationId.HasValue)
+                    {
+                        hBin = await _context.HoldingLocation.FirstOrDefaultAsync(h => h.HoldingLocationId == res.HoldingLocationId.Value);
+                    }
+
+                    int? orderId = null;
+                    var col = await _context.CustomerOrderLine.FirstOrDefaultAsync(c => c.OrderLineId == res.OrderLineId);
+                    if (col != null) orderId = col.OrderId;
+
+                    PutawayDirectives.Add(new PutawayDirectiveViewModel
+                    {
+                        PartId = line.PartId,
+                        PartNumber = partNum,
+                        Description = desc,
+                        Quantity = res.QuantityReserved,
+                        DestinationType = "Holding Allocation",
+                        LocationCode = hBin?.LocationCode ?? "HOLD-BIN-01",
+                        GuidanceNotes = $"Route {res.QuantityReserved:N0} unit(s) to Holding Location {hBin?.LocationCode ?? "HOLD-BIN-01"} reserved for Customer Order #{orderId}",
+                        OrderId = orderId
+                    });
+                }
+
+                decimal unreserved = Math.Max(0, line.QuantityReceived - totalReserved);
+                if (unreserved > 0)
+                {
+                    PutawayDirectives.Add(new PutawayDirectiveViewModel
+                    {
+                        PartId = line.PartId,
+                        PartNumber = partNum,
+                        Description = desc,
+                        Quantity = unreserved,
+                        DestinationType = "Standard Putaway",
+                        LocationCode = "MAIN-STOCK",
+                        GuidanceNotes = $"Place {unreserved:N0} unit(s) into primary warehouse bin storage"
+                    });
+                }
+            }
         }
 
         public async Task<IActionResult> OnPostUpdateStatusAsync(int id, string status)
@@ -115,8 +202,15 @@ namespace AmusementRideCRM.Pages.ReceivingRecord
 
             try
             {
-                // Process Receiving Line: update Part stock levels, PO line progress, & SerializedUnits + ZPL print jobs
-                await ReceivingWorkflow.ProcessReceivingLineAsync(_context, NewLine, serials, User.Identity?.Name);
+                // Process Receiving Line: over-delivery check, stock levels, holding allocation, ZPL spooling
+                await ReceivingWorkflow.ProcessReceivingLineAsync(
+                    _context,
+                    NewLine,
+                    serials,
+                    User.Identity?.Name,
+                    SupervisorUsername,
+                    DiscrepancyNotesInput ?? NewLine.DiscrepancyNotes,
+                    isSupervisorApproved: !string.IsNullOrWhiteSpace(SupervisorUsername));
             }
             catch (System.Exception ex)
             {

@@ -80,6 +80,14 @@
                         <span class="text-muted">Freight (@Model.Item.Currency):</span>
                         <span>€@Model.Item.FreightEur.ToString("N2")</span>
                     </div>
+                    <div class="d-flex justify-content-between mb-2 text-primary">
+                        <span class="text-muted">Snapshot Exchange Rate:</span>
+                        <span>@(Model.Item.ExchangeRate.HasValue ? Model.Item.ExchangeRate.Value.ToString("0.0000") : "N/A")</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2 text-primary">
+                        <span class="text-muted">Total (USD):</span>
+                        <span class="fw-semibold">$@(Model.Item.TotalUsd.HasValue ? Model.Item.TotalUsd.Value.ToString("N2") : "0.00")</span>
+                    </div>
                     <hr />
                     <div class="d-flex justify-content-between fs-5 fw-bold">
                         <span>Total (@Model.Item.Currency):</span>

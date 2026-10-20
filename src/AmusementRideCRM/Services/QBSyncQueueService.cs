@@ -85,6 +85,17 @@ public class QBSyncQueueService : IQBSyncQueueService
 
     public async Task<QBSyncQueue> EnqueueSyncItemAsync(string entityType, int entityId, string syncAction = "Create", string syncDirection = "ToQB", int priority = 0)
     {
+        if (string.Equals(entityType, "VendorInvoice", StringComparison.OrdinalIgnoreCase) ||
+            string.Equals(entityType, "VendorBill", StringComparison.OrdinalIgnoreCase) ||
+            string.Equals(entityType, "Bill", StringComparison.OrdinalIgnoreCase))
+        {
+            var vendorInvoice = await _dbContext.VendorInvoice.FindAsync(entityId);
+            if (vendorInvoice != null && (string.Equals(vendorInvoice.Status, "Pending Review", StringComparison.OrdinalIgnoreCase) || (vendorInvoice.HasDiscrepancy && !string.Equals(vendorInvoice.Status, "Approved", StringComparison.OrdinalIgnoreCase))))
+            {
+                throw new InvalidOperationException($"Vendor invoice #{vendorInvoice.InvoiceNumber ?? entityId.ToString()} is in 'Pending Review' status due to cost shift variance (> 5%) and cannot be synced to QuickBooks until cost shifts are reviewed and approved.");
+            }
+        }
+
         var item = new QBSyncQueue
         {
             EntityType = entityType,
@@ -156,6 +167,16 @@ public class QBSyncQueueService : IQBSyncQueueService
                 {
                     vendor.QBVendorListID = txnOrListId;
                     vendor.ModifiedDate = now;
+                }
+                break;
+
+            case "purchaseorder":
+            case "po":
+                var po = await _dbContext.PurchaseOrder.FindAsync(entityId);
+                if (po != null)
+                {
+                    po.QBPOTxnID = txnOrListId;
+                    po.ModifiedDate = now;
                 }
                 break;
         }

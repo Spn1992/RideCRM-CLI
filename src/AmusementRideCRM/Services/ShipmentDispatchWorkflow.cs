@@ -221,7 +221,7 @@ namespace AmusementRideCRM.Services
                     {
                         decimal releaseQty = totalReleasedForLine > 0 ? totalReleasedForLine : line.QuantityShipped;
                         part.ReservedQuantity = Math.Max(0, part.ReservedQuantity - releaseQty);
-                        part.AvailableQuantity = (part.QuantityOnHand - part.ReservedQuantity).ToString("F0");
+                        part.AvailableQuantity = part.QuantityOnHand - part.ReservedQuantity;
                         part.ModifiedDate = DateTime.UtcNow;
                         part.ModifiedBy = user ?? "System";
                     }

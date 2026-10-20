@@ -215,6 +215,19 @@ public class QBWebConnectorSvc : IQBWebConnectorSvc
 
                 return _serializer.BuildBillAddRq(bill, billLines, vendorForBill, item.SyncId);
 
+            case "purchaseorder":
+            case "po":
+                var po = _dbContext.PurchaseOrder.FirstOrDefault(p => p.PurchaseOrderId == item.EntityId);
+                if (po == null) return string.Empty;
+
+                var poLines = _dbContext.PurchaseOrderLine
+                    .Where(l => l.PurchaseOrderId == po.PurchaseOrderId)
+                    .OrderBy(l => l.LineNumber)
+                    .ToList();
+
+                VendorMaster? vendorForPo = _dbContext.VendorMaster.FirstOrDefault(v => v.VendorId == po.VendorId);
+                return _serializer.BuildPurchaseOrderAddRq(po, poLines, vendorForPo, item.SyncId);
+
             default:
                 return string.Empty;
         }

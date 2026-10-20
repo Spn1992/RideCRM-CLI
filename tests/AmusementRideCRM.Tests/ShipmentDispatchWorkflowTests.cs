@@ -47,7 +47,7 @@ namespace AmusementRideCRM.Tests
                 UnitOfMeasure = "Ea",
                 QuantityOnHand = 20m,
                 ReservedQuantity = 5m,
-                AvailableQuantity = "15"
+                AvailableQuantity = 15m
             };
 
             var holdingLoc = new HoldingLocation
@@ -199,7 +199,7 @@ namespace AmusementRideCRM.Tests
 
                 // 5. Part Stock Levels Updated
                 Assert.Equal(0m, part.ReservedQuantity); // Reduced from 5m to 0m
-                Assert.Equal("20", part.AvailableQuantity); // 20 - 0 = 20
+                Assert.Equal(20m, part.AvailableQuantity); // 20 - 0 = 20
 
                 // 6. Order and Line Status Updated
                 Assert.Equal("Shipped", orderLine.LineStatus);
